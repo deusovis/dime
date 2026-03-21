@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    
+    <title>DIME | Professional Basketball Analysis & Tips</title>
+    <meta name="description" content="Get professional basketball analysis and verified betting picks from DIME Tipster. Beat the bookie with precision and a proven ROI.">
+    <meta name="keywords" content="basketball picks, sports betting, NBA tips, verified tipster, basketball analysis, sports predictions">
+    <link rel="canonical" href="https://dimetipster.com/">
+
+    <meta property="og:title" content="DIME | Professional Basketball Analysis & Tips">
+    <meta property="og:description" content="Verified professional basketball betting picks with a proven +18.4% ROI. Join our Telegram for the latest precision plays.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dimetipster.com/">
+    <meta property="og:image" content="https://dimetipster.com/logo.png">
+    <meta property="og:site_name" content="DIME Tipster">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DIME | Professional Basketball Analysis & Tips">
+    <meta name="twitter:description" content="Verified professional basketball betting picks with a proven +18.4% ROI.">
+    <meta name="twitter:image" content="https://dimetipster.com/logo.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DIME Tipster",
+      "url": "https://dimetipster.com",
+      "logo": "https://dimetipster.com/logo.png",
+      "description": "Professional basketball analysis and verified sports betting tips.",
+      "sameAs": [
+        "https://t.me/deimantas",
+        "https://dime.blogabet.com"
+      ]
+    }
+    </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkSlate: '#0a0f14',
+                        dimeGreen: '#3e6b4d', 
+                        dimeGold: '#d4af37',
+                        dimeAccent: '#DB9C2A', 
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: radial-gradient(circle at top left, #1a2e22 0%, #05070a 100%);
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(62, 107, 77, 0.3);
+        }
+
+        .btn-telegram {
+            background: linear-gradient(135deg, #2481cc, #1d6fa5);
+            box-shadow: 0 4px 20px rgba(36, 129, 204, 0.4);
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2));
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const defaultData = [
+            { id: 1, date: 'Loading...', pick: 'Loading...', odds: '-', result: '-' }
+        ];
+
+        const App = () => {
+            const [picksData, setPicksData] = React.useState(defaultData);
+            const [isLoading, setIsLoading] = React.useState(true);
+
+            React.useEffect(() => {
+                fetch('picks.json')
+                    .then(response => {
+                        if (!response.ok) throw new Error("Could not find picks.json");
+                        return response.json();
+                    })
+                    .then(data => {
+                        setPicksData(data);
+                        setIsLoading(false);
+                    })
+                    .catch(error => {
+                        console.log("Using fallback data. Error: ", error);
+                        setPicksData([
+                            { id: 1, date: '2026-03-20', pick: 'Lakers -5.5', odds: '1.95', result: 'W' },
+                            { id: 2, date: '2026-03-19', pick: 'Celtics O 215.5', odds: '1.90', result: 'W' },
+                            { id: 3, date: '2026-03-18', pick: 'Nuggets ML', odds: '2.10', result: 'L' },
+                            { id: 4, date: '2026-03-17', pick: 'Warriors -3.0', odds: '1.85', result: 'W' },
+                            { id: 5, date: '2026-03-16', pick: 'Heat U 208.5', odds: '2.05', result: 'W' }
+                        ]);
+                        setIsLoading(false);
+                    });
+            }, []);
+
+            return (
+                <div className="relative overflow-x-hidden min-h-screen flex flex-col">
+                    
+                    {/* 3-COLUMN NAVIGATION FOR PERFECT CENTERING */}
+                    <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto fade-in">
+                        
+                        {/* LEFT: Logo */}
+                        <div className="flex-1 flex justify-start -mt-2 md:-mt-4">
+                            <img 
+                                src="logo.png" 
+                                alt="DIME Tipster Logo" 
+                                className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" 
+                            />
+                        </div>
+
+                        {/* CENTER: Growing Profit Chart */}
+                        <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90 transition-opacity hover:opacity-100">
+                            <span className="text-green-500 font-black text-[9px] md:text-xs tracking-[0.2em] uppercase mb-1 drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]">
+                                Proven Gains
+                            </span>
+                            <svg className="w-32 lg:w-48 h-10 lg:h-14 drop-shadow-[0_0_8px_rgba(34,197,94,0.3)]" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                {/* Gradient Fill */}
+                                <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2 L100,40 L0,40 Z" fill="url(#chartGrad)" opacity="0.2"/>
+                                {/* Green Line */}
+                                <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                {/* Pulse Dot at the end */}
+                                <circle cx="100" cy="2" r="3" fill="#22c55e" className="animate-pulse" />
+                                <defs>
+                                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#22c55e" stopOpacity="1" />
+                                        <stop offset="100%" stopColor="#22c55e" stopOpacity="0" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+
+                        {/* RIGHT: Telegram Badge */}
+                        <div className="flex-1 flex justify-end pt-2 md:pt-4 lg:pt-6"> 
+                            <a href="https://t.me/deimantas" target="_blank" rel="noopener noreferrer" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl md:rounded-2xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
+                                <i className="fa-brands fa-telegram text-lg md:text-xl"></i>
+                                <span>Join Now</span>
+                            </a>
+                        </div>
+                        
+                    </nav>
+
+                    {/* MAIN CONTENT */}
+                    <main className="container mx-auto px-4 pt-0 pb-10 max-w-6xl flex flex-col items-center flex-grow relative z-10">
+                        
+                        <div className="text-center mb-10 md:mb-12 fade-in -mt-2 md:-mt-6">
+                            <h1 className="text-3xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight uppercase text-white">
+                                Beat the <span className="text-dimeAccent">Bookie</span> <br/> 
+                                <span>with Precision</span>
+                            </h1>
+                            
+                            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
+                                <div className="w-full md:w-auto bg-white/5 border border-white/10 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
+                                    <i className="fa-solid fa-circle-check text-green-500 mr-2 text-xl"></i>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">Verified on</span>
+                                    <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 hover:text-green-400 transition-all font-black">Blogabet</a>
+                                </div>
+
+                                <div className="w-full md:w-auto bg-dimeGreen/20 border border-dimeGreen/40 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
+                                    <i className="fa-solid fa-chart-line text-green-500 mr-2 text-xl"></i> 
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">ROI:</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 mr-2 font-black">+18.4%</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">|</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black">+32.1</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 ml-2">Units</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Results Table */}
+                        <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden fade-in shadow-2xl">
+                            <div className="bg-gradient-to-r from-dimeGreen/30 to-transparent px-6 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
+                                <h2 className="text-base md:text-2xl font-black uppercase text-white">Results</h2>
+                                <div className="md:hidden text-[10px] text-gray-400 animate-pulse flex items-center gap-1">
+                                    <i className="fa-solid fa-arrow-right-long mr-1"></i>Swipe
+                                </div>
+                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest text-right">LAST 5 PICKS</div>
+                            </div>
+                            
+                            <div className="overflow-x-auto no-scrollbar">
+                                <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
+                                    <thead>
+                                        <tr className="bg-black/40 text-gray-500 text-[10px] md:text-xs uppercase tracking-[0.2em] font-black">
+                                            <th className="px-6 py-4 md:px-10 md:py-6 text-center md:text-left">Date</th>
+                                            <th className="px-6 py-4 md:px-10 md:py-6 text-center md:text-left">Pick</th>
+                                            <th className="px-6 py-4 md:px-10 md:py-6 text-center md:text-left">Odds</th>
+                                            <th className="px-10 py-4 md:py-6 text-right">Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-white/5 text-gray-200">
+                                        {picksData.map((pick) => (
+                                            <tr key={pick.id} className={`transition-all duration-300 group ${isLoading ? 'opacity-50' : 'hover:bg-dimeGreen/10 active:bg-dimeGreen/10'}`}>
+                                                <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm text-gray-400 font-medium tracking-tight text-center md:text-left">{pick.date}</td>
+                                                <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap text-center md:text-left">
+                                                    <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 font-black text-xs md:text-sm uppercase">
+                                                        <i className="fa-solid fa-basketball text-dimeGold text-[10px] md:text-xs"></i>
+                                                        {pick.pick}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm font-bold text-dimeGreen font-mono text-center md:text-left">{pick.odds}</td>
+                                                <td className="px-6 py-5 md:px-10 md:py-7 text-right">
+                                                    <span className={`px-3 py-1 md:px-5 md:py-2 rounded-lg md:rounded-xl font-black text-xs md:text-lg inline-block min-w-[60px] text-center ${pick.result === 'W' ? 'bg-green-600 text-white' : pick.result === 'L' ? 'bg-red-600/40 text-red-200 border border-red-500/20' : 'bg-gray-600 text-white'}`}>
+                                                        {pick.result}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div className="bg-black/40 p-6 md:p-8 text-center border-t border-white/5">
+                                <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-dimeGold transition-colors flex items-center justify-center gap-1 text-[10px] md:text-sm uppercase font-black">
+                                    <i className="fa-solid fa-circle-check text-green-500"></i>
+                                    <span>Full Verified History on <span className="text-green-500">Blogabet</span></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <footer className="mt-auto py-8 w-full text-center px-6">
+                            <p className="text-gray-600 text-[10px] md:text-xs font-black tracking-[0.2em] uppercase">
+                                © 2026 DIME TIPSTER
+                            </p>
+                        </footer>
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
