@@ -3,41 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    
+    <meta name="robots" content="noindex, nofollow">
     <title>DIME | Professional Basketball Analysis & Tips</title>
-    <meta name="description" content="Get professional basketball analysis and verified betting picks from DIME Tipster. Beat the bookie with precision and a proven ROI.">
-    <meta name="keywords" content="basketball picks, sports betting, NBA tips, verified tipster, basketball analysis, sports predictions">
-    <link rel="canonical" href="https://dimetipster.com/">
-
-    <meta property="og:title" content="DIME | Professional Basketball Analysis & Tips">
-    <meta property="og:description" content="Verified professional basketball betting picks with a proven +18.4% ROI. Join our Telegram for the latest precision plays.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://dimetipster.com/">
-    <meta property="og:image" content="https://dimetipster.com/logo.png">
-    <meta property="og:site_name" content="DIME Tipster">
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="DIME | Professional Basketball Analysis & Tips">
-    <meta name="twitter:description" content="Verified professional basketball betting picks with a proven +18.4% ROI.">
-    <meta name="twitter:image" content="https://dimetipster.com/logo.png">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "DIME Tipster",
-      "url": "https://dimetipster.com",
-      "logo": "https://dimetipster.com/logo.png",
-      "description": "Professional basketball analysis and verified sports betting tips.",
-      "sameAs": [
-        "https://t.me/deimantas",
-        "https://dime.blogabet.com"
-      ]
-    }
-    </script>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -111,7 +80,8 @@
             const [isLoading, setIsLoading] = React.useState(true);
 
             React.useEffect(() => {
-                fetch('picks.json')
+                // CACHE BUSTER ADDED HERE
+                fetch('picks.json?v=' + new Date().getTime())
                     .then(response => {
                         if (!response.ok) throw new Error("Could not find picks.json");
                         return response.json();
@@ -123,11 +93,11 @@
                     .catch(error => {
                         console.log("Using fallback data. Error: ", error);
                         setPicksData([
-                            { id: 1, date: '2026-03-20', pick: 'Lakers -5.5', odds: '1.95', result: 'W' },
-                            { id: 2, date: '2026-03-19', pick: 'Celtics O 215.5', odds: '1.90', result: 'W' },
-                            { id: 3, date: '2026-03-18', pick: 'Nuggets ML', odds: '2.10', result: 'L' },
-                            { id: 4, date: '2026-03-17', pick: 'Warriors -3.0', odds: '1.85', result: 'W' },
-                            { id: 5, date: '2026-03-16', pick: 'Heat U 208.5', odds: '2.05', result: 'W' }
+                            { id: 1, date: '2026-03-22', pick: 'Lakers -5.5', odds: '1.95', result: 'W' },
+                            { id: 2, date: '2026-03-21', pick: 'Celtics O 215.5', odds: '1.90', result: 'W' },
+                            { id: 3, date: '2026-03-20', pick: 'Nuggets ML', odds: '2.10', result: 'L' },
+                            { id: 4, date: '2026-03-19', pick: 'Warriors -3.0', odds: '1.85', result: 'W' },
+                            { id: 5, date: '2026-03-18', pick: 'Heat U 208.5', odds: '2.05', result: 'W' }
                         ]);
                         setIsLoading(false);
                     });
@@ -136,29 +106,23 @@
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col">
                     
-                    {/* 3-COLUMN NAVIGATION FOR PERFECT CENTERING */}
                     <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto fade-in">
                         
-                        {/* LEFT: Logo */}
                         <div className="flex-1 flex justify-start -mt-2 md:-mt-4">
                             <img 
                                 src="logo.png" 
-                                alt="DIME Tipster Logo" 
+                                alt="DIME Logo" 
                                 className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" 
                             />
                         </div>
 
-                        {/* CENTER: Growing Profit Chart */}
                         <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90 transition-opacity hover:opacity-100">
                             <span className="text-green-500 font-black text-[9px] md:text-xs tracking-[0.2em] uppercase mb-1 drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]">
                                 Proven Gains
                             </span>
                             <svg className="w-32 lg:w-48 h-10 lg:h-14 drop-shadow-[0_0_8px_rgba(34,197,94,0.3)]" viewBox="0 0 100 40" preserveAspectRatio="none">
-                                {/* Gradient Fill */}
                                 <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2 L100,40 L0,40 Z" fill="url(#chartGrad)" opacity="0.2"/>
-                                {/* Green Line */}
                                 <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                {/* Pulse Dot at the end */}
                                 <circle cx="100" cy="2" r="3" fill="#22c55e" className="animate-pulse" />
                                 <defs>
                                     <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
@@ -169,9 +133,8 @@
                             </svg>
                         </div>
 
-                        {/* RIGHT: Telegram Badge */}
                         <div className="flex-1 flex justify-end pt-2 md:pt-4 lg:pt-6"> 
-                            <a href="https://t.me/deimantas" target="_blank" rel="noopener noreferrer" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl md:rounded-2xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
+                            <a href="https://t.me/deimantas" target="_blank" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl md:rounded-2xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
                                 <i className="fa-brands fa-telegram text-lg md:text-xl"></i>
                                 <span>Join Now</span>
                             </a>
@@ -179,7 +142,6 @@
                         
                     </nav>
 
-                    {/* MAIN CONTENT */}
                     <main className="container mx-auto px-4 pt-0 pb-10 max-w-6xl flex flex-col items-center flex-grow relative z-10">
                         
                         <div className="text-center mb-10 md:mb-12 fade-in -mt-2 md:-mt-6">
@@ -192,7 +154,7 @@
                                 <div className="w-full md:w-auto bg-white/5 border border-white/10 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
                                     <i className="fa-solid fa-circle-check text-green-500 mr-2 text-xl"></i>
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">Verified on</span>
-                                    <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 hover:text-green-400 transition-all font-black">Blogabet</a>
+                                    <a href="https://dime.blogabet.com" target="_blank" className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 hover:text-green-400 transition-all font-black">Blogabet</a>
                                 </div>
 
                                 <div className="w-full md:w-auto bg-dimeGreen/20 border border-dimeGreen/40 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
@@ -206,7 +168,6 @@
                             </div>
                         </div>
 
-                        {/* Results Table */}
                         <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden fade-in shadow-2xl">
                             <div className="bg-gradient-to-r from-dimeGreen/30 to-transparent px-6 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
                                 <h2 className="text-base md:text-2xl font-black uppercase text-white">Results</h2>
@@ -249,7 +210,7 @@
                             </div>
                             
                             <div className="bg-black/40 p-6 md:p-8 text-center border-t border-white/5">
-                                <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-dimeGold transition-colors flex items-center justify-center gap-1 text-[10px] md:text-sm uppercase font-black">
+                                <a href="https://dime.blogabet.com" target="_blank" className="text-white hover:text-dimeGold transition-colors flex items-center justify-center gap-1 text-[10px] md:text-sm uppercase font-black">
                                     <i className="fa-solid fa-circle-check text-green-500"></i>
                                     <span>Full Verified History on <span className="text-green-500">Blogabet</span></span>
                                 </a>
