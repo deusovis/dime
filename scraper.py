@@ -91,18 +91,22 @@ def scrape_blogabet():
                 
                 # --- FIXED RESULT DETECTION ---
                 result = "-"
-                is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss|status-lost'))
-                is_won = block.find(class_=re.compile(r'label-success|text-green|win|won|status-won'))
+                
+                # 1. Check for exact class boundaries (prevents matching 'market-winner' or 'window')
+                is_lost = block.find(class_=re.compile(r'\b(label-danger|text-red|status-lost)\b'))
+                is_won = block.find(class_=re.compile(r'\b(label-success|text-green|status-won)\b'))
                 
                 if is_lost:
                     result = "L"
                 elif is_won:
                     result = "W"
                 else:
+                    # 2. Fallback using exact word boundaries \b to avoid matching "Winner"
                     upper_text = all_text.upper()
-                    if "WON" in upper_text or "WIN" in upper_text: 
+                    
+                    if re.search(r'\b(WON|WIN)\b', upper_text): 
                         result = "W"
-                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text: 
+                    elif re.search(r'\b(LOST|LOSS|LOSE)\b', upper_text): 
                         result = "L"
                     elif re.search(r'-\d+\.\d{2}\b', all_text): 
                         result = "L"
@@ -121,7 +125,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Removed empty parentheses while keeping (W).")
+        print("Success: Removed empty parentheses while keeping (W) and fixed win/loss logic.")
 
     except Exception as e:
         print(f"Error: {e}")
