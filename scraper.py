@@ -15,7 +15,7 @@ def scrape_blogabet():
     final_data = {"stats": {"roi": "+0%", "units": "0.0"}, "picks": []}
 
     try:
-        # STEP 1: GET ROI AND UNITS
+        # 1. GET ROI AND UNITS
         main_res = scraper.get(main_url, cookies=cookies)
         main_soup = BeautifulSoup(main_res.text, 'html.parser')
         profit_elem = main_soup.find(id="header-profit")
@@ -24,7 +24,7 @@ def scrape_blogabet():
         if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
         if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
 
-        # STEP 2: GET 10 PICKS
+        # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
@@ -56,27 +56,32 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # DATE DETECTIVE (Joining <span> elements)
+                # --- IMPROVED DATE DETECTIVE ---
+                date_text = ""
+                # Look for the container that holds the date
                 date_container = block.find(class_=re.compile(r'feed-date|date|time'))
-                date_text = " ".join(date_container.stripped_strings) if date_container else str(datetime.date.today())
+                if date_container:
+                    # Collect all text from all sub-elements (like <span>21</span> <span>Mar</span>)
+                    # and join them with a single space
+                    date_text = " ".join(date_container.stripped_strings)
+                
+                # If the container search failed, use a regex backup to find "DD Mon YYYY"
+                if not date_text:
+                    all_block_text = block.get_text(" ")
+                    date_match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', all_block_text)
+                    date_text = date_match.group(0) if date_match else str(datetime.date.today())
 
-                # ODDS
+                # ODDS & RESULT
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # RESULT DETECTION
                 result = "-"
-                profit_match = re.search(r'([+-])\d+\.\d+', all_text)
-                if profit_match:
-                    result = "W" if profit_match.group(1) == "+" else "L"
-                elif block.find(class_=re.compile(r'label-success|text-green|win|won')):
-                    result = "W"
-                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')):
-                    result = "L"
-                elif any(x in all_text.upper() for x in ["WON", "WIN"]): result = "W"
-                elif any(x in all_text.upper() for x in ["LOST", "LOSE", "LOSS"]): result = "L"
+                if block.find(class_=re.compile(r'label-success|text-green|win|won')): result = "W"
+                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')): result = "L"
+                elif "WON" in all_text.upper() or "WIN" in all_text.upper(): result = "W"
+                elif "LOST" in all_text.upper() or "LOSE" in all_text.upper() or "LOSS" in all_text.upper(): result = "L"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
@@ -85,14 +90,16 @@ def scrape_blogabet():
                     "odds": odds_val, 
                     "result": result
                 })
-            except: continue
+            except Exception as e:
+                print(f"Skipping pick: {e}")
+                continue
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Rollback complete: 10 picks saved with fixed dates and results.")
+        print(f"Successfully updated with 10 picks and correct dates.")
 
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Critical Error: {e}")
 
 if __name__ == "__main__":
     scrape_blogabet()
