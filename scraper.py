@@ -15,7 +15,7 @@ def scrape_blogabet():
     final_data = {"stats": {"roi": "+0%", "units": "0.0"}, "picks": []}
 
     try:
-        # 1. GET STATS
+        # 1. GET ROI AND UNITS
         main_res = scraper.get(main_url, cookies=cookies)
         main_soup = BeautifulSoup(main_res.text, 'html.parser')
         profit_elem = main_soup.find(id="header-profit")
@@ -31,18 +31,21 @@ def scrape_blogabet():
         
         seen_titles = set()
         for block in pick_blocks:
-            if len(final_data["picks"]) >= 10: break # BACK TO 10 PICKS
+            if len(final_data["picks"]) >= 10: break 
             
             try:
+                # MATCHUP & SELECTION
                 matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
+                # CLEANING
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
                     clean_text = re.sub(term, '', clean_text)
                 
+                # TEAM NAME + ML RULE
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
                     if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
@@ -53,27 +56,49 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                date_container = block.find(class_=re.compile(r'feed-date|date'))
-                date_text = " ".join([s.get_text(strip=True) for s in date_container.find_all('span')]) if date_container and date_container.find_all('span') else (date_container.get_text(strip=True) if date_container else str(datetime.date.today()))
+                # DATE
+                date_container = block.find(class_=re.compile(r'feed-date|date|time'))
+                date_text = " ".join(date_container.stripped_strings) if date_container else str(datetime.date.today())
 
+                # ODDS
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
+                # --- ENHANCED RESULT DETECTION ---
                 result = "-"
-                if block.find(class_=re.compile(r'label-success|text-green|win|won')): result = "W"
-                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')): result = "L"
-                elif "WON" in all_text.upper() or "WIN" in all_text.upper(): result = "W"
-                elif "LOST" in all_text.upper() or "LOSE" in all_text.upper(): result = "L"
+                # Check for negative profit (e.g. -1.00) or positive profit (+0.80)
+                profit_match = re.search(r'([+-])\d+\.\d+', all_text)
+                
+                if profit_match:
+                    result = "W" if profit_match.group(1) == "+" else "L"
+                # Check specific CSS classes
+                elif block.find(class_=re.compile(r'label-success|text-green|win|won')):
+                    result = "W"
+                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost|lost-pick')):
+                    result = "L"
+                # Check raw text keywords
+                elif any(x in all_text.upper() for x in ["WON", "WIN", "PROFIT"]):
+                    result = "W"
+                elif any(x in all_text.upper() for x in ["LOST", "LOSE", "LOSS"]):
+                    result = "L"
 
-                final_data["picks"].append({"id": len(final_data["picks"]) + 1, "date": date_text.strip(), "pick": pick_title, "odds": odds_val, "result": result})
+                final_data["picks"].append({
+                    "id": len(final_data["picks"]) + 1, 
+                    "date": date_text.strip(), 
+                    "pick": pick_title, 
+                    "odds": odds_val, 
+                    "result": result
+                })
             except: continue
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Scraped 10 picks and stats successfully.")
-    except Exception as e: print(f"Error: {e}")
+        print("Scraper finished: Results checked via profit symbols and labels.")
+
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     scrape_blogabet()
