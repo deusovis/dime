@@ -87,7 +87,7 @@
                     'BURKINA FASO': 'bf', 'BURUNDI': 'bi', 'CABO VERDE': 'cv', 'CAMBODIA': 'kh', 'CAMEROON': 'cm',
                     'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
                     'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
-                    'CYPRUS': 'cy', 'CZECH REPUBLIC': 'cz', 'CZECH R.': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
+                    'CYPRUS': 'cy', 'CZECH REPUBLIC': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
                     'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
                     'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
                     'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
@@ -216,7 +216,21 @@
                                                     <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap">
                                                         <div className="flex items-center font-black text-xs md:text-sm uppercase">
                                                             {getFlagIcon(pick.country)}
-                                                            <span>{pick.pick}</span>
+                                                            {(() => {
+                                                                const pickStr = pick.pick || '';
+                                                                const parts = pickStr.split(' ');
+                                                                if (parts.length > 1) {
+                                                                    const line = parts.pop();
+                                                                    const team = parts.join(' ');
+                                                                    return (
+                                                                        <span>
+                                                                            <span className="text-white">{team}</span>{' '}
+                                                                            <span className="text-dimeGold">{line}</span>
+                                                                        </span>
+                                                                    );
+                                                                }
+                                                                return <span className="text-white">{pickStr}</span>;
+                                                            })()}
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm font-bold text-dimeGold font-mono drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">{pick.odds}</td>
