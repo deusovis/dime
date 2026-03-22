@@ -4,34 +4,34 @@
         "date": "2026-03-22",
         "pick": "Fribourg - Massagno",
         "odds": "1.8",
-        "result": "-"
+        "result": "W"
     },
     {
         "id": 2,
         "date": "2026-03-22",
-        "pick": "Oberwart Gunners - Klosterneuburg Dukes",
-        "odds": "3.7",
-        "result": "-"
+        "pick": "Fribourg - Massagno",
+        "odds": "1.8",
+        "result": "W"
     },
     {
         "id": 3,
         "date": "2026-03-22",
-        "pick": "DSK Basketball Brandys (W) - ZVVZ USK Praha (W)",
-        "odds": "1.83",
-        "result": "-"
+        "pick": "Oberwart Gunners - Klosterneuburg Dukes",
+        "odds": "3.7",
+        "result": "W"
     },
     {
         "id": 4,
         "date": "2026-03-22",
-        "pick": "MKS Pruszkow (W) - Pompax Leszno (W)",
-        "odds": "1.83",
-        "result": "-"
+        "pick": "Oberwart Gunners - Klosterneuburg Dukes",
+        "odds": "3.7",
+        "result": "W"
     },
     {
         "id": 5,
         "date": "2026-03-22",
-        "pick": "Istanbul Genclikspor (W) - Mersin Basketball (W)",
+        "pick": "DSK Basketball Brandys (W) - ZVVZ USK Praha (W)",
         "odds": "1.83",
-        "result": "-"
+        "result": "W"
     }
 ]
