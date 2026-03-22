@@ -87,7 +87,7 @@
                     'BURKINA FASO': 'bf', 'BURUNDI': 'bi', 'CABO VERDE': 'cv', 'CAMBODIA': 'kh', 'CAMEROON': 'cm',
                     'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
                     'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
-                    'CYPRUS': 'cy', 'CZECH REPUBLIC': 'cz', 'Czech R.': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
+                    'CYPRUS': 'cy', 'CZECH REPUBLIC': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
                     'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
                     'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
                     'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
@@ -125,6 +125,23 @@
                 return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
             };
 
+            // NEW: Unit Calculation Logic for the header
+            const calculateTrend = (picks) => {
+                let units = 0;
+                picks.forEach(pick => {
+                    const res = (pick.result || '').toUpperCase();
+                    const odds = parseFloat(pick.odds);
+                    if (!isNaN(odds)) {
+                        if (res === 'W' || res === 'WON' || res === 'WIN') {
+                            units += (odds - 1); // Profit from 1 unit flat stake
+                        } else if (res === 'L' || res === 'LOST' || res === 'LOSE' || res === 'LOSS') {
+                            units -= 1; // Loss of 1 unit flat stake
+                        }
+                    }
+                });
+                return units;
+            };
+
             React.useEffect(() => {
                 fetch('picks.json?v=' + new Date().getTime())
                     .then(res => res.json())
@@ -138,6 +155,8 @@
                     })
                     .catch(() => setIsLoading(false));
             }, []);
+
+            const trendUnits = calculateTrend(data.picks);
 
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col">
@@ -191,7 +210,14 @@
                         <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden fade-in shadow-2xl">
                             <div className="bg-gradient-to-r from-dimeGreen/30 to-transparent px-6 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
                                 <h2 className="text-base md:text-2xl font-black uppercase text-white">Results</h2>
-                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest uppercase">LAST 10 PICKS</div>
+                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest uppercase flex items-center">
+                                    LAST 10 PICKS 
+                                    {data.picks.length > 0 && (
+                                        <span className={`ml-1 ${trendUnits > 0 ? 'text-green-500' : trendUnits < 0 ? 'text-red-500' : 'text-gray-400'}`}>
+                                            ({trendUnits > 0 ? '+' : ''}{trendUnits.toFixed(2)} u)
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                             
                             <div className="overflow-x-auto">
