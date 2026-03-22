@@ -152,27 +152,34 @@
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-white/5 text-gray-200">
-                                        {data.picks.map((pick, index) => (
-                                            <tr key={index} className="transition-all duration-300 hover:bg-dimeGreen/10">
-                                                <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm text-gray-400">{pick.date}</td>
-                                                <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap">
-                                                    <div className="flex items-center gap-3 font-black text-xs md:text-sm uppercase">
-                                                        <i className="fa-solid fa-basketball text-dimeGold text-[10px]"></i>
-                                                        {pick.pick}
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm font-bold text-dimeGreen font-mono">{pick.odds}</td>
-                                                <td className="px-6 py-5 md:px-10 md:py-7 text-right">
-                                                    <span className={`px-3 py-1 md:px-5 md:py-2 rounded-lg font-black text-xs md:text-lg inline-block min-w-[60px] text-center ${
-                                                        pick.result === 'W' ? 'bg-green-600 text-white shadow-[0_0_10px_rgba(22,163,74,0.3)]' : 
-                                                        pick.result === 'L' ? 'bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.3)]' : 
-                                                        'bg-gray-600 text-white'
-                                                    }`}>
-                                                        {pick.result}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                        {data.picks.map((pick, index) => {
+                                            // Robust result check
+                                            const res = (pick.result || '').toUpperCase();
+                                            const isWin = res === 'W' || res === 'WON' || res === 'WIN';
+                                            const isLoss = res === 'L' || res === 'LOST' || res === 'LOSE' || res === 'LOSS';
+
+                                            return (
+                                                <tr key={index} className="transition-all duration-300 hover:bg-dimeGreen/10">
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm text-gray-400">{pick.date}</td>
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap">
+                                                        <div className="flex items-center gap-3 font-black text-xs md:text-sm uppercase">
+                                                            <i className="fa-solid fa-basketball text-dimeGold text-[10px]"></i>
+                                                            {pick.pick}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm font-bold text-dimeGreen font-mono">{pick.odds}</td>
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-right">
+                                                        <span className={`px-3 py-1 md:px-5 md:py-2 rounded-lg font-black text-xs md:text-lg inline-block min-w-[60px] text-center ${
+                                                            isWin ? 'bg-green-600 text-white shadow-[0_0_10px_rgba(22,163,74,0.3)]' : 
+                                                            isLoss ? 'bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.3)]' : 
+                                                            'bg-gray-600 text-white'
+                                                        }`}>
+                                                            {pick.result}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
