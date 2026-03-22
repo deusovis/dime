@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+# This line forces GitHub to use the new engine and disables the warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
