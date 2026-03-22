@@ -39,7 +39,7 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING (ML Suffix)
+                # CLEANING
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
@@ -55,11 +55,19 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- UNTOUCHED DATE LOGIC (PERFECT) ---
+                # --- THE ULTIMATE DATE FIX (RESTORED EXACTLY AS IT WAS) ---
                 date_text = "-"
-                date_container = block.find(class_=re.compile(r'feed-date|date|time'))
+                # Search for the specific date container first
+                date_container = block.select_one('.feed-date, .date, .time')
                 if date_container:
-                    date_text = date_container.get_text(" ", strip=True)
+                    date_text = " ".join(date_container.stripped_strings)
+                
+                # If that fails, scan the whole block for "Day Month Year" (e.g., 21 Mar 2026)
+                if date_text == "-":
+                    raw_text = block.get_text(" ")
+                    match = re.search(r'(\d{1,2}\s+[A-Za-z]{3}\s+\d{4})', raw_text)
+                    if match:
+                        date_text = match.group(1)
 
                 # ODDS
                 all_text = block.get_text(" ")
@@ -67,29 +75,33 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- FIXED RESULT DETECTION (Turn Grey into Red L) ---
+                # --- FIXED RESULT DETECTION (2-Decimal Check) ---
                 result = "-"
                 
-                # 1. Look specifically for the Red "Danger" or "Lost" classes
-                # This ignores handicaps because Blogabet only colors the result badge red
-                is_lost_badge = block.find(class_=re.compile(r'label-danger|text-red|lost|loss|status-lost'))
-                is_won_badge = block.find(class_=re.compile(r'label-success|text-green|win|won|status-won'))
+                # 1. Check Explicit Badges
+                is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss|status-lost'))
+                is_won = block.find(class_=re.compile(r'label-success|text-green|win|won|status-won'))
                 
-                if is_lost_badge:
+                if is_lost:
                     result = "L"
-                elif is_won_badge:
+                elif is_won:
                     result = "W"
                 else:
-                    # 2. Final Keyword Backup (Scans for "LOST" text in the result area)
+                    # 2. Check Keywords
                     upper_text = all_text.upper()
-                    if "WON" in upper_text or "WIN" in upper_text:
+                    if "WON" in upper_text or "WIN" in upper_text: 
                         result = "W"
-                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text:
+                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text: 
                         result = "L"
+                    # 3. Check for 2-Decimal Profit (-1.00) vs 1-Decimal Handicap (-5.5)
+                    elif re.search(r'-\d+\.\d{2}\b', all_text):
+                        result = "L"
+                    elif re.search(r'\+\d+\.\d{2}\b', all_text):
+                        result = "W"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
-                    "date": date_text, 
+                    "date": date_text.strip(), 
                     "pick": pick_title, 
                     "odds": odds_val, 
                     "result": result
@@ -98,7 +110,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Dates kept, Lost results fixed.")
+        print("Success: Date logic restored, Grey dash fixed.")
 
     except Exception as e:
         print(f"Error: {e}")
