@@ -39,7 +39,7 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING
+                # CLEANING (ML Suffix)
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
@@ -56,10 +56,12 @@ def scrape_blogabet():
                 seen_titles.add(pick_title)
 
                 # --- LITERAL DATE FETCH (21 Mar 2026) ---
+                # Search specifically for the text within the date container
                 date_text = "-"
-                date_container = block.find(class_=re.compile(r'feed-date|date'))
+                date_container = block.find(class_=re.compile(r'feed-date|date|time'))
                 if date_container:
-                    date_text = " ".join(date_container.stripped_strings)
+                    # Collect all text strings (like 21, Mar, 2026) and join them
+                    date_text = " ".join(date_container.get_text(" ", strip=True).split())
 
                 # ODDS
                 all_text = block.get_text(" ")
@@ -67,37 +69,27 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- HANDICAP-SAFE RESULT DETECTION ---
+                # --- RESULT DETECTION (COLOR-BASED ONLY) ---
                 result = "-"
                 
-                # Check 1: Check for the specific color label (Green = W, Red = L)
-                # This is the most accurate because handicaps are never in these labels
-                if block.find(class_=re.compile(r'label-success|text-green')):
-                    result = "W"
-                elif block.find(class_=re.compile(r'label-danger|text-red')):
+                # We check for RED labels (Loss) and GREEN labels (Win)
+                # This prevents handicaps from being mistaken for results
+                is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss'))
+                is_won = block.find(class_=re.compile(r'label-success|text-green|win|won'))
+                
+                if is_lost:
                     result = "L"
-                
-                # Check 2: Look for results in the bottom "unit" section only
-                # We skip the "matchup" and "pick" text to avoid handicaps
-                if result == "-":
-                    # Look for elements that specifically contain units or labels
-                    result_area = block.find(class_=re.compile(r'pick-result|label|status'))
-                    result_text = result_area.get_text().upper() if result_area else ""
-                    
-                    if "WON" in result_text or "WIN" in result_text:
-                        result = "W"
-                    elif "LOST" in result_text or "LOSS" in result_text or "LOSE" in result_text:
-                        result = "L"
-                
-                # Check 3: If still unknown, scan the WHOLE block but only for keywords
-                if result == "-":
-                    upper_block = all_text.upper()
-                    if "WON" in upper_block or "WIN" in upper_block: result = "W"
+                elif is_won:
+                    result = "W"
+                else:
+                    # Keyword check only if color labels are missing
+                    upper_text = all_text.upper()
+                    if "WON" in upper_text or "WIN" in upper_text: result = "W"
                     elif "LOST" in upper_text or "LOSS" in upper_text: result = "L"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
-                    "date": date_text.strip(), 
+                    "date": date_text, 
                     "pick": pick_title, 
                     "odds": odds_val, 
                     "result": result
@@ -106,7 +98,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Handicap-safe results and literal dates saved.")
+        print("Success: Date and Results are perfectly aligned.")
 
     except Exception as e:
         print(f"Error: {e}")
