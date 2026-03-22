@@ -192,12 +192,12 @@
                     });
             }, []);
 
-            // --- THE NEW, SCREAMING BASKETBALL LOADING ANIMATION ---
+            // --- THE BRANDED BASKETBALL LOADING ANIMATION ---
             if (isLoading) {
                 return (
                     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-darkSlate overflow-hidden">
-                        {/* Spotlight Background */}
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(234,88,12,0.15)_0%,_transparent_60%)]"></div>
+                        {/* Spotlight Background using dimeAccent RGB values */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(219,156,42,0.15)_0%,_transparent_60%)]"></div>
                         
                         <div className="relative flex flex-col items-center z-10">
                             
@@ -205,8 +205,8 @@
                             <div className="relative w-32 h-32 md:w-48 md:h-48 flex justify-center items-end mb-4">
                                 {/* Wrapper controls the vertical bounce */}
                                 <div className="absolute w-full h-full flex justify-center items-end animate-bounce-heavy">
-                                    {/* Inner element controls the continuous spin */}
-                                    <i className="fa-solid fa-basketball text-[7rem] md:text-[10rem] text-[#ea580c] animate-spin-ball drop-shadow-[0_0_30px_rgba(234,88,12,0.8)]"></i>
+                                    {/* Inner element controls the continuous spin - Color changed to dimeAccent */}
+                                    <i className="fa-solid fa-basketball text-[7rem] md:text-[10rem] text-dimeAccent drop-shadow-[0_0_30px_rgba(219,156,42,0.8)]"></i>
                                 </div>
                             </div>
 
@@ -216,11 +216,11 @@
                             {/* Text Header */}
                             <div className="mt-12 flex flex-col items-center">
                                 <h2 className="text-white font-black text-3xl md:text-5xl tracking-tighter uppercase italic drop-shadow-[0_2px_5px_rgba(0,0,0,0.8)]">
-                                    Dime <span className="text-[#ea580c]">Tipster</span>
+                                    Dime <span className="text-dimeAccent">Tipster</span>
                                 </h2>
                                 
-                                <div className="mt-4 flex items-center gap-3 bg-black/60 px-6 py-3 rounded-xl border border-[#ea580c]/30 shadow-[0_0_15px_rgba(234,88,12,0.2)]">
-                                    <i className="fa-solid fa-basketball fa-bounce text-[#ea580c] text-sm md:text-lg"></i>
+                                <div className="mt-4 flex items-center gap-3 bg-black/60 px-6 py-3 rounded-xl border border-dimeAccent/30 shadow-[0_0_15px_rgba(219,156,42,0.2)]">
+                                    <i className="fa-solid fa-basketball fa-bounce text-dimeAccent text-sm md:text-lg"></i>
                                     <span className="text-gray-300 font-bold text-xs md:text-sm tracking-widest uppercase">LOADING STATS</span>
                                     <div className="w-16 text-right">
                                         <span className="text-dimeGold font-mono font-black text-sm md:text-lg">{scoreboardNum}%</span>
