@@ -2,8 +2,8 @@ name: Auto-Update Picks
 
 on:
   schedule:
-    - cron: '0 */4 * * *' # Runs every 4 hours automatically
-  workflow_dispatch: # Gives you a button to run it manually
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,7 +11,6 @@ permissions:
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
-    # Moving the override switch here forces it to apply directly to the runner
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
@@ -23,7 +22,7 @@ jobs:
         with:
           python-version: '3.10'
 
-- name: Install dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 cloudscraper
