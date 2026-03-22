@@ -24,10 +24,12 @@ def scrape_blogabet():
         if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
         if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
 
-        # 2. GET 10 PICKS
+
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
-        pick_blocks = soup.find_all('li', class_=re.compile(r'feed-pick'))
+        
+   
+        pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
         for block in pick_blocks:
