@@ -28,7 +28,7 @@ def scrape_blogabet():
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         
-        # CRITICAL FIX: Use picks_soup to find the actual list of bets
+        # Using picks_soup to find the actual list of 10 bets
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -57,16 +57,13 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- LITERAL DATE FETCH (21 Mar 2026) ---
+                # --- REVERTED DATE FETCH (The Working Version) ---
                 date_text = "-"
+                # Target the container exactly as we did when it worked
                 date_container = block.find(class_=re.compile(r'feed-date|date'))
                 if date_container:
-                    # This grabs the exact text written on Blogabet
+                    # Grabs literal text like "21 Mar 2026"
                     date_text = " ".join(date_container.stripped_strings)
-                    # Simple trim to keep only Day Mon Year
-                    parts = date_text.split()
-                    if len(parts) >= 2:
-                        date_text = " ".join(parts[:3])
 
                 # ODDS
                 all_text = block.get_text(" ")
@@ -76,13 +73,13 @@ def scrape_blogabet():
                 
                 # --- STABLE WIN/LOSS DETECTION ---
                 result = "-"
-                # Check for label classes (Green = W, Red = L)
+                # Check for label classes first (Green = W, Red = L)
                 if block.find(class_=re.compile(r'label-success|text-green')):
                     result = "W"
                 elif block.find(class_=re.compile(r'label-danger|text-red')):
                     result = "L"
                 
-                # Keyword backup ONLY if first check fails
+                # Keyword backup ONLY if first check fails (fixes the grey dash)
                 if result == "-":
                     upper_text = all_text.upper()
                     if "WON" in upper_text or "WIN" in upper_text: result = "W"
@@ -99,10 +96,10 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Scrape complete: Literal dates and safe results restored.")
+        print("Success: Dates and results fixed.")
 
     except Exception as e:
-        print(f"Critical Error: {e}")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     scrape_blogabet()
