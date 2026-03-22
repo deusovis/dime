@@ -24,6 +24,27 @@
                         dimeGreen: '#3e6b4d', 
                         dimeGold: '#d4af37',
                         dimeAccent: '#DB9C2A', 
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'dash': 'dash 2s ease-in-out forwards',
+                        'fade-out-in': 'fadeOutIn 3.5s ease-in-out forwards',
+                        'scan': 'scan 1.5s linear infinite',
+                    },
+                    keyframes: {
+                        dash: {
+                            'to': { 'stroke-dashoffset': '0' },
+                        },
+                        fadeOutIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.9)' },
+                            '10%': { opacity: '1', transform: 'scale(1)' },
+                            '90%': { opacity: '1', transform: 'scale(1)' },
+                            '100%': { opacity: '0', transform: 'scale(1.1)' },
+                        },
+                        scan: {
+                            '0%': { top: '-10%' },
+                            '100%': { top: '110%' },
+                        }
                     }
                 }
             }
@@ -38,6 +59,7 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
         .glass-card {
@@ -65,15 +87,41 @@
         @keyframes fadeIn {
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* SVG drawing animation helpers */
+        .path-draw {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+        
+        .delay-1 { animation-delay: 0.5s; }
+        .delay-2 { animation-delay: 1.0s; }
+        .delay-3 { animation-delay: 1.5s; }
+        .delay-4 { animation-delay: 2.0s; }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
+        // Helper hook for rapid number animation
+        const useRandomNumbers = (isActive, duration = 3500) => {
+            const [num, setNum] = React.useState('0.000');
+            React.useEffect(() => {
+                if (!isActive) return;
+                const interval = setInterval(() => {
+                    setNum((Math.random() * 100).toFixed(3));
+                }, 50);
+                setTimeout(() => clearInterval(interval), duration);
+                return () => clearInterval(interval);
+            }, [isActive, duration]);
+            return num;
+        };
+
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
+            const probNumber = useRandomNumbers(isLoading);
 
             const getFlagIcon = (countryName) => {
                 if (!countryName || countryName === "World") {
@@ -90,7 +138,7 @@
                     'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
                     'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
                     'CYPRUS': 'cy', 'CZECH R.': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
-                    'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
+                    'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALV Salvador': 'sv', 'ENGLAND': 'gb-eng',
                     'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
                     'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
                     'GEORGIA': 'ge', 'GERMANY': 'de', 'GHANA': 'gh', 'GREECE': 'gr', 'GUATEMALA': 'gt',
@@ -128,8 +176,6 @@
             };
 
             React.useEffect(() => {
-                // Simulating a slightly longer fetch for visual effect if needed, 
-                // but standard fetch is fine too.
                 fetch('picks.json?v=' + new Date().getTime())
                     .then(res => res.json())
                     .then(json => {
@@ -138,32 +184,89 @@
                         } else {
                             setData({ stats: { roi: '+18.4%', units: '+32.1' }, picks: Array.isArray(json) ? json : [] });
                         }
-                        // Short timeout just to ensure the loading screen flashes nicely even on fast connections
-                        setTimeout(() => setIsLoading(false), 800); 
+                        // LONGER TIMEOUT FOR INCREDIBLE ANIMATION
+                        setTimeout(() => setIsLoading(false), 3800); 
                     })
                     .catch(() => {
-                        setIsLoading(false);
+                        // Keep loading visible briefly even on error for the animation experience
+                        setTimeout(() => setIsLoading(false), 3800);
                     });
             }, []);
 
-            // --- THE NEW LOADING SCREEN ---
+            // --- THE INCREDIBLE BASKETBALL LOADING ANIMATION ---
             if (isLoading) {
                 return (
-                    <div className="min-h-screen flex flex-col items-center justify-center bg-[radial-gradient(circle_at_center,_#1a2e22_0%,_#05070a_100%)]">
-                        <div className="relative flex flex-col items-center fade-in">
-                            {/* Spinning high-tech ring */}
-                            <div className="absolute inset-0 -m-8 border-[3px] border-t-dimeGreen border-r-dimeGold border-b-transparent border-l-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(62,107,77,0.5)]"></div>
+                    <div className="min-h-screen flex flex-col items-center justify-center bg-[#05070a] overflow-hidden relative">
+                        {/* Background radial gradient overlay */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1a2e22_0%,_#05070a_100%)] opacity-70"></div>
+                        
+                        {/* Scanner Beam Effect */}
+                        <div className="absolute inset-0 z-0 overflow-hidden opacity-10">
+                            <div className="absolute left-0 right-0 h-1/2 bg-gradient-to-b from-transparent via-dimeGreen to-transparent animate-scan"></div>
+                        </div>
+
+                        <div className="relative flex flex-col items-center z-10 animate-fade-out-in px-4 text-center">
                             
-                            {/* Pulsing Logo */}
-                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 animate-pulse logo-glow" />
+                            {/* Central Basketball & Court Visualization */}
+                            <div className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center mb-10">
+                                
+                                {/* 1. Spinning Wireframe Basketball (Stage 1) */}
+                                <svg className="absolute w-full h-full text-dimeGreen opacity-20 animate-spin-slow" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="48" stroke="currentColor" strokeWidth="0.5" fill="none"/>
+                                    <ellipse cx="50" cy="50" rx="48" ry="15" stroke="currentColor" strokeWidth="0.5" fill="none"/>
+                                    <ellipse cx="50" cy="50" rx="15" ry="48" stroke="currentColor" strokeWidth="0.5" fill="none"/>
+                                    <path d="M15,15 Q50,50 85,85" stroke="currentColor" strokeWidth="0.5" fill="none"/>
+                                    <path d="M15,85 Q50,50 85,15" stroke="currentColor" strokeWidth="0.5" fill="none"/>
+                                </svg>
+
+                                {/* 2. Drawing Digital Court Key (Stage 2) */}
+                                <svg className="absolute w-full h-full text-dimeGold opacity-80" viewBox="0 0 100 100" fill="none">
+                                    {/* Three point line */}
+                                    <path className="path-draw animate-dash delay-1" d="M10,80 Q50,30 90,80" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+                                    {/* Key/Paint */}
+                                    <rect className="path-draw animate-dash delay-1" x="30" y="60" width="40" height="35" stroke="currentColor" strokeWidth="1"/>
+                                    <circle className="path-draw animate-dash delay-1" cx="50" cy="60" r="20" stroke="currentColor" strokeWidth="1"/>
+                                    {/* Backboard/Rim */}
+                                    <line className="path-draw animate-dash delay-1" x1="40" y1="88" x2="60" y2="88" stroke="currentColor" strokeWidth="1.5"/>
+                                    <circle className="path-draw animate-dash delay-1" cx="50" cy="85" r="3" stroke="currentColor" strokeWidth="1.5"/>
+                                </svg>
+
+                                {/* 3. Drawing Winning Play Simulation (Stage 3) */}
+                                <svg className="absolute w-full h-full text-dimeAccent drop-shadow-[0_0_8px_rgba(219,156,42,0.6)]" viewBox="0 0 100 100" fill="none">
+                                    {/* Offense O1 moves to screen */}
+                                    <circle cx="25" cy="75" r="2" fill="currentColor" className="animate-pulse delay-2 opacity-0" style={{animation:'fadeIn 0.1s forwards 1.2s'}}/>
+                                    <path className="path-draw animate-dash delay-3" d="M25,75 L45,65" stroke="currentColor" strokeWidth="1.2" strokeDasharray="5,3"/>
+                                    
+                                    {/* Offense O2 (Ball handler) cuts past screen */}
+                                    <circle cx="50" cy="50" r="2" fill="#22c55e" className="animate-pulse delay-2 opacity-0" style={{animation:'fadeIn 0.1s forwards 1.5s'}}/> {/* Ball holder */}
+                                    <path className="path-draw animate-dash delay-4" d="M50,50 C60,55 55,75 50,82" stroke="#22c55e" strokeWidth="1.5"/>
+                                    
+                                    {/* Defensive X's react (red) */}
+                                    <path d="M48,63 L52,67 M52,63 L48,67" stroke="#ef4444" strokeWidth="1" className="opacity-0" style={{animation:'fadeIn 0.1s forwards 2.0s'}}/>
+                                    <path d="M58,78 L62,82 M62,78 L58,82" stroke="#ef4444" strokeWidth="1" className="opacity-0" style={{animation:'fadeIn 0.1s forwards 2.3s'}}/>
+                                </svg>
+                                
+                                {/* 4. The Final "DIME" Logo Pulse (Stage 5) */}
+                                <img src="logo.png" alt="DIME Logo" className="absolute h-24 md:h-32 logo-glow opacity-0" style={{animation: 'fadeIn 0.5s forwards 3.0s, pulse 2s infinite 3.5s'}} />
+                            </div>
                             
-                            {/* Loading Text & Bouncing Dots */}
-                            <div className="mt-14 flex flex-col items-center gap-3">
-                                <span className="text-dimeGold font-black tracking-[0.4em] text-[10px] md:text-xs uppercase animate-pulse drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]">Analyzing Odds</span>
-                                <div className="flex gap-1.5">
-                                    <div className="w-1.5 h-1.5 bg-dimeGreen rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                    <div className="w-1.5 h-1.5 bg-dimeGreen rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                    <div className="w-1.5 h-1.5 bg-dimeGreen rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                            {/* High-Tech Loading Status (Stage 4) */}
+                            <div className="flex flex-col items-center gap-4 bg-black/40 border border-dimeGreen/30 p-6 rounded-2xl backdrop-blur-sm min-w-[280px]">
+                                <div className="flex items-center gap-3">
+                                    <i className="fa-solid fa-microchip text-dimeGreen animate-pulse text-xl"></i>
+                                    <span className="text-gray-400 font-black tracking-[0.3em] text-[10px] md:text-xs uppercase">DIMESYS V1.3 Active</span>
+                                </div>
+                                
+                                <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden relative border border-white/10">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-dimeGreen via-dimeGold to-dimeGreen rounded-full animate-dash path-draw" style={{strokeDasharray: '100,0', animation: 'drawPlay 3s linear forwards'}}></div>
+                                </div>
+
+                                <div className="text-dimeGold font-mono text-xs md:text-sm tracking-widest flex items-center gap-2">
+                                    <span className="text-gray-600">&gt;</span>
+                                    <span className="opacity-0" style={{animation: 'fadeIn 0.1s forwards 0.5s'}}>Initializing court cortex...</span>
+                                    <span className="opacity-0" style={{animation: 'fadeOut 0.1s forwards 1.0s, fadeIn 0.1s forwards 1.0s'}}>Simulating vector plays...</span>
+                                    <span className="opacity-0" style={{animation: 'fadeOut 0.1s forwards 2.0s, fadeIn 0.1s forwards 2.0s'}}>Calculating edge probability:</span>
+                                    <span className="text-green-400 font-black opacity-0" style={{animation: 'fadeIn 0.1s forwards 2.0s'}}>{probNumber}%</span>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +274,7 @@
                 );
             }
 
-            // --- MAIN APP RENDER ---
+            // --- MAIN APP RENDER (Fades in after loader) ---
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col fade-in">
                     <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto">
@@ -205,7 +308,7 @@
                             
                             <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
                                 
-                                {/* --- UPDATED VERIFIED BUTTON WITH NEW BADGE ON LEFT --- */}
+                                {/* --- VERIFIED BUTTON WITH NEW BADGE ON LEFT --- */}
                                 <div className="relative w-full md:w-auto bg-white/5 border border-white/10 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
                                     <div className="absolute -top-3 -left-2 md:-top-4 md:-left-4 z-20 flex items-center justify-center transform -rotate-12 transition-transform hover:scale-110 hover:-rotate-6 cursor-pointer">
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-md bg-red-500 opacity-60"></span>
@@ -220,7 +323,7 @@
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">Verified on</span>
                                     <a href="https://dime.blogabet.com" target="_blank" className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black hover:text-green-400 transition-colors">Blogabet</a>
                                 </div>
-                                {/* --- END UPDATED VERIFIED BUTTON --- */}
+                                {/* --- END VERIFIED BUTTON --- */}
 
                                 <div className="w-full md:w-auto bg-dimeGreen/20 border border-dimeGreen/40 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
                                     <i className="fa-solid fa-chart-line text-green-500 mr-2 text-xl"></i> 
