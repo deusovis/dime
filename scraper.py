@@ -11,11 +11,11 @@ def scrape_blogabet():
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
     
-    # Default stats
+    # Static stats as a safe fallback
     final_data = {"stats": {"roi": "+18.4%", "units": "+32.1"}, "picks": []}
 
     try:
-        # 1. GET ROI AND UNITS FROM HEADER
+        # 1. GET STATS FROM HEADER
         try:
             main_res = scraper.get(main_url, cookies=cookies)
             main_soup = BeautifulSoup(main_res.text, 'html.parser')
@@ -28,6 +28,8 @@ def scrape_blogabet():
         # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
+        
+        # Target the 10 pick entries
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -56,13 +58,20 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- LITERAL DATE FETCH ---
-                # We find any div/span that looks like a date container and grab ALL text
+                # --- THE ULTIMATE DATE FIX ---
+                # We find ANY element inside the block that contains "Mar", "Apr", etc.
                 date_text = "-"
-                date_container = block.find(class_=re.compile(r'date|time|feed-date'))
+                # Search for the specific date container first
+                date_container = block.select_one('.feed-date, .date, .time')
                 if date_container:
-                    # Join all parts like ['21', 'Mar', '2026'] with spaces
-                    date_text = " ".join(date_container.get_text(" ", strip=True).split())
+                    date_text = " ".join(date_container.stripped_strings)
+                
+                # If that fails, scan the whole block for "Day Month Year" (e.g., 21 Mar 2026)
+                if date_text == "-":
+                    raw_text = block.get_text(" ")
+                    match = re.search(r'(\d{1,2}\s+[A-Za-z]{3}\s+\d{4})', raw_text)
+                    if match:
+                        date_text = match.group(1)
 
                 # ODDS
                 all_text = block.get_text(" ")
@@ -70,35 +79,35 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- COLOR-BASED RESULT DETECTION ---
+                # --- THE ULTIMATE RESULT FIX (Red L / Green W) ---
                 result = "-"
-                # Check for RED (Loss) or GREEN (Win) labels specifically
-                # This is the ONLY way to ignore handicaps like -5.5
-                is_red = block.find(class_=re.compile(r'label-danger|text-red|lost|loss'))
-                is_green = block.find(class_=re.compile(r'label-success|text-green|win|won'))
+                # Check for the actual Red/Green labels Blogabet uses
+                is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss'))
+                is_won = block.find(class_=re.compile(r'label-success|text-green|win|won'))
                 
-                if is_red:
+                if is_lost:
                     result = "L"
-                elif is_green:
+                elif is_won:
                     result = "W"
                 else:
-                    # Last resort: check bottom-area text only
+                    # Final fallback: keyword scan
                     upper_text = all_text.upper()
                     if "WON" in upper_text or "WIN" in upper_text: result = "W"
                     elif "LOST" in upper_text or "LOSS" in upper_text: result = "L"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
-                    "date": date_text, 
+                    "date": date_text.strip(), 
                     "pick": pick_title, 
                     "odds": odds_val, 
                     "result": result
                 })
             except: continue
         
+        # SAVE
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Scrape successful. Results and Dates fixed.")
+        print(f"Scrape successful. Saved {len(final_data['picks'])} picks.")
 
     except Exception as e:
         print(f"Error: {e}")
