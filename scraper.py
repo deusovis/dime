@@ -24,36 +24,44 @@ def scrape_blogabet():
             if len(new_picks) >= 5: break
             
             try:
-                title_elem = block.find('h3')
-                pick_title = title_elem.get_text(strip=True) if title_elem else "Basketball Pick"
+                # 1. MATCHUP vs ACTUAL PICK
+                # Matchup is often "Team A - Team B"
+                matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
                 
+                # Selection is the specific handicap/pick (e.g., "Fribourg -34.5")
+                selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
+                selection = selection_elem.get_text(strip=True) if selection_elem else ""
+                
+                # Use the specific selection (handicap) if found, otherwise matchup
+                pick_title = selection if selection else matchup
+                
+                # MONEY LINE EXCEPTION
+                if "MONEY LINE" in pick_title.upper() or "MONEY LINE" in matchup.upper():
+                    # If the matchup contains the team and it's a Money Line bet
+                    # Clean up the name to "Team Money Line"
+                    base_name = selection.replace("Money Line", "").replace("ML", "").strip()
+                    if not base_name: # Fallback to the first team in the matchup
+                        base_name = matchup.split('-')[0].split('vs')[0].strip()
+                    pick_title = f"{base_name} Money Line"
+
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- SMART DATE DETECTIVE ---
-                date_text = ""
-                date_container = block.find(class_=re.compile(r'feed-date|date|time'))
-                
+                # 2. DATE (Smarter Span Joining)
+                date_container = block.find(class_=re.compile(r'feed-date|date'))
                 if date_container:
-                    # Blogabet often splits date into <span class="day">, <span class="month">, etc.
-                    # We join all child spans with a space to get "21 Mar 2026"
                     spans = date_container.find_all('span')
-                    if spans:
-                        date_text = " ".join([s.get_text(strip=True) for s in spans])
-                    else:
-                        date_text = date_container.get_text(strip=True)
-                
-                # If still empty, look for any text matching a date pattern (e.g., "21 Mar")
-                if not date_text:
-                    match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', block.get_text(" "))
-                    date_text = match.group(0) if match else str(datetime.date.today())
-                
-                # --- ODDS & RESULT ---
+                    date_text = " ".join([s.get_text(strip=True) for s in spans]) if spans else date_container.get_text(strip=True)
+                else:
+                    date_text = str(datetime.date.today())
+
+                # 3. ODDS
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
+                # 4. RESULT
                 result = "-"
                 if block.find(class_=re.compile(r'label-success|text-green|win|won')):
                     result = "W"
