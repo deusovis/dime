@@ -39,18 +39,16 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING (Keep (W) but destroy empty parens)
+                # CLEANING
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
                     clean_text = re.sub(term, '', clean_text)
                 
-                # Sweep up the empty parentheses left behind
                 clean_text = re.sub(r'\(\s*\)', '', clean_text)
                 
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
                     team_name = team_name.strip(" -")
-                    # Clean up any double spaces
                     team_name = re.sub(r'\s+', ' ', team_name).strip()
                     
                     if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
@@ -61,7 +59,7 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- BULLETPROOF COUNTRY DETECTION ---
+                # COUNTRY
                 country_name = "World"
                 for text_elem in block.find_all(['small', 'span', 'div', 'a']):
                     raw_str = text_elem.get_text(" ", strip=True)
@@ -71,7 +69,7 @@ def scrape_blogabet():
                             country_name = parts[1]
                             break
 
-                # --- THE ULTIMATE DATE FIX ---
+                # DATE
                 date_text = "-"
                 date_container = block.select_one('.feed-date, .date, .time')
                 if date_container:
@@ -89,29 +87,26 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- FIXED RESULT DETECTION ---
-                result = "-"
+                # --- BULLETPROOF RESULT DETECTION ---
+                result = "PENDING"
                 
-                # 1. Check for exact class boundaries (prevents matching 'market-winner' or 'window')
-                is_lost = block.find(class_=re.compile(r'\b(label-danger|text-red|status-lost)\b'))
-                is_won = block.find(class_=re.compile(r'\b(label-success|text-green|status-won)\b'))
+                # Target exact label badges only (ignores 'text-green' verified checkmarks)
+                labels = block.find_all(class_=re.compile(r'\b(label-success|label-danger|label-warning)\b'))
+                for label in labels:
+                    lbl_text = label.get_text(strip=True).upper()
+                    if lbl_text in ["WIN", "WON", "W"]:
+                        result = "W"
+                    elif lbl_text in ["LOSS", "LOST", "L"]:
+                        result = "L"
+                    elif lbl_text in ["VOID", "DRAW", "REFUND", "HALF WON", "HALF LOST"]:
+                        result = lbl_text
                 
-                if is_lost:
-                    result = "L"
-                elif is_won:
-                    result = "W"
-                else:
-                    # 2. Fallback using exact word boundaries \b to avoid matching "Winner"
-                    upper_text = all_text.upper()
-                    
-                    if re.search(r'\b(WON|WIN)\b', upper_text): 
+                # Fallback: strictly check profit/loss numbers (+ units or - units)
+                if result == "PENDING":
+                    if re.search(r'\+\d+\.\d{2}\b', all_text):
                         result = "W"
-                    elif re.search(r'\b(LOST|LOSS|LOSE)\b', upper_text): 
+                    elif re.search(r'-\d+\.\d{2}\b', all_text):
                         result = "L"
-                    elif re.search(r'-\d+\.\d{2}\b', all_text): 
-                        result = "L"
-                    elif re.search(r'\+\d+\.\d{2}\b', all_text): 
-                        result = "W"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
@@ -125,7 +120,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Removed empty parentheses while keeping (W) and fixed win/loss logic.")
+        print("Success: Bulletproof result logic applied.")
 
     except Exception as e:
         print(f"Error: {e}")
