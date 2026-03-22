@@ -72,10 +72,10 @@
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
 
-            // Comprehensive Flag Generator Logic
+            // Comprehensive Flag Generator Logic with Hover Tooltips
             const getFlagIcon = (countryName) => {
                 if (!countryName || countryName === "World") {
-                    return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
+                    return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2 cursor-help" title="World / International"></i>;
                 }
                 
                 const countryMap = {
@@ -119,27 +119,10 @@
                 const code = countryMap[countryName.toUpperCase().trim()];
                 
                 if (code) {
-                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} className="inline-block mr-2 shadow-sm rounded-sm" />;
+                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} title={countryName} className="inline-block mr-2 shadow-sm rounded-sm cursor-help" />;
                 }
                 
-                return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
-            };
-
-            // Unit Calculation Logic for the header
-            const calculateTrend = (picks) => {
-                let units = 0;
-                picks.forEach(pick => {
-                    const res = (pick.result || '').toUpperCase();
-                    const odds = parseFloat(pick.odds);
-                    if (!isNaN(odds)) {
-                        if (res === 'W' || res === 'WON' || res === 'WIN') {
-                            units += (odds - 1); // Profit from 1 unit flat stake
-                        } else if (res === 'L' || res === 'LOST' || res === 'LOSE' || res === 'LOSS') {
-                            units -= 1; // Loss of 1 unit flat stake
-                        }
-                    }
-                });
-                return units;
+                return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2 cursor-help" title={countryName}></i>;
             };
 
             React.useEffect(() => {
@@ -155,8 +138,6 @@
                     })
                     .catch(() => setIsLoading(false));
             }, []);
-
-            const trendUnits = calculateTrend(data.picks);
 
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col">
@@ -211,14 +192,8 @@
                             <div className="bg-gradient-to-r from-dimeGreen/30 to-transparent px-6 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
                                 <h2 className="text-base md:text-2xl font-black uppercase text-white">Results</h2>
                                 
-                                {/* UPDATED: Stacked layout with directly colored values and no parentheses */}
-                                <div className="hidden md:flex flex-col items-end font-black tracking-widest uppercase">
-                                    <span className="text-dimeAccent text-sm">LAST 10 PICKS</span>
-                                    {data.picks.length > 0 && (
-                                        <span className={`text-[11px] mt-1 opacity-90 tracking-widest ${trendUnits > 0 ? 'text-green-500' : trendUnits < 0 ? 'text-red-500' : 'text-gray-400'}`}>
-                                            {trendUnits > 0 ? '+' : ''}{trendUnits.toFixed(2)} u
-                                        </span>
-                                    )}
+                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest uppercase">
+                                    LAST 10 PICKS
                                 </div>
                             </div>
                             
