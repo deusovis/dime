@@ -1,76 +1,96 @@
 import json
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 import datetime
 
 def scrape_blogabet():
-    print("Connecting to Blogabet hidden data endpoint...")
-    
-    # 1. Target the exact backend URL where the picks are actually generated
+    print("Connecting to Blogabet using Cloudscraper...")
     url = "https://dime.blogabet.com/blog/picks"
     
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "X-Requested-With": "XMLHttpRequest" # Tells the server we are making a valid AJAX request
-    }
+    scraper = cloudscraper.create_scraper(browser={
+        'browser': 'chrome',
+        'platform': 'windows',
+        'desktop': True
+    })
     
-    # 2. Inject the age verification cookie so Blogabet doesn't block us with the 18+ popup
-    cookies = {
-        "ageVerified": "1"
-    }
+    headers = {"X-Requested-With": "XMLHttpRequest"}
+    cookies = {"ageVerified": "1"}
     
     try:
-        response = requests.get(url, headers=headers, cookies=cookies)
-        response.raise_for_status()
+        response = scraper.get(url, headers=headers, cookies=cookies)
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Find all individual pick blocks
-        pick_blocks = soup.find_all('li', class_='feed-pick')
-        
+        pick_blocks = soup.find_all(['li', 'div'], class_='feed-pick')
         new_picks = []
         
-        # Grab only the first 5 picks
         for index, block in enumerate(pick_blocks[:5]):
             try:
-                # Extract the Date
-                date_elem = block.find('div', class_='feed-date')
+                # 1. Date
+                date_elem = block.find(class_='feed-date')
                 date_text = date_elem.text.strip() if date_elem else str(datetime.date.today())
                 
-                # Extract the Pick Name (Team/Selection)
+                # 2. Pick Title
                 title_elem = block.find('h3')
                 pick_title = title_elem.text.strip() if title_elem else "Basketball Pick"
                 
-                # Extract the Odds
-                odds_elem = block.find('div', class_='pick-odds')
-                # Blogabet sometimes puts the odds inside a bold tag inside the pick-odds div
-                odds_val = odds_elem.find('strong').text.strip() if odds_elem and odds_elem.find('strong') else (odds_elem.text.strip() if odds_elem else "-")
-                
-                # Determine Result (W, L, or Pending) based on the CSS class
+                # 3. Odds - Aggressive Search
+                odds_val = "-"
+                odds_elem = block.find(class_='pick-odds')
+                if odds_elem and odds_elem.text.strip():
+                    odds_val = odds_elem.text.replace('@', '').strip()
+                else:
+                    # Look everywhere in the block for the '@' symbol
+                    for el in block.find_all(['span', 'div', 'strong', 'button', 'a']):
+                        if el.text and '@' in el.text and len(el.text) < 15:
+                            odds_val = el.text.replace('@', '').strip()
+                            break
+                            
+                # Clean up odds formatting
+                odds_val = odds_val.split('\n')[0].strip()
+
+                # 4. Result - Aggressive Search
                 result = "-"
-                block_classes = block.get('class', [])
+                # Check for Bootstrap label classes
+                labels = block.find_all(class_='label')
+                for label in labels:
+                    lbl_text = label.text.strip().upper()
+                    if lbl_text in ['WIN', 'WON', 'HALF-WIN', 'HALF WIN']:
+                        result = "W"
+                    elif lbl_text in ['LOSE', 'LOST', 'HALF-LOSE', 'HALF LOSE']:
+                        result = "L"
+                    elif lbl_text in ['VOID', 'DRAW', 'REFUND', 'PUSH']:
+                        result = "V"
                 
-                # Check for win/loss classes (Blogabet uses 'win', 'lose', 'half-win', 'half-lose', 'void', 'draw')
-                if 'win' in block_classes or 'half-win' in block_classes:
-                    result = "W"
-                elif 'lose' in block_classes or 'half-lose' in block_classes:
-                    result = "L"
-                elif 'void' in block_classes or 'draw' in block_classes:
-                    result = "V"
+                # If still nothing, check raw HTML for color classes
+                if result == "-":
+                    block_html = str(block).lower()
+                    if 'label-success' in block_html or 'bg-success' in block_html or 'won' in block_html:
+                        result = "W"
+                    elif 'label-danger' in block_html or 'bg-danger' in block_html or 'lost' in block_html:
+                        result = "L"
+                    elif 'label-default' in block_html or 'bg-warning' in block_html:
+                        result = "V"
                     
                 new_picks.append({
                     "id": index + 1,
-                    "date": date_text[:10], # Format to YYYY-MM-DD
+                    "date": date_text[:10],
                     "pick": pick_title,
                     "odds": odds_val,
                     "result": result
                 })
                 
+                # Debugging log: Prints the raw HTML of the first pick to help us if it fails again
+                if index == 0:
+                    print("--- DEBUG: HTML of First Pick ---")
+                    print(str(block)[:1000])
+                    print("---------------------------------")
+                
             except Exception as e:
-                print(f"Skipping a pick due to parsing error: {e}")
+                print(f"Parsing error on individual pick: {e}")
                 continue
         
         if not new_picks:
-            print("Could not find any picks on the backend URL. Check if Blogabet changed their layout.")
+            print("Failed to parse picks. Reverting to fallback data.")
             new_picks = [
                 {"id": 1, "date": str(datetime.date.today()), "pick": "Awaiting Live Scraper...", "odds": "-", "result": "-"}
             ]
@@ -78,7 +98,7 @@ def scrape_blogabet():
         with open('picks.json', 'w') as f:
             json.dump(new_picks, f, indent=4)
             
-        print(f"Successfully saved {len(new_picks)} picks to picks.json")
+        print(f"Successfully scraped and saved {len(new_picks)} picks.")
         
     except Exception as e:
         print(f"Critical Scraper Error: {e}")
