@@ -24,30 +24,27 @@ def scrape_blogabet():
             if len(new_picks) >= 5: break
             
             try:
-                # 1. MATCHUP vs ACTUAL PICK
-                # Matchup is often "Team A - Team B"
+                # 1. CAPTURE RAW SELECTION
                 matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
-                
-                # Selection is the specific handicap/pick (e.g., "Fribourg -34.5")
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
-                selection = selection_elem.get_text(strip=True) if selection_elem else ""
+                selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # Use the specific selection (handicap) if found, otherwise matchup
-                pick_title = selection if selection else matchup
+                # 2. APPLY CLEANING RULES
+                # Rule A: Convert Money Line to ML
+                pick_title = re.sub(r'(?i)Money Line', 'ML', selection)
                 
-                # MONEY LINE EXCEPTION
-                if "MONEY LINE" in pick_title.upper() or "MONEY LINE" in matchup.upper():
-                    # If the matchup contains the team and it's a Money Line bet
-                    # Clean up the name to "Team Money Line"
-                    base_name = selection.replace("Money Line", "").replace("ML", "").strip()
-                    if not base_name: # Fallback to the first team in the matchup
-                        base_name = matchup.split('-')[0].split('vs')[0].strip()
-                    pick_title = f"{base_name} Money Line"
+                # Rule B: Remove "Spread", "Game Lines", "Odds", and "Handicap" (case insensitive)
+                unwanted_terms = [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap']
+                for term in unwanted_terms:
+                    pick_title = re.sub(term, '', pick_title)
+                
+                # Rule C: Clean up extra spaces left behind by deletions
+                pick_title = re.sub(r'\s+', ' ', pick_title).strip()
 
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # 2. DATE (Smarter Span Joining)
+                # 3. DATE
                 date_container = block.find(class_=re.compile(r'feed-date|date'))
                 if date_container:
                     spans = date_container.find_all('span')
@@ -55,13 +52,13 @@ def scrape_blogabet():
                 else:
                     date_text = str(datetime.date.today())
 
-                # 3. ODDS
+                # 4. ODDS
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # 4. RESULT
+                # 5. RESULT
                 result = "-"
                 if block.find(class_=re.compile(r'label-success|text-green|win|won')):
                     result = "W"
@@ -86,7 +83,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(new_picks, f, indent=4)
-        print(f"Successfully updated picks.json with {len(new_picks)} picks.")
+        print(f"Successfully updated picks.json with {len(new_picks)} clean picks.")
         
     except Exception as e:
         print(f"Critical Scraper Error: {e}")
