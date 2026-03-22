@@ -11,6 +11,7 @@ def scrape_blogabet():
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
     
+    # Default stats
     final_data = {"stats": {"roi": "+18.4%", "units": "+32.1"}, "picks": []}
 
     try:
@@ -55,12 +56,12 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- LITERAL DATE FETCH (21 Mar 2026) ---
-                # Search specifically for the text within the date container
+                # --- LITERAL DATE FETCH ---
+                # We find any div/span that looks like a date container and grab ALL text
                 date_text = "-"
-                date_container = block.find(class_=re.compile(r'feed-date|date|time'))
+                date_container = block.find(class_=re.compile(r'date|time|feed-date'))
                 if date_container:
-                    # Collect all text strings (like 21, Mar, 2026) and join them
+                    # Join all parts like ['21', 'Mar', '2026'] with spaces
                     date_text = " ".join(date_container.get_text(" ", strip=True).split())
 
                 # ODDS
@@ -69,20 +70,19 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- RESULT DETECTION (COLOR-BASED ONLY) ---
+                # --- COLOR-BASED RESULT DETECTION ---
                 result = "-"
+                # Check for RED (Loss) or GREEN (Win) labels specifically
+                # This is the ONLY way to ignore handicaps like -5.5
+                is_red = block.find(class_=re.compile(r'label-danger|text-red|lost|loss'))
+                is_green = block.find(class_=re.compile(r'label-success|text-green|win|won'))
                 
-                # We check for RED labels (Loss) and GREEN labels (Win)
-                # This prevents handicaps from being mistaken for results
-                is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss'))
-                is_won = block.find(class_=re.compile(r'label-success|text-green|win|won'))
-                
-                if is_lost:
+                if is_red:
                     result = "L"
-                elif is_won:
+                elif is_green:
                     result = "W"
                 else:
-                    # Keyword check only if color labels are missing
+                    # Last resort: check bottom-area text only
                     upper_text = all_text.upper()
                     if "WON" in upper_text or "WIN" in upper_text: result = "W"
                     elif "LOST" in upper_text or "LOSS" in upper_text: result = "L"
@@ -98,7 +98,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Date and Results are perfectly aligned.")
+        print("Scrape successful. Results and Dates fixed.")
 
     except Exception as e:
         print(f"Error: {e}")
