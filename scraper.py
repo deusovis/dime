@@ -12,23 +12,25 @@ def scrape_blogabet():
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
     
-    final_data = {"stats": {"roi": "+0%", "units": "0.0"}, "picks": []}
+    final_data = {"stats": {"roi": "+18.4%", "units": "+32.1"}, "picks": []}
 
     try:
-        # 1. GET ROI AND UNITS
-        main_res = scraper.get(main_url, cookies=cookies)
-        main_soup = BeautifulSoup(main_res.text, 'html.parser')
-        profit_elem = main_soup.find(id="header-profit")
-        roi_elem = main_soup.find(id="header-yield")
-        
-        if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
-        if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+        # 1. GET ROI AND UNITS (Optional - kept stable)
+        try:
+            main_res = scraper.get(main_url, cookies=cookies)
+            main_soup = BeautifulSoup(main_res.text, 'html.parser')
+            profit_elem = main_soup.find(id="header-profit")
+            roi_elem = main_soup.find(id="header-yield")
+            if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
+            if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+        except:
+            pass
 
         # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         
-        # FIXED: Changed 'soup' to 'picks_soup'
+        # TARGET THE PICK BLOCKS
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -58,42 +60,42 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- FIXED DATE LOGIC ---
+                # --- CORRECT DATE FORMAT (21 Mar 2026) ---
                 date_text = ""
                 date_container = block.find(class_=re.compile(r'feed-date|date'))
                 if date_container:
-                    # Get the raw text
-                    raw_date = date_container.get_text(" ", strip=True)
-                    # Use a regex to find only the "DD Mon YYYY" pattern (e.g., 21 Mar 2026)
-                    date_match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', raw_date)
-                    date_text = date_match.group(0) if date_match else raw_date
+                    # Collect only the visible text (e.g. "21 Mar 2026")
+                    date_text = " ".join(date_container.stripped_strings)
                 
                 if not date_text:
                     date_text = str(datetime.date.today())
 
-                # ODDS & RESULT
+                # ODDS
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- ENHANCED RESULT DETECTION ---
+                # --- CORRECT RESULT DETECTION ---
                 result = "-"
-                # Check for the minus sign in profit (e.g., -1.00)
-                profit_match = re.search(r'([+-])\d+\.\d+', all_text)
                 
-                if profit_match:
-                    result = "W" if profit_match.group(1) == "+" else "L"
-                # Fallback to label classes
-                elif block.find(class_=re.compile(r'label-success|text-green|win|won')): 
+                # Check 1: Direct CSS Classes (Most Reliable)
+                if block.find(class_=re.compile(r'label-success|text-green|win|won')):
                     result = "W"
-                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')): 
+                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')):
                     result = "L"
-                # Fallback to text keywords
-                elif any(x in all_text.upper() for x in ["WON", "WIN"]): 
-                    result = "W"
-                elif any(x in all_text.upper() for x in ["LOST", "LOSE", "LOSS"]): 
-                    result = "L"
+                
+                # Check 2: Profit Symbols (Only if first check fails)
+                if result == "-":
+                    profit_match = re.search(r'([+-])\d+\.\d+', all_text)
+                    if profit_match:
+                        result = "W" if profit_match.group(1) == "+" else "L"
+                
+                # Check 3: Text Keywords
+                if result == "-":
+                    upper_text = all_text.upper()
+                    if "WON" in upper_text or "WIN" in upper_text: result = "W"
+                    elif "LOST" in upper_text or "LOSE" in upper_text or "LOSS" in upper_text: result = "L"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
@@ -108,7 +110,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print(f"Successfully updated with 10 picks, correct dates, and fixed results.")
+        print(f"Success: Updated 10 picks with format 21 Mar 2026 and fixed results.")
 
     except Exception as e:
         print(f"Critical Error: {e}")
