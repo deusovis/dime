@@ -125,7 +125,7 @@
                 return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
             };
 
-            // NEW: Unit Calculation Logic for the header
+            // Unit Calculation Logic for the header
             const calculateTrend = (picks) => {
                 let units = 0;
                 picks.forEach(pick => {
@@ -210,11 +210,17 @@
                         <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden fade-in shadow-2xl">
                             <div className="bg-gradient-to-r from-dimeGreen/30 to-transparent px-6 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
                                 <h2 className="text-base md:text-2xl font-black uppercase text-white">Results</h2>
-                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest uppercase flex items-center">
-                                    LAST 10 PICKS 
+                                
+                                {/* UPDATED: Stacked layout with white parentheses and colored values */}
+                                <div className="hidden md:flex flex-col items-end font-black tracking-widest uppercase">
+                                    <span className="text-dimeAccent text-sm">LAST 10 PICKS</span>
                                     {data.picks.length > 0 && (
-                                        <span className={`ml-1 ${trendUnits > 0 ? 'text-green-500' : trendUnits < 0 ? 'text-red-500' : 'text-gray-400'}`}>
-                                            ({trendUnits > 0 ? '+' : ''}{trendUnits.toFixed(2)} u)
+                                        <span className="text-white text-[11px] mt-1 opacity-90 tracking-widest">
+                                            (
+                                            <span className={trendUnits > 0 ? 'text-green-500' : trendUnits < 0 ? 'text-red-500' : 'text-gray-400'}>
+                                                {trendUnits > 0 ? '+' : ''}{trendUnits.toFixed(2)} u
+                                            </span>
+                                            )
                                         </span>
                                     )}
                                 </div>
