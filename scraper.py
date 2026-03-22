@@ -8,6 +8,7 @@ def scrape_blogabet():
     print("Connecting to Blogabet...")
     url = "https://dime.blogabet.com/blog/picks"
     
+    # Create a scraper that bypasses bot detection
     scraper = cloudscraper.create_scraper(browser={'browser': 'chrome','platform': 'windows','desktop': True})
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
@@ -15,11 +16,14 @@ def scrape_blogabet():
     try:
         response = scraper.get(url, headers=headers, cookies=cookies)
         soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Grab all list items that represent picks
         pick_blocks = soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         new_picks = []
         seen_titles = set()
         
+        # 30 LIMIT CHECK
         for block in pick_blocks:
             if len(new_picks) >= 30: break 
             
@@ -43,22 +47,22 @@ def scrape_blogabet():
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     # Strip "Money Line" and "ML" out to get just the team name
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
-                    # If cleaning made it empty, fallback to the first team in the matchup
                     if not team_name:
                         team_name = matchup.split('-')[0].split('vs')[0].strip()
-                    # FINAL FORMAT: Team Name ML
                     pick_title = f"{team_name} ML"
                 else:
-                    # Keep as Team Name + Handicap (e.g., Fribourg -34.5)
                     pick_title = clean_text.strip()
 
-                # Deduplicate based on final formatted title
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
                 # 4. DATE, ODDS, & RESULT
                 date_container = block.find(class_=re.compile(r'feed-date|date'))
-                date_text = " ".join([s.get_text(strip=True) for s in date_container.find_all('span')]) if date_container and date_container.find_all('span') else (date_container.get_text(strip=True) if date_container else str(datetime.date.today()))
+                if date_container:
+                    spans = date_container.find_all('span')
+                    date_text = " ".join([s.get_text(strip=True) for s in spans]) if spans else date_container.get_text(strip=True)
+                else:
+                    date_text = str(datetime.date.today())
 
                 all_text = block.get_text(" ")
                 odds_val = "-"
@@ -87,9 +91,10 @@ def scrape_blogabet():
                 print(f"Skipping pick due to error: {e}")
                 continue
         
+        # Save the 30 picks to the JSON file
         with open('picks.json', 'w') as f:
             json.dump(new_picks, f, indent=4)
-        print(f"Successfully saved {len(new_picks)} picks in Team + ML format.")
+        print(f"Successfully saved {len(new_picks)} picks to picks.json")
         
     except Exception as e:
         print(f"Critical Scraper Error: {e}")
