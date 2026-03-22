@@ -1,130 +1,273 @@
-import json
-import cloudscraper
-from bs4 import BeautifulSoup
-import re
-
-def scrape_blogabet():
-    main_url = "https://dime.blogabet.com"
-    picks_url = "https://dime.blogabet.com/blog/picks"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>DIME | Professional Basketball Analysis & Tips</title>
     
-    scraper = cloudscraper.create_scraper(browser={'browser': 'chrome','platform': 'windows','desktop': True})
-    headers = {"X-Requested-With": "XMLHttpRequest"}
-    cookies = {"ageVerified": "1"}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    final_data = {"stats": {"roi": "+18.4%", "units": "+32.1"}, "picks": []}
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    try:
-        # 1. GET ROI AND UNITS FROM HEADER
-        try:
-            main_res = scraper.get(main_url, cookies=cookies)
-            main_soup = BeautifulSoup(main_res.text, 'html.parser')
-            profit_elem = main_soup.find(id="header-profit")
-            roi_elem = main_soup.find(id="header-yield")
-            if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
-            if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
-        except: pass
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkSlate: '#0a0f14',
+                        dimeGreen: '#3e6b4d', 
+                        dimeGold: '#d4af37',
+                        dimeAccent: '#DB9C2A', 
+                    }
+                }
+            }
+        }
+    </script>
 
-        # 2. GET 10 PICKS
-        picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
-        picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
-        pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
-        
-        seen_titles = set()
-        for block in pick_blocks:
-            if len(final_data["picks"]) >= 10: break 
-            
-            try:
-                # MATCHUP & SELECTION
-                matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
-                selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
-                selection = selection_elem.get_text(strip=True) if selection_elem else matchup
+    <style>
+        body {
+            background: radial-gradient(circle at top left, #1a2e22 0%, #05070a 100%);
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(62, 107, 77, 0.3);
+        }
+
+        .btn-telegram {
+            background: linear-gradient(135deg, #2481cc, #1d6fa5);
+            box-shadow: 0 4px 20px rgba(36, 129, 204, 0.4);
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2));
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const App = () => {
+            const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
+            const [isLoading, setIsLoading] = React.useState(true);
+
+            // Comprehensive Flag Generator Logic
+            const getFlagIcon = (countryName) => {
+                if (!countryName || countryName === "World") {
+                    return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
+                }
                 
-                # CLEANING (Keep (W) but destroy empty parens)
-                clean_text = re.search(r'[^@]*', selection).group(0)
-                for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
-                    clean_text = re.sub(term, '', clean_text)
+                const countryMap = {
+                    'AFGHANISTAN': 'af', 'ALBANIA': 'al', 'ALGERIA': 'dz', 'ANDORRA': 'ad', 'ANGOLA': 'ao',
+                    'ARGENTINA': 'ar', 'ARMENIA': 'am', 'AUSTRALIA': 'au', 'AUSTRIA': 'at', 'AZERBAIJAN': 'az',
+                    'BAHAMAS': 'bs', 'BAHRAIN': 'bh', 'BANGLADESH': 'bd', 'BARBADOS': 'bb', 'BELARUS': 'by',
+                    'BELGIUM': 'be', 'BELIZE': 'bz', 'BENIN': 'bj', 'BHUTAN': 'bt', 'BOLIVIA': 'bo',
+                    'BOSNIA AND HERZEGOVINA': 'ba', 'BOSNIA': 'ba', 'BOTSWANA': 'bw', 'BRAZIL': 'br', 'BULGARIA': 'bg',
+                    'BURKINA FASO': 'bf', 'BURUNDI': 'bi', 'CABO VERDE': 'cv', 'CAMBODIA': 'kh', 'CAMEROON': 'cm',
+                    'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
+                    'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
+                    'CYPRUS': 'cy', 'CZECH REPUBLIC': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
+                    'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
+                    'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
+                    'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
+                    'GEORGIA': 'ge', 'GERMANY': 'de', 'GHANA': 'gh', 'GREECE': 'gr', 'GUATEMALA': 'gt',
+                    'GUINEA': 'gn', 'GUYANA': 'gy', 'HAITI': 'ht', 'HONDURAS': 'hn', 'HUNGARY': 'hu',
+                    'ICELAND': 'is', 'INDIA': 'in', 'INDONESIA': 'id', 'IRAN': 'ir', 'IRAQ': 'iq',
+                    'IRELAND': 'ie', 'ISRAEL': 'il', 'ITALY': 'it', 'JAMAICA': 'jm', 'JAPAN': 'jp',
+                    'JORDAN': 'jo', 'KAZAKHSTAN': 'kz', 'KENYA': 'ke', 'KOSOVO': 'xk', 'KUWAIT': 'kw',
+                    'KYRGYZSTAN': 'kg', 'LAOS': 'la', 'LATVIA': 'lv', 'LEBANON': 'lb', 'LIBERIA': 'lr',
+                    'LIBYA': 'ly', 'LIECHTENSTEIN': 'li', 'LITHUANIA': 'lt', 'LUXEMBOURG': 'lu', 'MADAGASCAR': 'mg',
+                    'MALAWI': 'mw', 'MALAYSIA': 'my', 'MALDIVES': 'mv', 'MALI': 'ml', 'MALTA': 'mt',
+                    'MEXICO': 'mx', 'MOLDOVA': 'md', 'MONACO': 'mc', 'MONGOLIA': 'mn', 'MONTENEGRO': 'me',
+                    'MOROCCO': 'ma', 'MOZAMBIQUE': 'mz', 'MYANMAR': 'mm', 'NAMIBIA': 'na', 'NEPAL': 'np',
+                    'NETHERLANDS': 'nl', 'NEW ZEALAND': 'nz', 'NICARAGUA': 'ni', 'NIGER': 'ne', 'NIGERIA': 'ng',
+                    'NORTH MACEDONIA': 'mk', 'MACEDONIA': 'mk', 'NORWAY': 'no', 'OMAN': 'om', 'PAKISTAN': 'pk',
+                    'PANAMA': 'pa', 'PARAGUAY': 'py', 'PERU': 'pe', 'PHILIPPINES': 'ph', 'POLAND': 'pl',
+                    'PORTUGAL': 'pt', 'PUERTO RICO': 'pr', 'QATAR': 'qa', 'ROMANIA': 'ro', 'RUSSIA': 'ru', 'RWANDA': 'rw',
+                    'SAUDI ARABIA': 'sa', 'SENEGAL': 'sn', 'SERBIA': 'rs', 'SINGAPORE': 'sg', 'SLOVAKIA': 'sk',
+                    'SLOVENIA': 'si', 'SOMALIA': 'so', 'SOUTH AFRICA': 'za', 'SOUTH KOREA': 'kr', 'REPUBLIC OF KOREA': 'kr',
+                    'KOREA REPUBLIC': 'kr', 'SPAIN': 'es', 'SRI LANKA': 'lk', 'SUDAN': 'sd', 'SWEDEN': 'se',
+                    'SWITZERLAND': 'ch', 'SYRIA': 'sy', 'TAIWAN': 'tw', 'TAJIKISTAN': 'tj', 'TANZANIA': 'tz',
+                    'THAILAND': 'th', 'TUNISIA': 'tn', 'TURKEY': 'tr', 'TÜRKİYE': 'tr', 'TURKMENISTAN': 'tm',
+                    'UGANDA': 'ug', 'UKRAINE': 'ua', 'UNITED ARAB EMIRATES': 'ae', 'UAE': 'ae', 'UNITED KINGDOM': 'gb',
+                    'UK': 'gb', 'USA': 'us', 'UNITED STATES': 'us', 'URUGUAY': 'uy', 'UZBEKISTAN': 'uz',
+                    'VENEZUELA': 've', 'VIETNAM': 'vn', 'YEMEN': 'ye', 'ZAMBIA': 'zm', 'ZIMBABWE': 'zw',
+                    'EUROPE': 'eu', 'INTERNATIONAL': 'un', 'WORLD': 'un'
+                };
+
+                const code = countryMap[countryName.toUpperCase().trim()];
                 
-                # Sweep up the empty parentheses left behind
-                clean_text = re.sub(r'\(\s*\)', '', clean_text)
+                if (code) {
+                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} className="inline-block mr-2 shadow-sm rounded-sm" />;
+                }
                 
-                if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
-                    team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
-                    team_name = team_name.strip(" -")
-                    # Clean up any double spaces
-                    team_name = re.sub(r'\s+', ' ', team_name).strip()
-                    
-                    if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
-                    pick_title = f"{team_name} ML"
-                else:
-                    pick_title = re.sub(r'\s+', ' ', clean_text).strip()
+                return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
+            };
 
-                if pick_title in seen_titles: continue
-                seen_titles.add(pick_title)
+            React.useEffect(() => {
+                fetch('picks.json?v=' + new Date().getTime())
+                    .then(res => res.json())
+                    .then(json => {
+                        if (json.stats && json.picks) {
+                            setData(json);
+                        } else {
+                            setData({ stats: { roi: '+18.4%', units: '+32.1' }, picks: Array.isArray(json) ? json : [] });
+                        }
+                        setIsLoading(false);
+                    })
+                    .catch(() => setIsLoading(false));
+            }, []);
 
-                # --- BULLETPROOF COUNTRY DETECTION ---
-                country_name = "World"
-                for text_elem in block.find_all(['small', 'span', 'div', 'a']):
-                    raw_str = text_elem.get_text(" ", strip=True)
-                    if "Basketball" in raw_str and "/" in raw_str:
-                        parts = [p.strip() for p in raw_str.split('/')]
-                        if len(parts) >= 2 and parts[0].upper() == "BASKETBALL":
-                            country_name = parts[1]
-                            break
+            return (
+                <div className="relative overflow-x-hidden min-h-screen flex flex-col">
+                    <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto fade-in">
+                        <div className="flex-1 flex justify-start -mt-2 md:-mt-4">
+                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
+                        </div>
 
-                # --- THE ULTIMATE DATE FIX ---
-                date_text = "-"
-                date_container = block.select_one('.feed-date, .date, .time')
-                if date_container:
-                    date_text = " ".join(date_container.stripped_strings)
-                
-                if date_text == "-":
-                    raw_text = block.get_text(" ")
-                    match = re.search(r'(\d{1,2}\s+[A-Za-z]{3}\s+\d{4})', raw_text)
-                    if match:
-                        date_text = match.group(1)
+                        <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90">
+                            <span className="text-green-500 font-black text-[9px] md:text-xs tracking-[0.2em] uppercase mb-1 drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]">Proven Gains</span>
+                            <svg className="w-32 lg:w-48 h-10 lg:h-14" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2 L100,40 L0,40 Z" fill="#22c55e" opacity="0.1"/>
+                                <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2" fill="none" stroke="#22c55e" strokeWidth="2.5" />
+                                <circle cx="100" cy="2" r="3" fill="#22c55e" className="animate-pulse" />
+                            </svg>
+                        </div>
 
-                # ODDS
-                all_text = block.get_text(" ")
-                odds_val = "-"
-                odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
-                if odds_match: odds_val = odds_match.group(1)
-                
-                # --- FIXED RESULT DETECTION ---
-                result = "-"
-                is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss|status-lost'))
-                is_won = block.find(class_=re.compile(r'label-success|text-green|win|won|status-won'))
-                
-                if is_lost:
-                    result = "L"
-                elif is_won:
-                    result = "W"
-                else:
-                    upper_text = all_text.upper()
-                    if "WON" in upper_text or "WIN" in upper_text: 
-                        result = "W"
-                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text: 
-                        result = "L"
-                    elif re.search(r'-\d+\.\d{2}\b', all_text): 
-                        result = "L"
-                    elif re.search(r'\+\d+\.\d{2}\b', all_text): 
-                        result = "W"
+                        <div className="flex-1 flex justify-end pt-2 md:pt-4"> 
+                            <a href="https://t.me/deimantas" target="_blank" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
+                                <i className="fa-brands fa-telegram text-lg md:text-xl"></i>
+                                <span>Join Now</span>
+                            </a>
+                        </div>
+                    </nav>
 
-                final_data["picks"].append({
-                    "id": len(final_data["picks"]) + 1, 
-                    "date": date_text.strip(), 
-                    "country": country_name.strip(), 
-                    "pick": pick_title, 
-                    "odds": odds_val, 
-                    "result": result
-                })
-            except: continue
-        
-        with open('picks.json', 'w') as f:
-            json.dump(final_data, f, indent=4)
-        print("Success: Removed empty parentheses while keeping (W).")
+                    <main className="container mx-auto px-4 pt-0 pb-10 max-w-6xl flex flex-col items-center flex-grow relative z-10">
+                        <div className="text-center mb-10 md:mb-12 fade-in -mt-2 md:-mt-6">
+                            <h1 className="text-3xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight uppercase text-white">
+                                Beat the <span className="text-dimeAccent">Bookie</span> <br/> 
+                                <span>with Precision</span>
+                            </h1>
+                            
+                            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
+                                <div className="w-full md:w-auto bg-white/5 border border-white/10 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
+                                    <i className="fa-solid fa-circle-check text-green-500 mr-2 text-xl"></i>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">Verified on</span>
+                                    <a href="https://dime.blogabet.com" target="_blank" className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black">Blogabet</a>
+                                </div>
 
-    except Exception as e:
-        print(f"Error: {e}")
+                                <div className="w-full md:w-auto bg-dimeGreen/20 border border-dimeGreen/40 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
+                                    <i className="fa-solid fa-chart-line text-green-500 mr-2 text-xl"></i> 
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">ROI:</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 mr-2 font-black">{data.stats.roi}</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">|</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black">{data.stats.units}</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 ml-2">Units</span>
+                                </div>
+                            </div>
+                        </div>
 
-if __name__ == "__main__":
-    scrape_blogabet()
+                        <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden fade-in shadow-2xl">
+                            <div className="bg-gradient-to-r from-dimeGreen/30 to-transparent px-6 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
+                                <h2 className="text-base md:text-2xl font-black uppercase text-white">Results</h2>
+                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest uppercase">LAST 10 PICKS</div>
+                            </div>
+                            
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
+                                    <thead>
+                                        <tr className="bg-black text-gray-500 text-[10px] md:text-xs uppercase tracking-[0.2em] font-black">
+                                            <th className="px-6 py-4 md:px-10 md:py-6">Date</th>
+                                            <th className="px-6 py-4 md:px-10 md:py-6">Pick</th>
+                                            <th className="px-6 py-4 md:px-10 md:py-6">Odds</th>
+                                            <th className="px-10 py-4 md:py-6 text-right">Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-white/5 text-gray-200">
+                                        {data.picks.map((pick, index) => {
+                                            const res = (pick.result || '').toUpperCase();
+                                            const isWin = res === 'W' || res === 'WON' || res === 'WIN';
+                                            const isLoss = res === 'L' || res === 'LOST' || res === 'LOSE' || res === 'LOSS';
+
+                                            return (
+                                                <tr key={index} className="transition-all duration-300 hover:bg-dimeGreen/10">
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm text-gray-400">{pick.date}</td>
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap">
+                                                        <div className="flex items-center font-black text-xs md:text-sm uppercase">
+                                                            {getFlagIcon(pick.country)}
+                                                            {(() => {
+                                                                const pickStr = pick.pick || '';
+                                                                const parts = pickStr.split(' ');
+                                                                if (parts.length > 1) {
+                                                                    const line = parts.pop();
+                                                                    const team = parts.join(' ');
+                                                                    return (
+                                                                        <span>
+                                                                            <span className="text-white">{team}</span>{' '}
+                                                                            <span className="text-dimeGold">{line}</span>
+                                                                        </span>
+                                                                    );
+                                                                }
+                                                                return <span className="text-white">{pickStr}</span>;
+                                                            })()}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm font-bold text-dimeGold font-mono drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">{pick.odds}</td>
+                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-right">
+                                                        <span className={`px-3 py-1 md:px-5 md:py-2 rounded-lg font-black text-xs md:text-lg inline-block min-w-[60px] text-center ${
+                                                            isWin ? 'bg-green-600 text-white shadow-[0_0_10px_rgba(22,163,74,0.3)]' : 
+                                                            isLoss ? 'bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.3)]' : 
+                                                            'bg-gray-600 text-white'
+                                                        }`}>
+                                                            {pick.result}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div className="bg-black/40 p-6 md:p-8 text-center border-t border-white/5">
+                                <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-dimeGold transition-colors flex items-center justify-center gap-1 text-[10px] md:text-sm uppercase font-black">
+                                    <i className="fa-solid fa-circle-check text-green-500"></i>
+                                    <span>Full Verified History on <span className="text-green-500">Blogabet</span></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <footer className="mt-auto py-8 w-full text-center">
+                            <p className="text-gray-600 text-[10px] md:text-xs font-black tracking-[0.2em] uppercase">© 2026 DIME TIPSTER</p>
+                        </footer>
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
