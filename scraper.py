@@ -26,9 +26,8 @@ def scrape_blogabet():
 
         # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
+        # CRITICAL FIX: Always use the new BeautifulSoup object for the picks
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
-        
-        # FIX: Ensure we use 'picks_soup' here
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -36,18 +35,16 @@ def scrape_blogabet():
             if len(final_data["picks"]) >= 10: break 
             
             try:
-                # MATCHUP & SELECTION
                 matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING
+                # CLEANING & ML FORMATTING
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
                     clean_text = re.sub(term, '', clean_text)
                 
-                # TEAM NAME + ML RULE
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
                     if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
@@ -58,38 +55,39 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # DATE
-                date_container = block.find(class_=re.compile(r'feed-date|date|time'))
-                date_text = " ".join(date_container.stripped_strings) if date_container else str(datetime.date.today())
+                # --- NEW BULLETPROOF DATE LOGIC ---
+                date_text = ""
+                # Search for any div or span with 'date' in the class
+                date_elem = block.find(class_=re.compile(r'feed-date|date|time'))
+                if date_elem:
+                    date_text = " ".join(date_elem.stripped_strings)
+                
+                # If class-based search fails, scan raw text for date patterns (e.g., 21 Mar)
+                if not date_text or len(date_text) < 3:
+                    all_text_content = block.get_text(" ")
+                    # Regex looks for: 1-2 digits, then 3 letters (month), then optional 4 digits (year)
+                    match = re.search(r'\d{1,2}\s+[A-Za-z]{3}(\s+\d{4})?', all_text_content)
+                    date_text = match.group(0) if match else str(datetime.date.today())
 
-                # ODDS & RESULT
+                # ODDS
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- THE RESULT ENGINE ---
+                # RESULT ENGINE (Solid Red Fix)
                 result = "-"
-                
-                # 1. Check for the Red color badge (most accurate)
-                if block.find(class_=re.compile(r'label-danger|text-red|lost-pick|status-lost')):
+                if block.find(class_=re.compile(r'label-danger|text-red|lost|loss|lost-pick')):
                     result = "L"
-                elif block.find(class_=re.compile(r'label-success|text-green|win-pick|status-won')):
+                elif block.find(class_=re.compile(r'label-success|text-green|win|won|win-pick')):
                     result = "W"
                 
-                # 2. Check for keywords in the full block text
                 if result == "-":
                     upper_text = all_text.upper()
-                    if "LOST" in upper_text or "LOSE" in upper_text or "LOSS" in upper_text:
+                    if any(x in upper_text for x in ["LOST", "LOSS", "LOSE", "-1.00", "-0.50"]):
                         result = "L"
-                    elif "WON" in upper_text or "WIN" in upper_text:
+                    elif any(x in upper_text for x in ["WON", "WIN", "PROFIT"]):
                         result = "W"
-                
-                # 3. Check for the minus sign in profit (backup)
-                if result == "-":
-                    profit_match = re.search(r'-\d+\.\d+', all_text)
-                    if profit_match:
-                        result = "L"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
@@ -99,15 +97,15 @@ def scrape_blogabet():
                     "result": result
                 })
             except Exception as e:
-                print(f"Skipping pick: {e}")
+                print(f"Skipping pick due to internal error: {e}")
                 continue
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success! Result logic updated.")
+        print(f"Scrape successful. Saved {len(final_data['picks'])} picks.")
 
     except Exception as e:
-        print(f"Critical Error: {e}")
+        print(f"Scraper failed completely: {e}")
 
 if __name__ == "__main__":
     scrape_blogabet()
