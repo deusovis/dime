@@ -72,6 +72,30 @@
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
 
+            // Flag Generator Logic
+            const getFlagIcon = (countryName) => {
+                if (!countryName || countryName === "World") {
+                    return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
+                }
+                
+                const countryMap = {
+                    'USA': 'us', 'UNITED STATES': 'us', 'SPAIN': 'es', 'FRANCE': 'fr',
+                    'GERMANY': 'de', 'ITALY': 'it', 'TURKEY': 'tr', 'GREECE': 'gr',
+                    'AUSTRALIA': 'au', 'SERBIA': 'rs', 'LITHUANIA': 'lt', 'EUROPE': 'eu',
+                    'BRAZIL': 'br', 'CANADA': 'ca', 'ARGENTINA': 'ar', 'CHINA': 'cn',
+                    'JAPAN': 'jp', 'PHILIPPINES': 'ph', 'SOUTH KOREA': 'kr', 'ISRAEL': 'il',
+                    'INTERNATIONAL': 'eu', 'WORLD': 'un'
+                };
+
+                const code = countryMap[countryName.toUpperCase()];
+                
+                if (code) {
+                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} className="inline-block mr-2 shadow-sm rounded-sm" />;
+                }
+                
+                return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
+            };
+
             React.useEffect(() => {
                 fetch('picks.json?v=' + new Date().getTime())
                     .then(res => res.json())
@@ -153,7 +177,6 @@
                                     </thead>
                                     <tbody className="divide-y divide-white/5 text-gray-200">
                                         {data.picks.map((pick, index) => {
-                                            // Robust result check
                                             const res = (pick.result || '').toUpperCase();
                                             const isWin = res === 'W' || res === 'WON' || res === 'WIN';
                                             const isLoss = res === 'L' || res === 'LOST' || res === 'LOSE' || res === 'LOSS';
@@ -162,9 +185,9 @@
                                                 <tr key={index} className="transition-all duration-300 hover:bg-dimeGreen/10">
                                                     <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm text-gray-400">{pick.date}</td>
                                                     <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap">
-                                                        <div className="flex items-center gap-3 font-black text-xs md:text-sm uppercase">
-                                                            <i className="fa-solid fa-basketball text-dimeGold text-[10px]"></i>
-                                                            {pick.pick}
+                                                        <div className="flex items-center font-black text-xs md:text-sm uppercase">
+                                                            {getFlagIcon(pick.country)}
+                                                            <span>{pick.pick}</span>
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm font-bold text-dimeGreen font-mono">{pick.odds}</td>
