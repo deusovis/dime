@@ -55,23 +55,21 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- NEW: COUNTRY DETECTION ---
+                # --- NEW: COUNTRY DETECTION (FIXED) ---
                 country_name = "World"
                 
-                # Look for flag images
-                flag_img = block.find('img', src=re.compile(r'flag|country'))
-                if flag_img and flag_img.get('title'):
-                    country_name = flag_img['title']
-                elif flag_img and flag_img.get('alt'):
-                    country_name = flag_img['alt']
+                # Join all text in the block to safely find the "Basketball / Country / League" path
+                full_block_text = " ".join(block.stripped_strings)
+                # Regex looks for "Basketball / [Anything until next slash]"
+                country_match = re.search(r'(?i)Basketball\s*/\s*([^/]+)', full_block_text)
+                
+                if country_match:
+                    country_name = country_match.group(1).strip()
                 else:
-                    # Look for text paths like "Basketball / USA / NBA"
-                    for text_node in block.find_all(string=True):
-                        if " / " in text_node and "Basketball" in text_node:
-                            parts = [p.strip() for p in text_node.split(" / ")]
-                            if len(parts) >= 2:
-                                country_name = parts[1]
-                                break
+                    # Backup: Look for flag images if the text path is missing
+                    flag_img = block.find('img', src=re.compile(r'flag|country'))
+                    if flag_img:
+                        country_name = flag_img.get('title') or flag_img.get('alt') or "World"
 
                 # --- THE ULTIMATE DATE FIX (UNTOUCHED) ---
                 date_text = "-"
@@ -102,15 +100,19 @@ def scrape_blogabet():
                     result = "W"
                 else:
                     upper_text = all_text.upper()
-                    if "WON" in upper_text or "WIN" in upper_text: result = "W"
-                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text: result = "L"
-                    elif re.search(r'-\d+\.\d{2}\b', all_text): result = "L"
-                    elif re.search(r'\+\d+\.\d{2}\b', all_text): result = "W"
+                    if "WON" in upper_text or "WIN" in upper_text: 
+                        result = "W"
+                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text: 
+                        result = "L"
+                    elif re.search(r'-\d+\.\d{2}\b', all_text): 
+                        result = "L"
+                    elif re.search(r'\+\d+\.\d{2}\b', all_text): 
+                        result = "W"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
                     "date": date_text.strip(), 
-                    "country": country_name.strip(), # Saved to JSON here
+                    "country": country_name.strip(), 
                     "pick": pick_title, 
                     "odds": odds_val, 
                     "result": result
@@ -119,7 +121,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Added Country tracking. Date and Results kept stable.")
+        print("Success: Country names are now correctly scraped.")
 
     except Exception as e:
         print(f"Error: {e}")
