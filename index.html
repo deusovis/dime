@@ -75,7 +75,7 @@
 
             const getFlagIcon = (countryName) => {
                 if (!countryName || countryName === "World") {
-                    return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-3 cursor-help drop-shadow-md" title="World / International"></i>;
+                    return <i className="fa-solid fa-globe text-dimeGold text-[12px] md:text-[14px] mr-1.5 md:mr-3 cursor-help drop-shadow-md" title="World / International"></i>;
                 }
                 
                 const countryMap = {
@@ -119,10 +119,10 @@
                 const code = countryMap[countryName.toUpperCase().trim()];
                 
                 if (code) {
-                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} title={countryName} className="inline-block mr-3 shadow-[0_2px_5px_rgba(0,0,0,0.5)] rounded-[2px] cursor-help border border-white/10" />;
+                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} title={countryName} className="w-4 md:w-5 inline-block mr-1.5 md:mr-3 shadow-[0_2px_5px_rgba(0,0,0,0.5)] rounded-[2px] cursor-help border border-white/10" />;
                 }
                 
-                return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-3 cursor-help drop-shadow-md" title={countryName}></i>;
+                return <i className="fa-solid fa-globe text-dimeGold text-[12px] md:text-[14px] mr-1.5 md:mr-3 cursor-help drop-shadow-md" title={countryName}></i>;
             };
 
             React.useEffect(() => {
@@ -192,8 +192,8 @@
                             {/* Decorative top glow */}
                             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
                             
-                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-6 py-6 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center backdrop-blur-xl relative z-10">
-                                <h2 className="text-base md:text-2xl font-black uppercase text-white tracking-wide">Results</h2>
+                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-center md:justify-between items-center backdrop-blur-xl relative z-10">
+                                <h2 className="text-lg md:text-2xl font-black uppercase text-white tracking-wide">Results</h2>
                                 
                                 <div className="hidden md:flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full bg-dimeAccent animate-pulse"></span>
@@ -201,14 +201,15 @@
                                 </div>
                             </div>
                             
-                            <div className="overflow-x-auto relative z-10">
-                                <table className="w-full text-left border-collapse min-w-[600px] md:min-w-full">
+                            <div className="w-full relative z-10">
+                                {/* Removed min-w forcing to allow mobile stacking */}
+                                <table className="w-full text-left border-collapse">
                                     <thead>
-                                        <tr className="bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-400 text-[10px] md:text-xs uppercase tracking-[0.25em] font-black border-b border-dimeGreen/20 shadow-md">
-                                            <th className="px-6 py-5 md:px-10 md:py-6 w-[15%]">Date</th>
-                                            <th className="px-6 py-5 md:px-10 md:py-6 w-[55%]">Pick</th>
-                                            <th className="px-6 py-5 md:px-10 md:py-6 w-[15%]">Odds</th>
-                                            <th className="px-10 py-5 md:py-6 text-right w-[15%]">Result</th>
+                                        <tr className="bg-gradient-to-r from-slate-900 to-slate-900/90 text-gray-400 text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] font-black border-b border-dimeGreen/20 shadow-md">
+                                            <th className="px-3 py-4 md:px-10 md:py-6 w-[15%]">Date</th>
+                                            <th className="px-2 py-4 md:px-10 md:py-6 w-[55%]">Pick</th>
+                                            <th className="px-2 py-4 md:px-10 md:py-6 w-[15%] text-center md:text-left">Odds</th>
+                                            <th className="px-3 py-4 md:px-10 md:py-6 text-right w-[15%]">Result</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-200">
@@ -219,12 +220,11 @@
 
                                             return (
                                                 <tr key={index} className="group border-b border-white/[0.04] last:border-0 hover:bg-gradient-to-r hover:from-white/[0.04] hover:to-transparent transition-all duration-300 ease-out">
-                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm text-gray-500 font-semibold tracking-wide group-hover:text-gray-400 transition-colors">
+                                                    <td className="px-3 py-4 md:px-10 md:py-7 text-[10px] md:text-sm text-gray-500 font-semibold tracking-wide whitespace-nowrap group-hover:text-gray-400 transition-colors">
                                                         {pick.date}
                                                     </td>
-                                                    <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap">
-                                                        <div className="flex items-center font-black text-xs md:text-base uppercase tracking-wide">
-                                                            {getFlagIcon(pick.country)}
+                                                    <td className="px-2 py-4 md:px-10 md:py-7">
+                                                        <div className="flex flex-col md:flex-row md:items-center font-black text-[11px] md:text-base uppercase tracking-wide gap-1 md:gap-3">
                                                             {(() => {
                                                                 const pickStr = pick.pick || '';
                                                                 const parts = pickStr.split(' ');
@@ -232,25 +232,37 @@
                                                                     const line = parts.pop();
                                                                     const team = parts.join(' ');
                                                                     return (
-                                                                        <span className="flex items-center">
-                                                                            <span className="text-gray-100 drop-shadow-md group-hover:text-white transition-colors">{team}</span>
-                                                                            <span className="ml-3 text-[10px] md:text-xs text-dimeGold bg-dimeGold/10 px-2.5 py-1 rounded-md border border-dimeGold/20 font-bold tracking-widest shadow-sm">
-                                                                                {line}
-                                                                            </span>
-                                                                        </span>
+                                                                        <React.Fragment>
+                                                                            <div className="flex items-center leading-tight">
+                                                                                {getFlagIcon(pick.country)}
+                                                                                <span className="text-gray-100 drop-shadow-md group-hover:text-white transition-colors line-clamp-2 md:line-clamp-none">
+                                                                                    {team}
+                                                                                </span>
+                                                                            </div>
+                                                                            <div className="pl-[22px] md:pl-0">
+                                                                                <span className="inline-block text-[9px] md:text-xs text-dimeGold bg-dimeGold/10 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded border border-dimeGold/20 font-bold tracking-widest shadow-sm">
+                                                                                    {line}
+                                                                                </span>
+                                                                            </div>
+                                                                        </React.Fragment>
                                                                     );
                                                                 }
-                                                                return <span className="text-gray-100 drop-shadow-md group-hover:text-white transition-colors">{pickStr}</span>;
+                                                                return (
+                                                                    <div className="flex items-center leading-tight">
+                                                                        {getFlagIcon(pick.country)}
+                                                                        <span className="text-gray-100 drop-shadow-md group-hover:text-white transition-colors">{pickStr}</span>
+                                                                    </div>
+                                                                );
                                                             })()}
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-5 md:px-10 md:py-7">
-                                                        <span className="inline-block bg-black/50 border border-white/5 rounded-lg px-4 py-1.5 text-xs md:text-sm font-black text-dimeGold font-mono drop-shadow-[0_0_8px_rgba(212,175,55,0.3)] shadow-inner">
+                                                    <td className="px-2 py-4 md:px-10 md:py-7 text-center md:text-left">
+                                                        <span className="inline-block bg-black/50 border border-white/5 rounded-md md:rounded-lg px-2 py-1 md:px-4 md:py-1.5 text-[10px] md:text-sm font-black text-dimeGold font-mono drop-shadow-[0_0_8px_rgba(212,175,55,0.3)] shadow-inner">
                                                             {pick.odds}
                                                         </span>
                                                     </td>
-                                                    <td className="px-6 py-5 md:px-10 md:py-7 text-right">
-                                                        <span className={`px-4 py-1.5 md:px-6 md:py-2 rounded-xl font-black text-xs md:text-sm tracking-widest inline-block min-w-[70px] text-center border backdrop-blur-sm transition-all duration-300 ${
+                                                    <td className="px-3 py-4 md:px-10 md:py-7 text-right">
+                                                        <span className={`px-2 py-1 md:px-6 md:py-2 rounded-lg md:rounded-xl font-black text-[10px] md:text-sm tracking-widest inline-block min-w-[36px] md:min-w-[70px] text-center border backdrop-blur-sm transition-all duration-300 ${
                                                             isWin ? 'bg-green-500/10 text-green-400 border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.15)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 
                                                             isLoss ? 'bg-red-500/10 text-red-400 border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.15)] group-hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]' : 
                                                             'bg-gray-500/10 text-gray-400 border-gray-500/30'
@@ -265,10 +277,10 @@
                                 </table>
                             </div>
                             
-                            <div className="bg-gradient-to-t from-black/60 to-black/30 p-6 md:p-8 text-center border-t border-white/5 relative z-10">
-                                <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="group text-gray-400 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 text-[10px] md:text-sm uppercase font-black tracking-widest">
-                                    <span className="bg-green-500/20 rounded-full p-1.5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        <i className="fa-solid fa-check text-green-400 text-xs"></i>
+                            <div className="bg-gradient-to-t from-black/60 to-black/30 p-4 md:p-8 text-center border-t border-white/5 relative z-10">
+                                <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="group text-gray-400 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 text-[9px] md:text-sm uppercase font-black tracking-widest">
+                                    <span className="bg-green-500/20 rounded-full p-1 md:p-1.5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <i className="fa-solid fa-check text-green-400 text-[10px] md:text-xs"></i>
                                     </span>
                                     <span>Full Verified History on <span className="text-green-400 group-hover:text-green-300 transition-colors drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">Blogabet</span></span>
                                 </a>
