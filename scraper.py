@@ -11,10 +11,11 @@ def scrape_blogabet():
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
     
+    # Static fallback stats
     final_data = {"stats": {"roi": "+18.4%", "units": "+32.1"}, "picks": []}
 
     try:
-        # 1. GET ROI AND UNITS (Header)
+        # 1. GET ROI AND UNITS FROM HEADER
         try:
             main_res = scraper.get(main_url, cookies=cookies)
             main_soup = BeautifulSoup(main_res.text, 'html.parser')
@@ -28,7 +29,7 @@ def scrape_blogabet():
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         
-        # Use picks_soup to find the actual list of bets
+        # Target the pick rows
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -41,7 +42,7 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING (ML Suffix Logic)
+                # CLEANING (ML Suffix)
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
@@ -57,12 +58,12 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- REVERTED DATE FETCH (The Literal Version) ---
+                # --- SIMPLE DATE SCRAPE (LITERAL TEXT) ---
                 date_text = "-"
-                # Target the feed-date class directly
-                date_container = block.find(class_=re.compile(r'feed-date|date'))
+                # Find the box that contains the date
+                date_container = block.find(class_=re.compile(r'feed-date|date|time'))
                 if date_container:
-                    # Grabs literal text strings (like "21", "Mar", "2026") and joins them
+                    # Just grab the raw text exactly as it is written (e.g. "21 Mar 2026")
                     date_text = date_container.get_text(" ", strip=True)
 
                 # ODDS
@@ -71,15 +72,15 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- STABLE WIN/LOSS DETECTION (Restored) ---
+                # --- STABLE WIN/LOSS ---
                 result = "-"
-                # Check for label classes first (Green = W, Red = L)
+                # Use Blogabet's original Green/Red labels
                 if block.find(class_=re.compile(r'label-success|text-green')):
                     result = "W"
                 elif block.find(class_=re.compile(r'label-danger|text-red')):
                     result = "L"
                 
-                # Keyword backup only if classes fail
+                # If no label, check for words
                 if result == "-":
                     upper_text = all_text.upper()
                     if "WON" in upper_text or "WIN" in upper_text: result = "W"
@@ -87,16 +88,17 @@ def scrape_blogabet():
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
-                    "date": date_text.strip(), 
+                    "date": date_text, 
                     "pick": pick_title, 
                     "odds": odds_val, 
                     "result": result
                 })
             except: continue
         
+        # SAVE
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Literal date and result logic restored.")
+        print("Success: Literal date and result text scraped.")
 
     except Exception as e:
         print(f"Error: {e}")
