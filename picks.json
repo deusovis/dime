@@ -9,7 +9,7 @@
     {
         "id": 2,
         "date": "2026-03-22",
-        "pick": "ML Klosterneuburg Dukes",
+        "pick": "Klosterneuburg Dukes ML",
         "odds": "3.7",
         "result": "W"
     },
@@ -51,7 +51,7 @@
     {
         "id": 8,
         "date": "2026-03-22",
-        "pick": "ML NKA Pecs",
+        "pick": "NKA Pecs ML",
         "odds": "2.12",
         "result": "-"
     },
@@ -65,7 +65,7 @@
     {
         "id": 10,
         "date": "2026-03-22",
-        "pick": "ML Vimpelin Veto",
+        "pick": "Vimpelin Veto ML",
         "odds": "1.83",
         "result": "-"
     }
