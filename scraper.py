@@ -15,7 +15,7 @@ def scrape_blogabet():
     final_data = {"stats": {"roi": "+0%", "units": "0.0"}, "picks": []}
 
     try:
-        # 1. GET ROI AND UNITS
+        # 1. GET ROI AND UNITS FROM HEADER
         main_res = scraper.get(main_url, cookies=cookies)
         main_soup = BeautifulSoup(main_res.text, 'html.parser')
         profit_elem = main_soup.find(id="header-profit")
@@ -24,11 +24,11 @@ def scrape_blogabet():
         if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
         if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
 
-
+        # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         
-   
+        # FIXED: Use picks_soup here, NOT main_soup
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -58,39 +58,35 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # DATE DETECTION
+                # DATE DETECTION (Literal text from Blogabet)
                 date_text = ""
                 date_container = block.find(class_=re.compile(r'feed-date|date|time'))
                 if date_container:
                     date_text = " ".join(date_container.stripped_strings)
                 
+                # If literal fetch fails, use fallback in "22 Mar 2026" format
                 if not date_text:
-                    all_block_text = block.get_text(" ")
-                    date_match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', all_block_text)
-                    date_text = date_match.group(0) if date_match else str(datetime.date.today())
+                    date_text = datetime.date.today().strftime('%d %b %Y')
 
-                # ODDS & RESULT
+                # ODDS
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- ENHANCED RESULT DETECTION ---
+                # --- FIXED RESULT DETECTION ---
                 result = "-"
-                # Check for the minus sign in profit (e.g., -1.00)
-                profit_match = re.search(r'([+-])\d+\.\d+', all_text)
                 
-                if profit_match:
-                    result = "W" if profit_match.group(1) == "+" else "L"
-                # Fallback to label classes
-                elif block.find(class_=re.compile(r'label-success|text-green|win|won')): 
+                # Check for label classes FIRST (Most reliable)
+                # Success = Win, Danger = Loss
+                if block.find(class_=re.compile(r'label-success|text-green')):
                     result = "W"
-                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')): 
+                elif block.find(class_=re.compile(r'label-danger|text-red')):
                     result = "L"
-                # Fallback to text keywords
-                elif any(x in all_text.upper() for x in ["WON", "WIN"]): 
+                # Check keywords as backup
+                elif any(x in all_text.upper() for x in ["WON", "WIN"]):
                     result = "W"
-                elif any(x in all_text.upper() for x in ["LOST", "LOSE", "LOSS"]): 
+                elif any(x in all_text.upper() for x in ["LOST", "LOSE", "LOSS"]):
                     result = "L"
 
                 final_data["picks"].append({
