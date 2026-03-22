@@ -8,13 +8,12 @@ on:
 permissions:
   contents: write
 
-# This line forces GitHub to use the new engine and disables the warning
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
+    # Moving the override switch here forces it to apply directly to the runner
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
