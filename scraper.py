@@ -55,14 +55,30 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- THE ULTIMATE DATE FIX (RESTORED EXACTLY AS IT WAS) ---
+                # --- NEW: COUNTRY DETECTION ---
+                country_name = "World"
+                
+                # Look for flag images
+                flag_img = block.find('img', src=re.compile(r'flag|country'))
+                if flag_img and flag_img.get('title'):
+                    country_name = flag_img['title']
+                elif flag_img and flag_img.get('alt'):
+                    country_name = flag_img['alt']
+                else:
+                    # Look for text paths like "Basketball / USA / NBA"
+                    for text_node in block.find_all(string=True):
+                        if " / " in text_node and "Basketball" in text_node:
+                            parts = [p.strip() for p in text_node.split(" / ")]
+                            if len(parts) >= 2:
+                                country_name = parts[1]
+                                break
+
+                # --- THE ULTIMATE DATE FIX (UNTOUCHED) ---
                 date_text = "-"
-                # Search for the specific date container first
                 date_container = block.select_one('.feed-date, .date, .time')
                 if date_container:
                     date_text = " ".join(date_container.stripped_strings)
                 
-                # If that fails, scan the whole block for "Day Month Year" (e.g., 21 Mar 2026)
                 if date_text == "-":
                     raw_text = block.get_text(" ")
                     match = re.search(r'(\d{1,2}\s+[A-Za-z]{3}\s+\d{4})', raw_text)
@@ -75,10 +91,8 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- FIXED RESULT DETECTION (2-Decimal Check) ---
+                # --- FIXED RESULT DETECTION (UNTOUCHED) ---
                 result = "-"
-                
-                # 1. Check Explicit Badges
                 is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss|status-lost'))
                 is_won = block.find(class_=re.compile(r'label-success|text-green|win|won|status-won'))
                 
@@ -87,21 +101,16 @@ def scrape_blogabet():
                 elif is_won:
                     result = "W"
                 else:
-                    # 2. Check Keywords
                     upper_text = all_text.upper()
-                    if "WON" in upper_text or "WIN" in upper_text: 
-                        result = "W"
-                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text: 
-                        result = "L"
-                    # 3. Check for 2-Decimal Profit (-1.00) vs 1-Decimal Handicap (-5.5)
-                    elif re.search(r'-\d+\.\d{2}\b', all_text):
-                        result = "L"
-                    elif re.search(r'\+\d+\.\d{2}\b', all_text):
-                        result = "W"
+                    if "WON" in upper_text or "WIN" in upper_text: result = "W"
+                    elif "LOST" in upper_text or "LOSS" in upper_text or "LOSE" in upper_text: result = "L"
+                    elif re.search(r'-\d+\.\d{2}\b', all_text): result = "L"
+                    elif re.search(r'\+\d+\.\d{2}\b', all_text): result = "W"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
                     "date": date_text.strip(), 
+                    "country": country_name.strip(), # Saved to JSON here
                     "pick": pick_title, 
                     "odds": odds_val, 
                     "result": result
@@ -110,7 +119,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Date logic restored, Grey dash fixed.")
+        print("Success: Added Country tracking. Date and Results kept stable.")
 
     except Exception as e:
         print(f"Error: {e}")
