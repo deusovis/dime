@@ -5,101 +5,134 @@ import datetime
 import re
 
 def scrape_blogabet():
+    # Target URLs
     main_url = "https://dime.blogabet.com"
     picks_url = "https://dime.blogabet.com/blog/picks"
     
+    # Initialize the scraper to bypass Cloudflare security
     scraper = cloudscraper.create_scraper(browser={'browser': 'chrome','platform': 'windows','desktop': True})
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
     
-    final_data = {"stats": {"roi": "+0%", "units": "0.0"}, "picks": []}
+    # Default data structure
+    final_data = {
+        "stats": {"roi": "+0%", "units": "0.0"},
+        "picks": []
+    }
 
     try:
-        # 1. GET ROI AND UNITS
+        # --- STEP 1: SCRAPE ROI AND UNITS FROM MAIN PROFILE ---
+        print("Connecting to main profile for stats...")
         main_res = scraper.get(main_url, cookies=cookies)
         main_soup = BeautifulSoup(main_res.text, 'html.parser')
+        
         profit_elem = main_soup.find(id="header-profit")
         roi_elem = main_soup.find(id="header-yield")
         
-        if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
-        if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+        if profit_elem:
+            final_data["stats"]["units"] = profit_elem.get_text(strip=True)
+        if roi_elem:
+            final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+            
+        print(f"Stats Updated: ROI ({final_data['stats']['roi']}) Units ({final_data['stats']['units']})")
 
-        # 2. GET 10 PICKS
+        # --- STEP 2: SCRAPE LAST 10 PICKS ---
+        print("Fetching latest picks...")
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
+        
+        # Blogabet uses <li> tags with 'feed-pick' for each entry
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
         for block in pick_blocks:
-            if len(final_data["picks"]) >= 10: break 
+            if len(final_data["picks"]) >= 10: 
+                break # Stop at exactly 10 picks
             
             try:
-                # MATCHUP & SELECTION
+                # 1. Capture Raw Selection & Matchup
                 matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING
+                # 2. Advanced Cleaning (Remove Odds @, Parentheses, and Jargon)
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
-                for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
+                
+                unwanted_terms = [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']
+                for term in unwanted_terms:
                     clean_text = re.sub(term, '', clean_text)
                 
-                # TEAM NAME + ML RULE
+                # 3. Team Name + ML Suffix Logic
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
-                    if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
+                    if not team_name: # Fallback to matchup if selection text is just "Money Line"
+                        team_name = matchup.split('-')[0].split('vs')[0].strip()
                     pick_title = f"{team_name} ML"
                 else:
                     pick_title = clean_text.strip()
 
+                # Duplicate Prevention
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- IMPROVED DATE DETECTIVE ---
-                date_text = ""
-                # Look for the container that holds the date
+                # 4. Capture Correct Blogabet Date (Joining Spans)
                 date_container = block.find(class_=re.compile(r'feed-date|date|time'))
                 if date_container:
-                    # Collect all text from all sub-elements (like <span>21</span> <span>Mar</span>)
-                    # and join them with a single space
+                    # Joins "21", "Mar", "2026" into "21 Mar 2026"
                     date_text = " ".join(date_container.stripped_strings)
-                
-                # If the container search failed, use a regex backup to find "DD Mon YYYY"
-                if not date_text:
-                    all_block_text = block.get_text(" ")
-                    date_match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', all_block_text)
-                    date_text = date_match.group(0) if date_match else str(datetime.date.today())
+                else:
+                    date_text = str(datetime.date.today())
 
-                # ODDS & RESULT
+                # 5. Capture Odds
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
-                if odds_match: odds_val = odds_match.group(1)
+                if odds_match:
+                    odds_val = odds_match.group(1)
                 
+                # 6. Aggressive Result Detection (Fixing the Grey "-" issue)
                 result = "-"
-                if block.find(class_=re.compile(r'label-success|text-green|win|won')): result = "W"
-                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')): result = "L"
-                elif "WON" in all_text.upper() or "WIN" in all_text.upper(): result = "W"
-                elif "LOST" in all_text.upper() or "LOSE" in all_text.upper() or "LOSS" in all_text.upper(): result = "L"
+                # Check A: Check for negative/positive profit symbols in text
+                profit_match = re.search(r'([+-])\d+\.\d+', all_text)
+                if profit_match:
+                    result = "W" if profit_match.group(1) == "+" else "L"
+                
+                # Check B: CSS Classes
+                if result == "-":
+                    if block.find(class_=re.compile(r'label-success|text-green|win|won')):
+                        result = "W"
+                    elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost|lost-pick')):
+                        result = "L"
+                
+                # Check C: Keyword Search
+                if result == "-":
+                    upper_text = all_text.upper()
+                    if any(x in upper_text for x in ["WON", "WIN"]):
+                        result = "W"
+                    elif any(x in upper_text for x in ["LOST", "LOSE", "LOSS"]):
+                        result = "L"
 
                 final_data["picks"].append({
-                    "id": len(final_data["picks"]) + 1, 
-                    "date": date_text.strip(), 
-                    "pick": pick_title, 
-                    "odds": odds_val, 
+                    "id": len(final_data["picks"]) + 1,
+                    "date": date_text.strip(),
+                    "pick": pick_title,
+                    "odds": odds_val,
                     "result": result
                 })
+                
             except Exception as e:
-                print(f"Skipping pick: {e}")
+                print(f"Error parsing individual pick: {e}")
                 continue
         
+        # Save to picks.json
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print(f"Successfully updated with 10 picks and correct dates.")
+            
+        print(f"Successfully saved {len(final_data['picks'])} picks and live stats.")
 
     except Exception as e:
-        print(f"Critical Error: {e}")
+        print(f"Critical Scraper Error: {e}")
 
 if __name__ == "__main__":
     scrape_blogabet()
