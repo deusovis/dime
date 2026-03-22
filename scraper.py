@@ -39,14 +39,15 @@ def scrape_blogabet():
                 for term in unwanted:
                     clean_text = re.sub(term, '', clean_text)
                 
-                # 3. APPLY ML PREFIX RULE
+                # 3. APPLY ML SUFFIX RULE (Team Name + ML)
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     # Strip "Money Line" and "ML" out to get just the team name
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
                     # If cleaning made it empty, fallback to the first team in the matchup
                     if not team_name:
                         team_name = matchup.split('-')[0].split('vs')[0].strip()
-                    pick_title = f"ML {team_name}"
+                    # FINAL FORMAT: Team Name ML
+                    pick_title = f"{team_name} ML"
                 else:
                     # Keep as Team Name + Handicap (e.g., Fribourg -34.5)
                     pick_title = clean_text.strip()
@@ -55,7 +56,7 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # 4. DATE, ODDS, & RESULT (Same reliable logic)
+                # 4. DATE, ODDS, & RESULT
                 date_container = block.find(class_=re.compile(r'feed-date|date'))
                 date_text = " ".join([s.get_text(strip=True) for s in date_container.find_all('span')]) if date_container and date_container.find_all('span') else (date_container.get_text(strip=True) if date_container else str(datetime.date.today()))
 
@@ -88,7 +89,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(new_picks, f, indent=4)
-        print(f"Successfully saved {len(new_picks)} picks with ML prefix formatting.")
+        print(f"Successfully saved {len(new_picks)} picks in Team + ML format.")
         
     except Exception as e:
         print(f"Critical Scraper Error: {e}")
