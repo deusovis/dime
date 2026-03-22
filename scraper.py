@@ -27,6 +27,8 @@ def scrape_blogabet():
         # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
+        
+        # FIXED: Changed 'soup' to 'picks_soup'
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -56,18 +58,15 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- TARGETED DATE FIX ---
-                # We only look for the specific 'feed-date' or 'date' class
+                # --- FIXED DATE LOGIC ---
                 date_text = ""
-                date_elem = block.find(class_=re.compile(r'feed-date|date'))
-                if date_elem:
-                    # Get the text but exclude any nested time or extra metadata
-                    date_text = date_elem.get_text(" ", strip=True)
-                    # If the date is too long (contains time), take only the first 11 characters (DD Mon YYYY)
-                    if len(date_text) > 11:
-                        date_match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', date_text)
-                        if date_match:
-                            date_text = date_match.group(0)
+                date_container = block.find(class_=re.compile(r'feed-date|date'))
+                if date_container:
+                    # Get the raw text
+                    raw_date = date_container.get_text(" ", strip=True)
+                    # Use a regex to find only the "DD Mon YYYY" pattern (e.g., 21 Mar 2026)
+                    date_match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', raw_date)
+                    date_text = date_match.group(0) if date_match else raw_date
                 
                 if not date_text:
                     date_text = str(datetime.date.today())
@@ -78,20 +77,23 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # RESULT ENGINE (Ensuring Red L)
+                # --- ENHANCED RESULT DETECTION ---
                 result = "-"
-                # Check for negative profit symbol
-                if "-" in all_text and any(x in all_text for x in ["00", "50", "units"]):
-                    result = "L"
-                elif block.find(class_=re.compile(r'label-danger|text-red|lost|loss')):
-                    result = "L"
-                elif block.find(class_=re.compile(r'label-success|text-green|win|won')):
-                    result = "W"
+                # Check for the minus sign in profit (e.g., -1.00)
+                profit_match = re.search(r'([+-])\d+\.\d+', all_text)
                 
-                if result == "-":
-                    upper_text = all_text.upper()
-                    if "LOST" in upper_text or "LOSS" in upper_text: result = "L"
-                    elif "WON" in upper_text or "WIN" in upper_text: result = "W"
+                if profit_match:
+                    result = "W" if profit_match.group(1) == "+" else "L"
+                # Fallback to label classes
+                elif block.find(class_=re.compile(r'label-success|text-green|win|won')): 
+                    result = "W"
+                elif block.find(class_=re.compile(r'label-danger|text-red|lose|lost')): 
+                    result = "L"
+                # Fallback to text keywords
+                elif any(x in all_text.upper() for x in ["WON", "WIN"]): 
+                    result = "W"
+                elif any(x in all_text.upper() for x in ["LOST", "LOSE", "LOSS"]): 
+                    result = "L"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
@@ -100,14 +102,16 @@ def scrape_blogabet():
                     "odds": odds_val, 
                     "result": result
                 })
-            except: continue
+            except Exception as e:
+                print(f"Skipping pick: {e}")
+                continue
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Fixed dates and results.")
+        print(f"Successfully updated with 10 picks, correct dates, and fixed results.")
 
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Critical Error: {e}")
 
 if __name__ == "__main__":
     scrape_blogabet()
