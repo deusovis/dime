@@ -29,16 +29,22 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # 2. APPLY CLEANING RULES
-                # Rule A: Convert Money Line to ML
+                # 2. APPLY HEAVY-DUTY SCRUBBING
+                # Rule A: Convert "Money Line" to "ML"
                 pick_title = re.sub(r'(?i)Money Line', 'ML', selection)
                 
-                # Rule B: Remove "Spread", "Game Lines", "Odds", and "Handicap" (case insensitive)
-                unwanted_terms = [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap']
-                for term in unwanted_terms:
+                # Rule B: Remove the @ symbol and any trailing odds (e.g., @1.80)
+                pick_title = re.search(r'[^@]*', pick_title).group(0)
+                
+                # Rule C: Remove Parentheses and anything inside them (e.g., "(Spread)" or "(Massagno)")
+                pick_title = re.sub(r'\(.*?\)', '', pick_title)
+                
+                # Rule D: Remove unwanted bookie jargon (Spread, Game Lines, Handicap, etc.)
+                unwanted = [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']
+                for term in unwanted:
                     pick_title = re.sub(term, '', pick_title)
                 
-                # Rule C: Clean up extra spaces left behind by deletions
+                # Rule E: Final cleanup of extra spaces
                 pick_title = re.sub(r'\s+', ' ', pick_title).strip()
 
                 if pick_title in seen_titles: continue
@@ -52,7 +58,7 @@ def scrape_blogabet():
                 else:
                     date_text = str(datetime.date.today())
 
-                # 4. ODDS
+                # 4. ODDS (Keep this for the separate Odds column)
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
@@ -83,7 +89,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(new_picks, f, indent=4)
-        print(f"Successfully updated picks.json with {len(new_picks)} clean picks.")
+        print(f"Successfully updated picks.json with {len(new_picks)} ultra-clean picks.")
         
     except Exception as e:
         print(f"Critical Scraper Error: {e}")
