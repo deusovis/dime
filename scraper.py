@@ -25,6 +25,8 @@ def scrape_blogabet():
         # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
+        
+        # FIXED: Corrected to picks_soup
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
         seen_titles = set()
@@ -37,12 +39,13 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING (ML Suffix Logic)
+                # CLEANING
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
                     clean_text = re.sub(term, '', clean_text)
                 
+                # TEAM NAME + ML RULE
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
                     if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
@@ -53,18 +56,16 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- THE STICKY FIX: FETCH DATE FROM POST ---
+                # --- LITERAL DATE FETCH ---
                 date_text = "-"
-                # Blogabet often puts the date in a div with class 'feed-date' or 'date'
-                date_container = block.find(class_=re.compile(r'date|time|feed-date'))
+                date_container = block.find(class_=re.compile(r'feed-date|date'))
                 if date_container:
-                    # This grabs the literal text (e.g. "21 Mar 2026")
+                    # Grabs literal text like "21 Mar 2026"
                     date_text = " ".join(date_container.stripped_strings)
-                    # Clean up if it grabbed time as well (e.g. "21 Mar 2026 14:00")
-                    # We only want the first 3 parts: Day, Month, Year
+                    # Simple trim to remove time if present
                     parts = date_text.split()
-                    if len(parts) >= 2:
-                        date_text = " ".join(parts[:3])
+                    if len(parts) >= 3:
+                        date_text = f"{parts[0]} {parts[1]} {parts[2]}"
 
                 # ODDS
                 all_text = block.get_text(" ")
@@ -72,17 +73,21 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # RESULT ENGINE (STRICT)
+                # --- STABLE WIN/LOSS DETECTION ---
                 result = "-"
+                # Check for label classes first
                 if block.find(class_=re.compile(r'label-success|text-green')):
                     result = "W"
                 elif block.find(class_=re.compile(r'label-danger|text-red')):
                     result = "L"
                 
+                # Keyword backup only if classes fail
                 if result == "-":
                     upper_text = all_text.upper()
-                    if "WON" in upper_text or "WIN" in upper_text: result = "W"
-                    elif "LOST" in upper_text or "LOSE" in upper_text or "LOSS" in upper_text: result = "L"
+                    if "WON" in upper_text or "WIN" in upper_text:
+                        result = "W"
+                    elif "LOST" in upper_text or "LOSE" in upper_text or "LOSS" in upper_text:
+                        result = "L"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
@@ -95,7 +100,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Literal date and result text fetched.")
+        print("Success: Literal dates and stable results saved.")
 
     except Exception as e:
         print(f"Critical Error: {e}")
