@@ -39,14 +39,16 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING
+                # CLEANING (Fixed to keep parentheses like (W))
                 clean_text = re.search(r'[^@]*', selection).group(0)
-                clean_text = re.sub(r'\(.*?\)', '', clean_text)
+                # Removed the regex that destroyed parentheses here
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
                     clean_text = re.sub(term, '', clean_text)
                 
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
+                    # Clean up any trailing hyphens that might be left over
+                    team_name = team_name.strip(" -")
                     if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
                     pick_title = f"{team_name} ML"
                 else:
@@ -57,19 +59,15 @@ def scrape_blogabet():
 
                 # --- BULLETPROOF COUNTRY DETECTION ---
                 country_name = "World"
-                
-                # Scan all small text elements specifically for the category path
                 for text_elem in block.find_all(['small', 'span', 'div', 'a']):
                     raw_str = text_elem.get_text(" ", strip=True)
-                    # Look for the exact Breadcrumb pattern
                     if "Basketball" in raw_str and "/" in raw_str:
-                        # Split safely: "Basketball / USA / NBA" -> ['Basketball', 'USA', 'NBA']
                         parts = [p.strip() for p in raw_str.split('/')]
                         if len(parts) >= 2 and parts[0].upper() == "BASKETBALL":
                             country_name = parts[1]
                             break
 
-                # --- THE ULTIMATE DATE FIX (UNTOUCHED) ---
+                # --- THE ULTIMATE DATE FIX ---
                 date_text = "-"
                 date_container = block.select_one('.feed-date, .date, .time')
                 if date_container:
@@ -87,7 +85,7 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- FIXED RESULT DETECTION (UNTOUCHED) ---
+                # --- FIXED RESULT DETECTION ---
                 result = "-"
                 is_lost = block.find(class_=re.compile(r'label-danger|text-red|lost|loss|status-lost'))
                 is_won = block.find(class_=re.compile(r'label-success|text-green|win|won|status-won'))
@@ -119,7 +117,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Country paths precisely targeted and saved.")
+        print("Success: Full team names including parentheses are now saved.")
 
     except Exception as e:
         print(f"Error: {e}")
