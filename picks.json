@@ -6,73 +6,73 @@
     "picks": [
         {
             "id": 1,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "Fribourg -34.5",
             "odds": "1.8",
-            "result": "L"
+            "result": "W"
         },
         {
             "id": 2,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "Klosterneuburg Dukes ML",
             "odds": "3.7",
             "result": "W"
         },
         {
             "id": 3,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "DSK Basketball Brandys  +54.5",
             "odds": "1.83",
             "result": "W"
         },
         {
             "id": 4,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "MKS Pruszkow  -16.5",
             "odds": "1.83",
-            "result": "L"
+            "result": "W"
         },
         {
             "id": 5,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "Istanbul Genclikspor  -19.5",
             "odds": "1.83",
-            "result": "L"
+            "result": "W"
         },
         {
             "id": 6,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "The Hoops  -17.5",
             "odds": "1.83",
-            "result": "L"
+            "result": "-"
         },
         {
             "id": 7,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "APR BBC  -41.5",
             "odds": "1.83",
-            "result": "L"
+            "result": "W"
         },
         {
             "id": 8,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "NKA Pecs ML",
             "odds": "2.12",
-            "result": "L"
+            "result": "-"
         },
         {
             "id": 9,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "Beira Mar +16.5",
             "odds": "1.83",
             "result": "W"
         },
         {
             "id": 10,
-            "date": "21 Mar 2026",
+            "date": "22 Mar 2026",
             "pick": "Vimpelin Veto ML",
             "odds": "1.83",
-            "result": "L"
+            "result": "-"
         }
     ]
 }
