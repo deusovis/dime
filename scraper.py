@@ -21,50 +21,49 @@ def scrape_blogabet():
         seen_titles = set()
         
         for block in pick_blocks:
-            if len(new_picks) >= 5: break
+            if len(new_picks) >= 30: break 
             
             try:
-                # 1. CAPTURE RAW SELECTION
+                # 1. GET RAW DATA
                 matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # 2. APPLY HEAVY-DUTY SCRUBBING
-                # Rule A: Convert "Money Line" to "ML"
-                pick_title = re.sub(r'(?i)Money Line', 'ML', selection)
-                
-                # Rule B: Remove the @ symbol and any trailing odds (e.g., @1.80)
-                pick_title = re.search(r'[^@]*', pick_title).group(0)
-                
-                # Rule C: Remove Parentheses and anything inside them (e.g., "(Spread)" or "(Massagno)")
-                pick_title = re.sub(r'\(.*?\)', '', pick_title)
-                
-                # Rule D: Remove unwanted bookie jargon (Spread, Game Lines, Handicap, etc.)
+                # 2. THE CLEANING ENGINE
+                # Remove everything after '@' (the odds)
+                clean_text = re.search(r'[^@]*', selection).group(0)
+                # Remove parentheses and content inside
+                clean_text = re.sub(r'\(.*?\)', '', clean_text)
+                # Remove jargon labels
                 unwanted = [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']
                 for term in unwanted:
-                    pick_title = re.sub(term, '', pick_title)
+                    clean_text = re.sub(term, '', clean_text)
                 
-                # Rule E: Final cleanup of extra spaces
-                pick_title = re.sub(r'\s+', ' ', pick_title).strip()
+                # 3. APPLY ML PREFIX RULE
+                if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
+                    # Strip "Money Line" and "ML" out to get just the team name
+                    team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
+                    # If cleaning made it empty, fallback to the first team in the matchup
+                    if not team_name:
+                        team_name = matchup.split('-')[0].split('vs')[0].strip()
+                    pick_title = f"ML {team_name}"
+                else:
+                    # Keep as Team Name + Handicap (e.g., Fribourg -34.5)
+                    pick_title = clean_text.strip()
 
+                # Deduplicate based on final formatted title
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # 3. DATE
+                # 4. DATE, ODDS, & RESULT (Same reliable logic)
                 date_container = block.find(class_=re.compile(r'feed-date|date'))
-                if date_container:
-                    spans = date_container.find_all('span')
-                    date_text = " ".join([s.get_text(strip=True) for s in spans]) if spans else date_container.get_text(strip=True)
-                else:
-                    date_text = str(datetime.date.today())
+                date_text = " ".join([s.get_text(strip=True) for s in date_container.find_all('span')]) if date_container and date_container.find_all('span') else (date_container.get_text(strip=True) if date_container else str(datetime.date.today()))
 
-                # 4. ODDS (Keep this for the separate Odds column)
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # 5. RESULT
                 result = "-"
                 if block.find(class_=re.compile(r'label-success|text-green|win|won')):
                     result = "W"
@@ -89,7 +88,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(new_picks, f, indent=4)
-        print(f"Successfully updated picks.json with {len(new_picks)} ultra-clean picks.")
+        print(f"Successfully saved {len(new_picks)} picks with ML prefix formatting.")
         
     except Exception as e:
         print(f"Critical Scraper Error: {e}")
