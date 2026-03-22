@@ -39,20 +39,24 @@ def scrape_blogabet():
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING (Fixed to keep parentheses like (W))
+                # CLEANING (Keep (W) but destroy empty parens)
                 clean_text = re.search(r'[^@]*', selection).group(0)
-                # Removed the regex that destroyed parentheses here
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
                     clean_text = re.sub(term, '', clean_text)
                 
+                # Sweep up the empty parentheses left behind
+                clean_text = re.sub(r'\(\s*\)', '', clean_text)
+                
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
-                    # Clean up any trailing hyphens that might be left over
                     team_name = team_name.strip(" -")
+                    # Clean up any double spaces
+                    team_name = re.sub(r'\s+', ' ', team_name).strip()
+                    
                     if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
                     pick_title = f"{team_name} ML"
                 else:
-                    pick_title = clean_text.strip()
+                    pick_title = re.sub(r'\s+', ' ', clean_text).strip()
 
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
@@ -117,7 +121,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Full team names including parentheses are now saved.")
+        print("Success: Removed empty parentheses while keeping (W).")
 
     except Exception as e:
         print(f"Error: {e}")
