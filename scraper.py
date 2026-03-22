@@ -26,7 +26,6 @@ def scrape_blogabet():
 
         # 2. GET 10 PICKS
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
-        # CRITICAL FIX: Always use the new BeautifulSoup object for the picks
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
@@ -35,16 +34,18 @@ def scrape_blogabet():
             if len(final_data["picks"]) >= 10: break 
             
             try:
+                # MATCHUP & SELECTION
                 matchup = block.find('h3').get_text(strip=True) if block.find('h3') else ""
                 selection_elem = block.find(class_=re.compile(r'pick-line|pick-name|selection'))
                 selection = selection_elem.get_text(strip=True) if selection_elem else matchup
                 
-                # CLEANING & ML FORMATTING
+                # CLEANING
                 clean_text = re.search(r'[^@]*', selection).group(0)
                 clean_text = re.sub(r'\(.*?\)', '', clean_text)
                 for term in [r'(?i)Spread', r'(?i)Game Lines', r'(?i)Odds', r'(?i)Handicap', r'(?i)Main']:
                     clean_text = re.sub(term, '', clean_text)
                 
+                # TEAM NAME + ML RULE
                 if "MONEY LINE" in selection.upper() or "ML" in selection.upper():
                     team_name = re.sub(r'(?i)Money Line|ML', '', clean_text).strip()
                     if not team_name: team_name = matchup.split('-')[0].split('vs')[0].strip()
@@ -55,39 +56,42 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- NEW BULLETPROOF DATE LOGIC ---
+                # --- TARGETED DATE FIX ---
+                # We only look for the specific 'feed-date' or 'date' class
                 date_text = ""
-                # Search for any div or span with 'date' in the class
-                date_elem = block.find(class_=re.compile(r'feed-date|date|time'))
+                date_elem = block.find(class_=re.compile(r'feed-date|date'))
                 if date_elem:
-                    date_text = " ".join(date_elem.stripped_strings)
+                    # Get the text but exclude any nested time or extra metadata
+                    date_text = date_elem.get_text(" ", strip=True)
+                    # If the date is too long (contains time), take only the first 11 characters (DD Mon YYYY)
+                    if len(date_text) > 11:
+                        date_match = re.search(r'\d{1,2}\s+[A-Za-z]{3}\s+\d{4}', date_text)
+                        if date_match:
+                            date_text = date_match.group(0)
                 
-                # If class-based search fails, scan raw text for date patterns (e.g., 21 Mar)
-                if not date_text or len(date_text) < 3:
-                    all_text_content = block.get_text(" ")
-                    # Regex looks for: 1-2 digits, then 3 letters (month), then optional 4 digits (year)
-                    match = re.search(r'\d{1,2}\s+[A-Za-z]{3}(\s+\d{4})?', all_text_content)
-                    date_text = match.group(0) if match else str(datetime.date.today())
+                if not date_text:
+                    date_text = str(datetime.date.today())
 
-                # ODDS
+                # ODDS & RESULT
                 all_text = block.get_text(" ")
                 odds_val = "-"
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # RESULT ENGINE (Solid Red Fix)
+                # RESULT ENGINE (Ensuring Red L)
                 result = "-"
-                if block.find(class_=re.compile(r'label-danger|text-red|lost|loss|lost-pick')):
+                # Check for negative profit symbol
+                if "-" in all_text and any(x in all_text for x in ["00", "50", "units"]):
                     result = "L"
-                elif block.find(class_=re.compile(r'label-success|text-green|win|won|win-pick')):
+                elif block.find(class_=re.compile(r'label-danger|text-red|lost|loss')):
+                    result = "L"
+                elif block.find(class_=re.compile(r'label-success|text-green|win|won')):
                     result = "W"
                 
                 if result == "-":
                     upper_text = all_text.upper()
-                    if any(x in upper_text for x in ["LOST", "LOSS", "LOSE", "-1.00", "-0.50"]):
-                        result = "L"
-                    elif any(x in upper_text for x in ["WON", "WIN", "PROFIT"]):
-                        result = "W"
+                    if "LOST" in upper_text or "LOSS" in upper_text: result = "L"
+                    elif "WON" in upper_text or "WIN" in upper_text: result = "W"
 
                 final_data["picks"].append({
                     "id": len(final_data["picks"]) + 1, 
@@ -96,16 +100,14 @@ def scrape_blogabet():
                     "odds": odds_val, 
                     "result": result
                 })
-            except Exception as e:
-                print(f"Skipping pick due to internal error: {e}")
-                continue
+            except: continue
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print(f"Scrape successful. Saved {len(final_data['picks'])} picks.")
+        print("Success: Fixed dates and results.")
 
     except Exception as e:
-        print(f"Scraper failed completely: {e}")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     scrape_blogabet()
