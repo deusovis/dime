@@ -72,22 +72,51 @@
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
 
-            // Flag Generator Logic
+            // Comprehensive Flag Generator Logic
             const getFlagIcon = (countryName) => {
                 if (!countryName || countryName === "World") {
                     return <i className="fa-solid fa-globe text-dimeGold text-[14px] mr-2"></i>;
                 }
                 
                 const countryMap = {
-                    'USA': 'us', 'UNITED STATES': 'us', 'SPAIN': 'es', 'FRANCE': 'fr',
-                    'GERMANY': 'de', 'ITALY': 'it', 'TURKEY': 'tr', 'GREECE': 'gr',
-                    'AUSTRALIA': 'au', 'SERBIA': 'rs', 'LITHUANIA': 'lt', 'EUROPE': 'eu',
-                    'BRAZIL': 'br', 'CANADA': 'ca', 'ARGENTINA': 'ar', 'CHINA': 'cn',
-                    'JAPAN': 'jp', 'PHILIPPINES': 'ph', 'SOUTH KOREA': 'kr', 'ISRAEL': 'il',
-                    'INTERNATIONAL': 'eu', 'WORLD': 'un'
+                    'AFGHANISTAN': 'af', 'ALBANIA': 'al', 'ALGERIA': 'dz', 'ANDORRA': 'ad', 'ANGOLA': 'ao',
+                    'ARGENTINA': 'ar', 'ARMENIA': 'am', 'AUSTRALIA': 'au', 'AUSTRIA': 'at', 'AZERBAIJAN': 'az',
+                    'BAHAMAS': 'bs', 'BAHRAIN': 'bh', 'BANGLADESH': 'bd', 'BARBADOS': 'bb', 'BELARUS': 'by',
+                    'BELGIUM': 'be', 'BELIZE': 'bz', 'BENIN': 'bj', 'BHUTAN': 'bt', 'BOLIVIA': 'bo',
+                    'BOSNIA AND HERZEGOVINA': 'ba', 'BOSNIA': 'ba', 'BOTSWANA': 'bw', 'BRAZIL': 'br', 'BULGARIA': 'bg',
+                    'BURKINA FASO': 'bf', 'BURUNDI': 'bi', 'CABO VERDE': 'cv', 'CAMBODIA': 'kh', 'CAMEROON': 'cm',
+                    'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
+                    'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
+                    'CYPRUS': 'cy', 'CZECH REPUBLIC': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
+                    'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
+                    'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
+                    'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
+                    'GEORGIA': 'ge', 'GERMANY': 'de', 'GHANA': 'gh', 'GREECE': 'gr', 'GUATEMALA': 'gt',
+                    'GUINEA': 'gn', 'GUYANA': 'gy', 'HAITI': 'ht', 'HONDURAS': 'hn', 'HUNGARY': 'hu',
+                    'ICELAND': 'is', 'INDIA': 'in', 'INDONESIA': 'id', 'IRAN': 'ir', 'IRAQ': 'iq',
+                    'IRELAND': 'ie', 'ISRAEL': 'il', 'ITALY': 'it', 'JAMAICA': 'jm', 'JAPAN': 'jp',
+                    'JORDAN': 'jo', 'KAZAKHSTAN': 'kz', 'KENYA': 'ke', 'KOSOVO': 'xk', 'KUWAIT': 'kw',
+                    'KYRGYZSTAN': 'kg', 'LAOS': 'la', 'LATVIA': 'lv', 'LEBANON': 'lb', 'LIBERIA': 'lr',
+                    'LIBYA': 'ly', 'LIECHTENSTEIN': 'li', 'LITHUANIA': 'lt', 'LUXEMBOURG': 'lu', 'MADAGASCAR': 'mg',
+                    'MALAWI': 'mw', 'MALAYSIA': 'my', 'MALDIVES': 'mv', 'MALI': 'ml', 'MALTA': 'mt',
+                    'MEXICO': 'mx', 'MOLDOVA': 'md', 'MONACO': 'mc', 'MONGOLIA': 'mn', 'MONTENEGRO': 'me',
+                    'MOROCCO': 'ma', 'MOZAMBIQUE': 'mz', 'MYANMAR': 'mm', 'NAMIBIA': 'na', 'NEPAL': 'np',
+                    'NETHERLANDS': 'nl', 'NEW ZEALAND': 'nz', 'NICARAGUA': 'ni', 'NIGER': 'ne', 'NIGERIA': 'ng',
+                    'NORTH MACEDONIA': 'mk', 'MACEDONIA': 'mk', 'NORWAY': 'no', 'OMAN': 'om', 'PAKISTAN': 'pk',
+                    'PANAMA': 'pa', 'PARAGUAY': 'py', 'PERU': 'pe', 'PHILIPPINES': 'ph', 'POLAND': 'pl',
+                    'PORTUGAL': 'pt', 'PUERTO RICO': 'pr', 'QATAR': 'qa', 'ROMANIA': 'ro', 'RUSSIA': 'ru', 'RWANDA': 'rw',
+                    'SAUDI ARABIA': 'sa', 'SENEGAL': 'sn', 'SERBIA': 'rs', 'SINGAPORE': 'sg', 'SLOVAKIA': 'sk',
+                    'SLOVENIA': 'si', 'SOMALIA': 'so', 'SOUTH AFRICA': 'za', 'SOUTH KOREA': 'kr', 'REPUBLIC OF KOREA': 'kr',
+                    'KOREA REPUBLIC': 'kr', 'SPAIN': 'es', 'SRI LANKA': 'lk', 'SUDAN': 'sd', 'SWEDEN': 'se',
+                    'SWITZERLAND': 'ch', 'SYRIA': 'sy', 'TAIWAN': 'tw', 'TAJIKISTAN': 'tj', 'TANZANIA': 'tz',
+                    'THAILAND': 'th', 'TUNISIA': 'tn', 'TURKEY': 'tr', 'TÜRKİYE': 'tr', 'TURKMENISTAN': 'tm',
+                    'UGANDA': 'ug', 'UKRAINE': 'ua', 'UNITED ARAB EMIRATES': 'ae', 'UAE': 'ae', 'UNITED KINGDOM': 'gb',
+                    'UK': 'gb', 'USA': 'us', 'UNITED STATES': 'us', 'URUGUAY': 'uy', 'UZBEKISTAN': 'uz',
+                    'VENEZUELA': 've', 'VIETNAM': 'vn', 'YEMEN': 'ye', 'ZAMBIA': 'zm', 'ZIMBABWE': 'zw',
+                    'EUROPE': 'eu', 'INTERNATIONAL': 'un', 'WORLD': 'un'
                 };
 
-                const code = countryMap[countryName.toUpperCase()];
+                const code = countryMap[countryName.toUpperCase().trim()];
                 
                 if (code) {
                     return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} className="inline-block mr-2 shadow-sm rounded-sm" />;
@@ -190,7 +219,6 @@
                                                             <span>{pick.pick}</span>
                                                         </div>
                                                     </td>
-                                                    {/* UPDATED: text-dimeGold with a subtle drop shadow */}
                                                     <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm font-bold text-dimeGold font-mono drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">{pick.odds}</td>
                                                     <td className="px-6 py-5 md:px-10 md:py-7 text-right">
                                                         <span className={`px-3 py-1 md:px-5 md:py-2 rounded-lg font-black text-xs md:text-lg inline-block min-w-[60px] text-center ${
