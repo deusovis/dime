@@ -63,8 +63,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Sleek scrollbar for the table container */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3e6b4d;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
     </style>
 </head>
 <body>
@@ -80,7 +92,6 @@
             const [isLoading, setIsLoading] = React.useState(true);
 
             React.useEffect(() => {
-                // CACHE BUSTER ADDED HERE
                 fetch('picks.json?v=' + new Date().getTime())
                     .then(response => {
                         if (!response.ok) throw new Error("Could not find picks.json");
@@ -92,12 +103,10 @@
                     })
                     .catch(error => {
                         console.log("Using fallback data. Error: ", error);
+                        // Fallback data if file is missing
                         setPicksData([
                             { id: 1, date: '2026-03-22', pick: 'Lakers -5.5', odds: '1.95', result: 'W' },
-                            { id: 2, date: '2026-03-21', pick: 'Celtics O 215.5', odds: '1.90', result: 'W' },
-                            { id: 3, date: '2026-03-20', pick: 'Nuggets ML', odds: '2.10', result: 'L' },
-                            { id: 4, date: '2026-03-19', pick: 'Warriors -3.0', odds: '1.85', result: 'W' },
-                            { id: 5, date: '2026-03-18', pick: 'Heat U 208.5', odds: '2.05', result: 'W' }
+                            { id: 2, date: '2026-03-21', pick: 'Fribourg -34.5', odds: '1.80', result: 'W' }
                         ]);
                         setIsLoading(false);
                     });
@@ -172,15 +181,16 @@
                             <div className="bg-gradient-to-r from-dimeGreen/30 to-transparent px-6 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
                                 <h2 className="text-base md:text-2xl font-black uppercase text-white">Results</h2>
                                 <div className="md:hidden text-[10px] text-gray-400 animate-pulse flex items-center gap-1">
-                                    <i className="fa-solid fa-arrow-right-long mr-1"></i>Swipe
+                                    <i className="fa-solid fa-arrow-down mr-1"></i>Scroll for More
                                 </div>
-                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest text-right">LAST 5 PICKS</div>
+                                <div className="hidden md:block text-dimeAccent font-black text-sm tracking-widest text-right uppercase">Last 30 Picks</div>
                             </div>
                             
-                            <div className="overflow-x-auto no-scrollbar">
+                            {/* SCROLLABLE WRAPPER ADDED HERE */}
+                            <div className="overflow-x-auto overflow-y-auto max-h-[600px] custom-scrollbar">
                                 <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
-                                    <thead>
-                                        <tr className="bg-black/40 text-gray-500 text-[10px] md:text-xs uppercase tracking-[0.2em] font-black">
+                                    <thead className="sticky top-0 z-20">
+                                        <tr className="bg-black text-gray-500 text-[10px] md:text-xs uppercase tracking-[0.2em] font-black">
                                             <th className="px-6 py-4 md:px-10 md:py-6 text-center md:text-left">Date</th>
                                             <th className="px-6 py-4 md:px-10 md:py-6 text-center md:text-left">Pick</th>
                                             <th className="px-6 py-4 md:px-10 md:py-6 text-center md:text-left">Odds</th>
@@ -188,8 +198,8 @@
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-white/5 text-gray-200">
-                                        {picksData.map((pick) => (
-                                            <tr key={pick.id} className={`transition-all duration-300 group ${isLoading ? 'opacity-50' : 'hover:bg-dimeGreen/10 active:bg-dimeGreen/10'}`}>
+                                        {picksData.map((pick, index) => (
+                                            <tr key={index} className={`transition-all duration-300 group ${isLoading ? 'opacity-50' : 'hover:bg-dimeGreen/10 active:bg-dimeGreen/10'}`}>
                                                 <td className="px-6 py-5 md:px-10 md:py-7 text-xs md:text-sm text-gray-400 font-medium tracking-tight text-center md:text-left">{pick.date}</td>
                                                 <td className="px-6 py-5 md:px-10 md:py-7 whitespace-nowrap text-center md:text-left">
                                                     <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 font-black text-xs md:text-sm uppercase">
