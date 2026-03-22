@@ -9,7 +9,7 @@
             "date": "2026-03-22",
             "pick": "Fribourg -34.5",
             "odds": "1.8",
-            "result": "W"
+            "result": "L"
         },
         {
             "id": 2,
@@ -30,35 +30,35 @@
             "date": "2026-03-22",
             "pick": "MKS Pruszkow  -16.5",
             "odds": "1.83",
-            "result": "W"
+            "result": "L"
         },
         {
             "id": 5,
             "date": "2026-03-22",
             "pick": "Istanbul Genclikspor  -19.5",
             "odds": "1.83",
-            "result": "W"
+            "result": "L"
         },
         {
             "id": 6,
-            "date": "2026-03-22",
+            "date": "",
             "pick": "The Hoops  -17.5",
             "odds": "1.83",
-            "result": "-"
+            "result": "L"
         },
         {
             "id": 7,
             "date": "2026-03-22",
             "pick": "APR BBC  -41.5",
             "odds": "1.83",
-            "result": "W"
+            "result": "L"
         },
         {
             "id": 8,
-            "date": "2026-03-22",
+            "date": "",
             "pick": "NKA Pecs ML",
             "odds": "2.12",
-            "result": "-"
+            "result": "L"
         },
         {
             "id": 9,
@@ -69,10 +69,10 @@
         },
         {
             "id": 10,
-            "date": "2026-03-22",
+            "date": "",
             "pick": "Vimpelin Veto ML",
             "odds": "1.83",
-            "result": "-"
+            "result": "L"
         }
     ]
 }
