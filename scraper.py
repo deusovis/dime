@@ -55,21 +55,19 @@ def scrape_blogabet():
                 if pick_title in seen_titles: continue
                 seen_titles.add(pick_title)
 
-                # --- NEW: COUNTRY DETECTION (FIXED) ---
+                # --- BULLETPROOF COUNTRY DETECTION ---
                 country_name = "World"
                 
-                # Join all text in the block to safely find the "Basketball / Country / League" path
-                full_block_text = " ".join(block.stripped_strings)
-                # Regex looks for "Basketball / [Anything until next slash]"
-                country_match = re.search(r'(?i)Basketball\s*/\s*([^/]+)', full_block_text)
-                
-                if country_match:
-                    country_name = country_match.group(1).strip()
-                else:
-                    # Backup: Look for flag images if the text path is missing
-                    flag_img = block.find('img', src=re.compile(r'flag|country'))
-                    if flag_img:
-                        country_name = flag_img.get('title') or flag_img.get('alt') or "World"
+                # Scan all small text elements specifically for the category path
+                for text_elem in block.find_all(['small', 'span', 'div', 'a']):
+                    raw_str = text_elem.get_text(" ", strip=True)
+                    # Look for the exact Breadcrumb pattern
+                    if "Basketball" in raw_str and "/" in raw_str:
+                        # Split safely: "Basketball / USA / NBA" -> ['Basketball', 'USA', 'NBA']
+                        parts = [p.strip() for p in raw_str.split('/')]
+                        if len(parts) >= 2 and parts[0].upper() == "BASKETBALL":
+                            country_name = parts[1]
+                            break
 
                 # --- THE ULTIMATE DATE FIX (UNTOUCHED) ---
                 date_text = "-"
@@ -121,7 +119,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Country names are now correctly scraped.")
+        print("Success: Country paths precisely targeted and saved.")
 
     except Exception as e:
         print(f"Error: {e}")
