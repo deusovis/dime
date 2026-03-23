@@ -454,7 +454,7 @@
                                 Welcome to DIME Tipster. For over a decade, we have systematically dismantled sportsbooks through deep-level basketball analysis. We do not rely on luck, gut feelings, or biases; our approach is rooted entirely in verified statistics, advanced metrics, and an encyclopedic knowledge of global basketball markets. 
                             </p>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-12">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-10">
                                 <div className="bg-black/40 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center shadow-inner">
                                     <i className="fa-solid fa-calendar-check text-3xl text-dimeGold mb-3"></i>
                                     <span className="text-3xl font-black text-white tracking-tight mb-1">10+</span>
@@ -469,6 +469,31 @@
                                     <i className="fa-solid fa-arrow-trend-up text-3xl text-dimeAccent mb-3"></i>
                                     <span className="text-3xl font-black text-white tracking-tight mb-1">Consistent</span>
                                     <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Stable Growth</span>
+                                </div>
+                            </div>
+
+                            {/* NEW: Value Proposition & Guarantee Section */}
+                            <div className="w-full flex flex-col md:flex-row gap-4 md:gap-6 mb-12">
+                                {/* 100+ Picks */}
+                                <div className="flex-1 bg-gradient-to-br from-dimeGreen/20 to-black/60 border border-dimeGreen/30 rounded-2xl p-6 md:p-8 flex items-start gap-4 shadow-[0_0_20px_rgba(62,107,77,0.1)] transition-transform hover:-translate-y-1 duration-300">
+                                    <div className="bg-dimeGreen/20 p-3 rounded-xl flex-shrink-0">
+                                        <i className="fa-solid fa-crosshairs text-2xl text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]"></i>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base">100+ Picks Per Month</h4>
+                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed">During the active basketball season, you receive a massive volume of over 100 high-value, meticulously researched plays every single month to maximize your compounding growth.</p>
+                                    </div>
+                                </div>
+
+                                {/* Money Back Guarantee */}
+                                <div className="flex-1 bg-gradient-to-br from-dimeAccent/20 to-black/60 border border-dimeAccent/30 rounded-2xl p-6 md:p-8 flex items-start gap-4 shadow-[0_0_20px_rgba(219,156,42,0.1)] transition-transform hover:-translate-y-1 duration-300">
+                                    <div className="bg-dimeAccent/20 p-3 rounded-xl flex-shrink-0">
+                                        <i className="fa-solid fa-hand-holding-dollar text-2xl text-dimeGold drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"></i>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base">100% Risk-Free Guarantee</h4>
+                                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed">We back our expertise with absolute accountability. If a month ends in negative profit, you receive a full refund for your subscription—you risk absolutely nothing with us.</p>
+                                    </div>
                                 </div>
                             </div>
 
