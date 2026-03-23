@@ -92,12 +92,35 @@
         }
 
         .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-            opacity: 0;
+            animation: fadeIn 0.4s ease-out forwards;
         }
 
         @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Hide scrollbar for modal but allow scrolling */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Marquee Animation */
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+            animation: scroll-left 40s linear infinite;
+            display: flex;
+            width: max-content;
+        }
+        .animate-scroll:hover {
+            animation-play-state: paused;
         }
     </style>
 </head>
@@ -105,7 +128,6 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // NEW: Smooth progress hook from 0 to 100 over the exact loading duration
         const useLoadingProgress = (isActive, duration = 2800) => {
             const [progress, setProgress] = React.useState(0);
             
@@ -119,7 +141,7 @@
                     setProgress(newProgress);
                     
                     if (elapsed >= duration) clearInterval(interval);
-                }, 16); // Updates at ~60fps for smoothness
+                }, 16); 
                 
                 return () => clearInterval(interval);
             }, [isActive, duration]);
@@ -127,9 +149,19 @@
             return progress;
         };
 
+        // Basketball leagues for the Marquee
+        const leagues = [
+            "🇺🇸 NBA", "🇪🇺 EuroLeague", "🇪🇸 Liga ACB", "🇮🇹 LBA", "🇫🇷 LNB Pro A", 
+            "🇩🇪 BBL", "🇹🇷 BSL", "🇬🇷 GBL", "🇦🇺 NBL", "🇨🇳 CBA", 
+            "🇦🇷 LNB", "🇧🇷 NBB", "🌎 FIBA World", "🇪🇺 EuroCup", "🏀 BCL"
+        ];
+        // Duplicate the array to create a seamless infinite loop
+        const doubledLeagues = [...leagues, ...leagues];
+
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
+            const [isAboutOpen, setIsAboutOpen] = React.useState(false);
             const progress = useLoadingProgress(isLoading);
 
             const getFlagIcon = (countryName) => {
@@ -206,7 +238,6 @@
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(62,107,77,0.15)_0%,_transparent_60%)]"></div>
                         
                         <div className="relative flex flex-col items-center z-10 w-full max-w-sm">
-                            
                             <div className="relative w-32 h-32 md:w-48 md:h-48 flex justify-center items-end mb-4">
                                 <div className="absolute w-full h-full flex justify-center items-end animate-bounce-heavy">
                                     <i className="fa-solid fa-basketball text-[7rem] md:text-[10rem] text-[#ea580c] animate-spin-ball drop-shadow-[0_0_30px_rgba(62,107,77,0.8)]"></i>
@@ -218,7 +249,6 @@
                             <div className="mt-12 flex flex-col items-center w-full gap-6">
                                 <img src="logo.png" alt="DIME Tipster Logo" className="h-24 md:h-36 w-auto object-contain logo-glow" />
                                 
-                                {/* NEW: Rolling Ball Progress Bar */}
                                 <div className="w-full flex flex-col gap-2 bg-black/40 p-4 rounded-xl border border-dimeGreen/20 shadow-[0_0_20px_rgba(62,107,77,0.15)]">
                                     <div className="flex justify-between w-full px-1 text-[10px] md:text-xs font-black tracking-widest uppercase text-gray-400">
                                         <span>Loading</span>
@@ -226,13 +256,11 @@
                                     </div>
                                     
                                     <div className="relative w-full h-1.5 md:h-2 bg-black/80 rounded-full border border-white/5 overflow-visible shadow-inner">
-                                        {/* The filled green track */}
                                         <div 
                                             className="absolute top-0 left-0 h-full bg-gradient-to-r from-dimeGreen to-[#4ade80] rounded-full shadow-[0_0_10px_rgba(74,222,128,0.4)] transition-all duration-75 ease-linear"
                                             style={{ width: `${progress}%` }}
                                         ></div>
                                         
-                                        {/* The rolling basketball */}
                                         <div 
                                             className="absolute top-1/2 -translate-y-1/2 -ml-2.5 z-10 transition-all duration-75 ease-linear"
                                             style={{ left: `${progress}%` }}
@@ -264,11 +292,25 @@
                             </svg>
                         </div>
 
-                        <div className="flex-1 flex justify-end pt-2 md:pt-4"> 
+                        <div className="flex-1 flex justify-end items-center gap-4 pt-2 md:pt-4"> 
+                            {/* NEW: About Button */}
+                            <button 
+                                onClick={() => setIsAboutOpen(true)} 
+                                className="text-gray-400 hover:text-white font-black text-xs md:text-sm uppercase tracking-widest transition-colors hidden md:block border-b-2 border-transparent hover:border-dimeGold pb-1">
+                                About Us
+                            </button>
+                            
                             <a href="https://t.me/deimantas" target="_blank" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
                                 <i className="fa-brands fa-telegram text-lg md:text-xl"></i>
                                 <span>Join Now</span>
                             </a>
+                            
+                            {/* Mobile About Button Icon */}
+                            <button 
+                                onClick={() => setIsAboutOpen(true)} 
+                                className="md:hidden text-gray-400 hover:text-white text-xl">
+                                <i className="fa-solid fa-circle-info"></i>
+                            </button>
                         </div>
                     </nav>
 
@@ -407,6 +449,122 @@
                             <p className="text-gray-500 text-[10px] md:text-xs font-black tracking-[0.3em] uppercase">© 2026 DIME TIPSTER</p>
                         </footer>
                     </main>
+
+                    {/* NEW: About Section Modal */}
+                    {isAboutOpen && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md fade-in">
+                            <div className="relative w-full max-w-4xl max-h-[95vh] overflow-y-auto hide-scrollbar glass-card rounded-2xl md:rounded-[2rem] border border-dimeGreen/40 shadow-[0_0_50px_rgba(62,107,77,0.3)]">
+                                
+                                {/* Header / Close Button */}
+                                <div className="sticky top-0 z-20 flex justify-end p-4 md:p-6 bg-gradient-to-b from-slate-900 via-slate-900/90 to-transparent">
+                                    <button onClick={() => setIsAboutOpen(false)} className="text-gray-400 hover:text-white text-3xl transition-colors drop-shadow-md">
+                                        <i className="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+
+                                <div className="px-6 pb-12 md:px-16 md:pb-16 flex flex-col items-center">
+                                    
+                                    <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-6 text-center leading-tight">
+                                        10+ Years of <br/> <span className="text-dimeAccent">Data-Driven</span> Dominance
+                                    </h2>
+
+                                    <div className="w-16 h-1 bg-dimeGreen rounded-full mb-8"></div>
+
+                                    <p className="text-gray-300 text-sm md:text-lg text-center font-medium leading-relaxed mb-10 max-w-2xl">
+                                        Welcome to DIME Tipster. For over a decade, we have systematically dismantled sportsbooks through deep-level basketball analysis. We do not rely on luck, gut feelings, or biases; our approach is rooted entirely in verified statistics, advanced metrics, and an encyclopedic knowledge of global basketball markets. 
+                                    </p>
+
+                                    {/* Stats Grid */}
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-12">
+                                        <div className="bg-black/40 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center shadow-inner">
+                                            <i className="fa-solid fa-calendar-check text-3xl text-dimeGold mb-3"></i>
+                                            <span className="text-3xl font-black text-white tracking-tight mb-1">10+</span>
+                                            <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Years Profitable</span>
+                                        </div>
+                                        <div className="bg-black/40 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center shadow-inner">
+                                            <i className="fa-solid fa-shield-halved text-3xl text-green-500 mb-3"></i>
+                                            <span className="text-3xl font-black text-white tracking-tight mb-1">100%</span>
+                                            <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Verified Tracking</span>
+                                        </div>
+                                        <div className="bg-black/40 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center shadow-inner">
+                                            <i className="fa-solid fa-arrow-trend-up text-3xl text-dimeAccent mb-3"></i>
+                                            <span className="text-3xl font-black text-white tracking-tight mb-1">Consistent</span>
+                                            <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Stable Growth</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Trust Graph */}
+                                    <div className="w-full mb-12 bg-black/60 rounded-xl p-4 md:p-8 border border-white/10 relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_rgba(219,156,42,0.1),_transparent_50%)]"></div>
+                                        
+                                        <h3 className="text-white text-sm md:text-base font-black uppercase tracking-widest mb-6 flex items-center gap-3 relative z-10">
+                                            <i className="fa-solid fa-chart-area text-dimeGold"></i>
+                                            Verified Equity Growth (2016-2026)
+                                        </h3>
+                                        
+                                        {/* CSS/SVG Faked Graph for visual trust */}
+                                        <div className="w-full h-48 md:h-64 relative z-10 flex flex-col justify-end border-l border-b border-gray-700 pb-2 pl-2">
+                                            
+                                            {/* Y-Axis Labels */}
+                                            <div className="absolute left-[-25px] top-0 h-full flex flex-col justify-between text-[8px] md:text-[10px] text-gray-500 font-mono py-2">
+                                                <span>+500u</span>
+                                                <span>+250u</span>
+                                                <span>0u</span>
+                                            </div>
+
+                                            <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 300">
+                                                <defs>
+                                                    <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
+                                                        <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
+                                                        <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
+                                                    </linearGradient>
+                                                </defs>
+                                                {/* Graph Fill Area */}
+                                                <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20 L 1000,300 L 0,300 Z" fill="url(#gradientArea)" />
+                                                {/* Graph Line */}
+                                                <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20" fill="none" stroke="#22c55e" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
+                                                {/* Data Points */}
+                                                <circle cx="1000" cy="20" r="8" fill="#fff" stroke="#22c55e" strokeWidth="4" className="animate-pulse" />
+                                            </svg>
+                                        </div>
+                                        
+                                        {/* X-Axis Labels */}
+                                        <div className="flex justify-between text-[8px] md:text-[10px] text-gray-500 font-mono mt-3 ml-2">
+                                            <span>2016</span>
+                                            <span>2018</span>
+                                            <span>2020</span>
+                                            <span>2022</span>
+                                            <span>2024</span>
+                                            <span className="text-dimeGold font-bold">2026</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Leagues Marquee Section */}
+                                    <div className="w-full border-t border-white/10 pt-8 mt-4 overflow-hidden">
+                                        <h3 className="text-center text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.2em] font-black mb-6">
+                                            Mastering the Global Hardwood
+                                        </h3>
+                                        
+                                        <div className="relative flex overflow-x-hidden group bg-black/20 py-4 rounded-xl border border-white/5">
+                                            {/* Fade Gradients for edge smoothness */}
+                                            <div className="absolute top-0 left-0 w-12 md:w-24 h-full bg-gradient-to-r from-[#0d141c] to-transparent z-10 pointer-events-none"></div>
+                                            <div className="absolute top-0 right-0 w-12 md:w-24 h-full bg-gradient-to-l from-[#0d141c] to-transparent z-10 pointer-events-none"></div>
+                                            
+                                            <div className="animate-scroll whitespace-nowrap flex items-center gap-8 md:gap-12 px-4">
+                                                {doubledLeagues.map((league, idx) => (
+                                                    <span key={idx} className="text-gray-300 font-black text-sm md:text-lg tracking-widest uppercase hover:text-white hover:scale-110 transition-all cursor-default">
+                                                        {league}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 </div>
             );
         };
