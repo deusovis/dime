@@ -123,7 +123,6 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // CHANGED: Reduced loading animation duration from 2800ms to 1200ms
         const useLoadingProgress = (isActive, duration = 1200) => {
             const [progress, setProgress] = React.useState(0);
             
@@ -145,38 +144,33 @@
             return progress;
         };
 
-        // CHANGED: Replaced Wikipedia SVGs with guaranteed PNG generation matching your dark/gold theme
+        // Real non-US top 25 global basketball league logos from Wikimedia CDN
         const topLeagues = [
-            { name: "NBA", logo: "https://ui-avatars.com/api/?name=NBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "EuroLeague", logo: "https://ui-avatars.com/api/?name=EL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "Liga ACB", logo: "https://ui-avatars.com/api/?name=ACB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "LBA Italy", logo: "https://ui-avatars.com/api/?name=LBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "LNB Pro A", logo: "https://ui-avatars.com/api/?name=LNB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "BBL Germany", logo: "https://ui-avatars.com/api/?name=BBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "BSL Turkey", logo: "https://ui-avatars.com/api/?name=BSL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "GBL Greece", logo: "https://ui-avatars.com/api/?name=GBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "NBL Australia", logo: "https://ui-avatars.com/api/?name=NBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "CBA China", logo: "https://ui-avatars.com/api/?name=CBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "FIBA", logo: "https://ui-avatars.com/api/?name=FIB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "EuroCup", logo: "https://ui-avatars.com/api/?name=EC&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "BCL", logo: "https://ui-avatars.com/api/?name=BCL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "B.League", logo: "https://ui-avatars.com/api/?name=BL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "KBL", logo: "https://ui-avatars.com/api/?name=KBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "PBA", logo: "https://ui-avatars.com/api/?name=PBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "ABA League", logo: "https://ui-avatars.com/api/?name=ABA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "LKL", logo: "https://ui-avatars.com/api/?name=LKL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "PLK", logo: "https://ui-avatars.com/api/?name=PLK&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "LNB Arg", logo: "https://ui-avatars.com/api/?name=ARG&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "NBB Brazil", logo: "https://ui-avatars.com/api/?name=NBB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "BSN P.Rico", logo: "https://ui-avatars.com/api/?name=BSN&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "CEBL Canada", logo: "https://ui-avatars.com/api/?name=CEB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "BAL Africa", logo: "https://ui-avatars.com/api/?name=BAL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "VTB United", logo: "https://ui-avatars.com/api/?name=VTB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "BNXT League", logo: "https://ui-avatars.com/api/?name=BNX&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "Winner League", logo: "https://ui-avatars.com/api/?name=ISR&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "KLS Serbia", logo: "https://ui-avatars.com/api/?name=KLS&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "A1 Croatia", logo: "https://ui-avatars.com/api/?name=CRO&background=0a0f14&color=d4af37&bold=true&rounded=true" },
-            { name: "LEB Oro", logo: "https://ui-avatars.com/api/?name=LEB&background=0a0f14&color=d4af37&bold=true&rounded=true" }
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/EuroLeague_logo.svg/320px-EuroLeague_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Liga_Endesa_logo.svg/320px-Liga_Endesa_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/69/Lega_Basket_Serie_A_logo.svg/320px-Lega_Basket_Serie_A_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/LNB_Pro_A_logo.svg/320px-LNB_Pro_A_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Basketball_Bundesliga_logo.svg/320px-Basketball_Bundesliga_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/Basketbol_S%C3%BCper_Ligi_logo.svg/320px-Basketbol_S%C3%BCper_Ligi_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/Greek_Basket_League_logo.svg/320px-Greek_Basket_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/64/National_Basketball_League_%28Australia%29_logo.svg/320px-National_Basketball_League_%28Australia%29_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Chinese_Basketball_Association_logo.svg/320px-Chinese_Basketball_Association_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/14/ABA_League_logo.svg/320px-ABA_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/b/b3/VTB_United_League_logo.svg/320px-VTB_United_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f8/B.League_logo.svg/320px-B.League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/Korean_Basketball_League_logo.svg/320px-Korean_Basketball_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/61/Philippine_Basketball_Association_logo.svg/320px-Philippine_Basketball_Association_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Lietuvos_krep%C5%A1inio_lyga_logo.svg/320px-Lietuvos_krep%C5%A1inio_lyga_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Israeli_Basketball_Premier_League_logo.svg/320px-Israeli_Basketball_Premier_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/FIBA_logo.svg/320px-FIBA_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/22/EuroCup_Basketball_logo.svg/320px-EuroCup_Basketball_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/27/Basketball_Champions_League_logo.svg/320px-Basketball_Champions_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Novo_Basquete_Brasil_logo.svg/320px-Novo_Basquete_Brasil_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Liga_Nacional_de_B%C3%A1squet_logo.svg/320px-Liga_Nacional_de_B%C3%A1squet_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a3/Canadian_Elite_Basketball_League_logo.svg/320px-Canadian_Elite_Basketball_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Baloncesto_Superior_Nacional_logo.svg/320px-Baloncesto_Superior_Nacional_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/BNXT_League_logo.svg/320px-BNXT_League_logo.svg.png" },
+            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1a/Basketball_Africa_League_logo.svg/320px-Basketball_Africa_League_logo.svg.png" }
         ];
         const doubledLeagues = [...topLeagues, ...topLeagues];
 
@@ -253,7 +247,6 @@
                         } else {
                             setData({ stats: { roi: '+18.4%', units: '+32.1' }, picks: Array.isArray(json) ? json : [] });
                         }
-                        // CHANGED: Match fetching timer to new UI timer
                         setTimeout(() => setIsLoading(false), 1200); 
                     })
                     .catch(() => {
@@ -312,7 +305,7 @@
                             
                             <button 
                                 onClick={scrollToAbout} 
-                                className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-8 mt-6 md:mt-8 lg:mt-14">
+                                className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-8 mt-6 md:mt-8 lg:mt-12 self-start">
                                 About Us
                             </button>
                         </div>
@@ -522,9 +515,9 @@
                                 </h3>
                                 
                                 <div className="w-full h-48 md:h-64 relative z-10 flex flex-col justify-end border-l border-b border-gray-700 pb-2 pl-2">
-                                    <div className="absolute left-[-25px] top-0 h-full flex flex-col justify-between text-[8px] md:text-[10px] text-gray-500 font-mono py-2">
-                                        <span>+500u</span>
-                                        <span>+250u</span>
+                                    <div className="absolute left-[-35px] top-0 h-full flex flex-col justify-between text-[8px] md:text-[10px] text-gray-500 font-mono py-2">
+                                        <span>+2400u</span>
+                                        <span>+1200u</span>
                                         <span>0u</span>
                                     </div>
 
@@ -561,13 +554,14 @@
                                     <div className="absolute top-0 left-0 w-12 md:w-24 h-full bg-gradient-to-r from-[#0d141c] to-transparent z-10 pointer-events-none"></div>
                                     <div className="absolute top-0 right-0 w-12 md:w-24 h-full bg-gradient-to-l from-[#0d141c] to-transparent z-10 pointer-events-none"></div>
                                     
-                                    <div className="animate-scroll whitespace-nowrap flex items-center gap-8 md:gap-12 px-4">
+                                    <div className="animate-scroll whitespace-nowrap flex items-center gap-10 md:gap-16 px-4">
                                         {doubledLeagues.map((league, idx) => (
-                                            <div key={idx} className="flex items-center gap-2 md:gap-3 cursor-default group/item">
-                                                <img src={league.logo} alt={league.name} className="w-5 md:w-7 h-auto rounded-[2px] shadow-[0_2px_5px_rgba(0,0,0,0.8)] opacity-70 group-hover/item:opacity-100 transition-all duration-300 border border-white/10" />
-                                                <span className="text-gray-400 font-black text-xs md:text-sm tracking-widest uppercase group-hover/item:text-white transition-all">
-                                                    {league.name}
-                                                </span>
+                                            <div key={idx} className="flex items-center justify-center w-14 md:w-20 h-14 md:h-20 shrink-0">
+                                                <img 
+                                                    src={league.logo} 
+                                                    alt="League Logo" 
+                                                    className="max-w-full max-h-full object-contain filter drop-shadow-[0_0_5px_rgba(255,255,255,0.1)] hover:scale-110 hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300" 
+                                                />
                                             </div>
                                         ))}
                                     </div>
