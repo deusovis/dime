@@ -144,42 +144,26 @@
             return progress;
         };
 
-        // Top 30 FIBA Countries excluding USA (using FlagCDN for reliable icons)
-        const topCountries = [
-            { name: "Spain", logo: "https://flagcdn.com/w80/es.png" },
-            { name: "Germany", logo: "https://flagcdn.com/w80/de.png" },
-            { name: "Serbia", logo: "https://flagcdn.com/w80/rs.png" },
-            { name: "Australia", logo: "https://flagcdn.com/w80/au.png" },
-            { name: "Latvia", logo: "https://flagcdn.com/w80/lv.png" },
-            { name: "Canada", logo: "https://flagcdn.com/w80/ca.png" },
-            { name: "Argentina", logo: "https://flagcdn.com/w80/ar.png" },
-            { name: "France", logo: "https://flagcdn.com/w80/fr.png" },
-            { name: "Lithuania", logo: "https://flagcdn.com/w80/lt.png" },
-            { name: "Slovenia", logo: "https://flagcdn.com/w80/si.png" },
-            { name: "Brazil", logo: "https://flagcdn.com/w80/br.png" },
-            { name: "Italy", logo: "https://flagcdn.com/w80/it.png" },
-            { name: "Greece", logo: "https://flagcdn.com/w80/gr.png" },
-            { name: "Poland", logo: "https://flagcdn.com/w80/pl.png" },
-            { name: "Puerto Rico", logo: "https://flagcdn.com/w80/pr.png" },
-            { name: "Montenegro", logo: "https://flagcdn.com/w80/me.png" },
-            { name: "Dominican Republic", logo: "https://flagcdn.com/w80/do.png" },
-            { name: "Czech Republic", logo: "https://flagcdn.com/w80/cz.png" },
-            { name: "Finland", logo: "https://flagcdn.com/w80/fi.png" },
-            { name: "New Zealand", logo: "https://flagcdn.com/w80/nz.png" },
-            { name: "Japan", logo: "https://flagcdn.com/w80/jp.png" },
-            { name: "Georgia", logo: "https://flagcdn.com/w80/ge.png" },
-            { name: "Venezuela", logo: "https://flagcdn.com/w80/ve.png" },
-            { name: "Mexico", logo: "https://flagcdn.com/w80/mx.png" },
-            { name: "Turkey", logo: "https://flagcdn.com/w80/tr.png" },
-            { name: "Iran", logo: "https://flagcdn.com/w80/ir.png" },
-            { name: "Lebanon", logo: "https://flagcdn.com/w80/lb.png" },
-            { name: "China", logo: "https://flagcdn.com/w80/cn.png" },
-            { name: "Philippines", logo: "https://flagcdn.com/w80/ph.png" },
-            { name: "Angola", logo: "https://flagcdn.com/w80/ao.png" }
+        // Highly reliable Wikimedia SVG links for top non-US leagues
+        const topLeagues = [
+            { name: "EuroLeague", logo: "https://upload.wikimedia.org/wikipedia/en/f/f1/EuroLeague_logo.svg" },
+            { name: "Liga ACB", logo: "https://upload.wikimedia.org/wikipedia/en/f/f6/Liga_Endesa_logo.svg" },
+            { name: "LBA", logo: "https://upload.wikimedia.org/wikipedia/en/6/69/Lega_Basket_Serie_A_logo.svg" },
+            { name: "LNB Pro A", logo: "https://upload.wikimedia.org/wikipedia/en/5/52/LNB_Pro_A_logo.svg" },
+            { name: "BBL", logo: "https://upload.wikimedia.org/wikipedia/en/0/07/Basketball_Bundesliga_logo.svg" },
+            { name: "BSL", logo: "https://upload.wikimedia.org/wikipedia/en/e/e6/Basketbol_S%C3%BCper_Ligi_logo.svg" },
+            { name: "GBL", logo: "https://upload.wikimedia.org/wikipedia/en/6/68/Greek_Basket_League_logo.svg" },
+            { name: "NBL", logo: "https://upload.wikimedia.org/wikipedia/en/6/64/National_Basketball_League_%28Australia%29_logo.svg" },
+            { name: "CBA", logo: "https://upload.wikimedia.org/wikipedia/en/8/87/Chinese_Basketball_Association_logo.svg" },
+            { name: "ABA", logo: "https://upload.wikimedia.org/wikipedia/en/1/14/ABA_League_logo.svg" },
+            { name: "B.League", logo: "https://upload.wikimedia.org/wikipedia/en/f/f8/B.League_logo.svg" },
+            { name: "LKL", logo: "https://upload.wikimedia.org/wikipedia/en/2/29/Lietuvos_krep%C5%A1inio_lyga_logo.svg" },
+            { name: "Winner League", logo: "https://upload.wikimedia.org/wikipedia/en/5/52/Israeli_Basketball_Premier_League_logo.svg" },
+            { name: "FIBA", logo: "https://upload.wikimedia.org/wikipedia/en/8/8c/FIBA_logo.svg" }
         ];
         
         // Multiplied for seamless marquee scrolling
-        const doubledLeagues = [...topCountries, ...topCountries, ...topCountries];
+        const doubledLeagues = [...topLeagues, ...topLeagues, ...topLeagues, ...topLeagues];
 
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
@@ -386,7 +370,7 @@
                                         <tr className="bg-black text-gray-400 text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] font-black border-y border-white/10">
                                             <th className="px-3 py-4 md:px-10 md:py-6 w-[15%]">Date</th>
                                             <th className="px-2 py-4 md:px-10 md:py-6 w-[55%]">Pick</th>
-                                            <th className="px-2 py-4 md:px-10 md:py-6 w-[15%] text-center">Odds</th>
+                                            <th className="px-2 py-4 md:px-10 md:py-6 w-[15%] text-center align-middle">Odds</th>
                                             <th className="px-3 py-4 md:px-10 md:py-6 text-right w-[15%]">Result</th>
                                         </tr>
                                     </thead>
@@ -434,8 +418,8 @@
                                                             })()}
                                                         </div>
                                                     </td>
-                                                    <td className="px-2 py-4 md:px-10 md:py-7 text-center">
-                                                        <span className="inline-block px-2 py-1 md:px-4 md:py-1.5 text-[10px] md:text-sm font-black text-dimeGold font-mono">
+                                                    <td className="px-2 py-4 md:px-10 md:py-7 text-center align-middle">
+                                                        <span className="font-black text-[10px] md:text-sm text-dimeGold font-mono block">
                                                             {pick.odds}
                                                         </span>
                                                     </td>
@@ -563,12 +547,12 @@
                                     
                                     <div className="animate-scroll whitespace-nowrap flex items-center gap-10 md:gap-16 px-4">
                                         {doubledLeagues.map((league, idx) => (
-                                            <div key={idx} className="flex items-center justify-center shrink-0">
+                                            <div key={idx} className="flex items-center justify-center shrink-0 bg-white/90 p-1.5 rounded-md shadow-[0_2px_5px_rgba(0,0,0,0.5)]">
                                                 <img 
                                                     src={league.logo} 
                                                     alt={league.name} 
-                                                    onError={(e) => { e.target.style.display = 'none'; }}
-                                                    className="w-10 md:w-14 rounded-sm shadow-[0_2px_5px_rgba(0,0,0,0.5)] filter hover:scale-110 hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300" 
+                                                    onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.style.display = 'none'; }}
+                                                    className="h-8 md:h-12 w-auto object-contain filter hover:scale-110 transition-all duration-300" 
                                                 />
                                             </div>
                                         ))}
