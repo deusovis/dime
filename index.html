@@ -144,16 +144,33 @@
             return progress;
         };
 
-        // Massive extraction of international basketball league IDs to ensure maximum variety
-        const globalLeagueIds = [
-            2, 3, 4, 104, 115, 116, 117, 118, 119, 120, 121, 122, 124, 125, 
-            126, 128, 130, 131, 132, 134, 138, 140, 142, 145, 146, 147, 150, 
-            153, 161, 193, 197, 201
+        // Comprehensive list of 24 top international leagues mapped to reliable CDN endpoints
+        const topLeagues = [
+            { id: 138, name: "EuroLeague", abbr: "EL" },
+            { id: 130, name: "Liga ACB", abbr: "ACB" },
+            { id: 134, name: "Lega Basket Serie A", abbr: "LBA" },
+            { id: 133, name: "LNB Pro A", abbr: "LNB" },
+            { id: 136, name: "Basketball Bundesliga", abbr: "BBL" },
+            { id: 137, name: "Basketbol Süper Ligi", abbr: "BSL" },
+            { id: 140, name: "Greek Basket League", abbr: "GBL" },
+            { id: 146, name: "National Basketball League", abbr: "NBL" },
+            { id: 151, name: "Chinese Basketball Association", abbr: "CBA" },
+            { id: 141, name: "ABA League", abbr: "ABA" },
+            { id: 142, name: "Lietuvos krepšinio lyga", abbr: "LKL" },
+            { id: 144, name: "VTB United League", abbr: "VTB" },
+            { id: 148, name: "Korean Basketball League", abbr: "KBL" },
+            { id: 153, name: "Philippine Basketball Association", abbr: "PBA" },
+            { id: 155, name: "Novo Basquete Brasil", abbr: "NBB" },
+            { id: 157, name: "Liga Nacional de Básquet", abbr: "LNB" },
+            { id: 1703, name: "Basketball Champions League", abbr: "BCL" },
+            { id: 139, name: "EuroCup", abbr: "EC" },
+            { id: 161, name: "Polish Basketball League", abbr: "PLK" },
+            { id: 145, name: "Israeli Basketball Premier League", abbr: "ISL" },
+            { id: 251, name: "Baloncesto Superior Nacional", abbr: "BSN" },
+            { id: 4083, name: "B.League", abbr: "BL" },
+            { id: 11571, name: "Canadian Elite Basketball League", abbr: "CEBL" },
+            { id: 11464, name: "BNXT League", abbr: "BNXT" }
         ];
-        
-        const topLeagues = globalLeagueIds.map(id => ({
-            logo: `https://media.api-sports.io/basketball/leagues/${id}.png`
-        }));
         
         // Multiplied for seamless marquee scrolling
         const doubledLeagues = [...topLeagues, ...topLeagues, ...topLeagues];
@@ -161,6 +178,7 @@
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
+            const [failedImages, setFailedImages] = React.useState({});
             const progress = useLoadingProgress(isLoading);
 
             const scrollToAbout = () => {
@@ -168,6 +186,10 @@
                 if (aboutSection) {
                     aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
+            };
+
+            const handleImageError = (id) => {
+                setFailedImages(prev => ({ ...prev, [id]: true }));
             };
 
             const getFlagIcon = (countryName) => {
@@ -540,16 +562,19 @@
                                     
                                     <div className="animate-scroll whitespace-nowrap flex items-center gap-10 md:gap-16 px-4">
                                         {doubledLeagues.map((league, idx) => (
-                                            <div key={idx} className="flex items-center justify-center shrink-0 bg-white/90 p-1.5 rounded-md shadow-[0_2px_5px_rgba(0,0,0,0.5)]">
-                                                <img 
-                                                    src={league.logo} 
-                                                    alt="Basketball League Logo" 
-                                                    onError={(e) => { 
-                                                        e.target.onerror = null; 
-                                                        e.target.parentElement.style.display = 'none'; 
-                                                    }}
-                                                    className="h-8 md:h-12 w-auto object-contain filter hover:scale-110 transition-all duration-300" 
-                                                />
+                                            <div key={idx} className="flex items-center justify-center shrink-0 w-14 h-14 md:w-16 md:h-16">
+                                                {failedImages[league.id] ? (
+                                                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-black/50 border border-dimeGold/30 rounded-full shadow-[0_0_10px_rgba(212,175,55,0.2)] hover:scale-110 transition-transform duration-300">
+                                                        <span className="text-dimeGold font-black text-[10px] md:text-xs tracking-wider">{league.abbr}</span>
+                                                    </div>
+                                                ) : (
+                                                    <img 
+                                                        src={`https://api.sofascore.app/api/v1/unique-tournament/${league.id}/image/dark`} 
+                                                        alt={league.name} 
+                                                        onError={() => handleImageError(league.id)}
+                                                        className="h-10 md:h-14 w-auto max-w-[60px] object-contain filter drop-shadow-[0_0_5px_rgba(255,255,255,0.1)] hover:scale-110 hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300" 
+                                                    />
+                                                )}
                                             </div>
                                         ))}
                                     </div>
