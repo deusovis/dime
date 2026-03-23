@@ -290,17 +290,25 @@
 
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col fade-in">
-                    
-                    {/* EXACT ORIGINAL NAV STRUCTURE + ABOUT US */}
                     <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto">
-                        <div className="flex-1 flex justify-start items-start gap-4 md:gap-6 -mt-2 md:-mt-4">
-                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
+                        <div className="flex-1 flex justify-start items-start gap-4 md:gap-8">
+                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105 -mt-2 md:-mt-4" />
                             
-                            <button 
-                                onClick={scrollToAbout} 
-                                className="text-white hover:text-dimeGold hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] font-black text-[10px] md:text-sm uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent hover:border-dimeGold pb-0.5 mt-4 md:mt-8">
-                                ABOUT US
-                            </button>
+                            <div className="pt-4 lg:pt-8 hidden md:block">
+                                <button 
+                                    onClick={scrollToAbout} 
+                                    className="text-white hover:text-dimeGold hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] font-black text-xs md:text-sm uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent hover:border-dimeGold pb-0.5">
+                                    About Us
+                                </button>
+                            </div>
+                            
+                            <div className="pt-4 md:hidden">
+                                <button 
+                                    onClick={scrollToAbout} 
+                                    className="text-white hover:text-dimeGold text-xl drop-shadow-md transition-colors duration-300">
+                                    <i className="fa-solid fa-circle-info"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90">
@@ -464,7 +472,6 @@
                                 Welcome to DIME Tipster. For over a decade, we have systematically dismantled sportsbooks through deep-level basketball analysis. We do not rely on luck, gut feelings, or biases; our approach is rooted entirely in verified statistics, advanced metrics, and an encyclopedic knowledge of global basketball markets. 
                             </p>
 
-                            {/* REMOVED: Consistent Stable Growth BOX */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mb-10 mx-auto">
                                 <div className="bg-black/40 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center shadow-inner">
                                     <i className="fa-solid fa-calendar-check text-3xl text-dimeGold mb-3"></i>
