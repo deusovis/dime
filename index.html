@@ -144,35 +144,26 @@
             return progress;
         };
 
-        // Real non-US top 25 global basketball league logos from Wikimedia CDN
+        // Real logos fetched securely from official domains
         const topLeagues = [
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/EuroLeague_logo.svg/320px-EuroLeague_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Liga_Endesa_logo.svg/320px-Liga_Endesa_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/69/Lega_Basket_Serie_A_logo.svg/320px-Lega_Basket_Serie_A_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/LNB_Pro_A_logo.svg/320px-LNB_Pro_A_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Basketball_Bundesliga_logo.svg/320px-Basketball_Bundesliga_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/Basketbol_S%C3%BCper_Ligi_logo.svg/320px-Basketbol_S%C3%BCper_Ligi_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/Greek_Basket_League_logo.svg/320px-Greek_Basket_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/64/National_Basketball_League_%28Australia%29_logo.svg/320px-National_Basketball_League_%28Australia%29_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Chinese_Basketball_Association_logo.svg/320px-Chinese_Basketball_Association_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/14/ABA_League_logo.svg/320px-ABA_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/b/b3/VTB_United_League_logo.svg/320px-VTB_United_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f8/B.League_logo.svg/320px-B.League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/Korean_Basketball_League_logo.svg/320px-Korean_Basketball_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/6/61/Philippine_Basketball_Association_logo.svg/320px-Philippine_Basketball_Association_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Lietuvos_krep%C5%A1inio_lyga_logo.svg/320px-Lietuvos_krep%C5%A1inio_lyga_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Israeli_Basketball_Premier_League_logo.svg/320px-Israeli_Basketball_Premier_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/FIBA_logo.svg/320px-FIBA_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/22/EuroCup_Basketball_logo.svg/320px-EuroCup_Basketball_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/2/27/Basketball_Champions_League_logo.svg/320px-Basketball_Champions_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Novo_Basquete_Brasil_logo.svg/320px-Novo_Basquete_Brasil_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Liga_Nacional_de_B%C3%A1squet_logo.svg/320px-Liga_Nacional_de_B%C3%A1squet_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/a/a3/Canadian_Elite_Basketball_League_logo.svg/320px-Canadian_Elite_Basketball_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Baloncesto_Superior_Nacional_logo.svg/320px-Baloncesto_Superior_Nacional_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/BNXT_League_logo.svg/320px-BNXT_League_logo.svg.png" },
-            { logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1a/Basketball_Africa_League_logo.svg/320px-Basketball_Africa_League_logo.svg.png" }
+            { name: "EuroLeague", logo: "https://logo.clearbit.com/euroleaguebasketball.net" },
+            { name: "Liga ACB", logo: "https://logo.clearbit.com/acb.com" },
+            { name: "LBA", logo: "https://logo.clearbit.com/legabasket.it" },
+            { name: "LNB Pro A", logo: "https://logo.clearbit.com/lnb.fr" },
+            { name: "BBL", logo: "https://logo.clearbit.com/easycredit-bbl.de" },
+            { name: "NBL", logo: "https://logo.clearbit.com/nbl.com.au" },
+            { name: "FIBA", logo: "https://logo.clearbit.com/fiba.basketball" },
+            { name: "B.League", logo: "https://logo.clearbit.com/bleague.jp" },
+            { name: "ABA", logo: "https://logo.clearbit.com/aba-liga.com" },
+            { name: "LKL", logo: "https://logo.clearbit.com/lkl.lt" },
+            { name: "Winner League", logo: "https://logo.clearbit.com/basket.co.il" },
+            { name: "CEBL", logo: "https://logo.clearbit.com/cebl.ca" },
+            { name: "BAL", logo: "https://logo.clearbit.com/thebal.com" },
+            { name: "VTB", logo: "https://logo.clearbit.com/vtb-league.com" }
         ];
-        const doubledLeagues = [...topLeagues, ...topLeagues];
+        
+        // Quadrupled for seamless marquee scrolling
+        const doubledLeagues = [...topLeagues, ...topLeagues, ...topLeagues, ...topLeagues];
 
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
@@ -428,7 +419,7 @@
                                                         </div>
                                                     </td>
                                                     <td className="px-2 py-4 md:px-10 md:py-7 text-center md:text-left">
-                                                        <span className="inline-block bg-black/50 border border-white/5 rounded-md md:rounded-lg px-2 py-1 md:px-4 md:py-1.5 text-[10px] md:text-sm font-black text-dimeGold font-mono drop-shadow-[0_0_8px_rgba(212,175,55,0.3)] shadow-inner">
+                                                        <span className="inline-block bg-black/50 border border-white/5 rounded-md md:rounded-lg px-2 py-1 md:px-4 md:py-1.5 text-[10px] md:text-sm font-black text-dimeGold font-mono">
                                                             {pick.odds}
                                                         </span>
                                                     </td>
@@ -559,7 +550,8 @@
                                             <div key={idx} className="flex items-center justify-center w-14 md:w-20 h-14 md:h-20 shrink-0">
                                                 <img 
                                                     src={league.logo} 
-                                                    alt="League Logo" 
+                                                    alt={league.name} 
+                                                    onError={(e) => { e.target.style.display = 'none'; }}
                                                     className="max-w-full max-h-full object-contain filter drop-shadow-[0_0_5px_rgba(255,255,255,0.1)] hover:scale-110 hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300" 
                                                 />
                                             </div>
