@@ -1,11 +1,19 @@
 {
     "stats": {
-        "roi": "+8%",
-        "units": "+31"
+        "roi": "+9%",
+        "units": "+32"
     },
     "picks": [
         {
             "id": 1,
+            "date": "22 Mar 2026",
+            "country": "Brazil",
+            "pick": "Minas Tenis Clube -14.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 2,
             "date": "22 Mar 2026",
             "country": "Poland",
             "pick": "AZS Politechnika Korona Krakow (W) -7.5",
@@ -13,7 +21,23 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 3,
+            "date": "23 Mar 2026",
+            "country": "El Salvador",
+            "pick": "Metapan (W) (Mayor) -5.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 4,
+            "date": "23 Mar 2026",
+            "country": "El Salvador",
+            "pick": "Ahuachapan (W) (Mayor) +15.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 5,
             "date": "22 Mar 2026",
             "country": "Czech R.",
             "pick": "Basket Ostrava (W) ML",
@@ -21,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 6,
             "date": "22 Mar 2026",
             "country": "Italy",
             "pick": "Libertas Livorno ML",
@@ -29,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 7,
             "date": "22 Mar 2026",
             "country": "Finland",
             "pick": "Tapiolan Honka 2 -4.5",
@@ -37,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 8,
             "date": "22 Mar 2026",
             "country": "Turkey",
             "pick": "Turgutlu (W) -10.5",
@@ -45,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "22 Mar 2026",
             "country": "Romania",
             "pick": "ACS Rising Stars PL -12.5",
@@ -53,35 +77,11 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "22 Mar 2026",
             "country": "Bulgaria",
             "pick": "Rilski Sportist ML",
             "odds": "1.95",
-            "result": "L"
-        },
-        {
-            "id": 8,
-            "date": "22 Mar 2026",
-            "country": "Portugal",
-            "pick": "Olivais Futebol Clube -7.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 9,
-            "date": "22 Mar 2026",
-            "country": "Portugal",
-            "pick": "Juvemaia-ACDC -6.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "21 Mar 2026",
-            "country": "Chile",
-            "pick": "Universidad de Concepcion -7.5",
-            "odds": "1.83",
             "result": "L"
         }
     ]
