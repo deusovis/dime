@@ -290,24 +290,24 @@
 
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col fade-in">
-                    <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto">
-                        <div className="flex-1 flex justify-start items-center gap-4 md:gap-8 -mt-2 md:-mt-4">
-                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
+                    <nav className="w-full flex items-center justify-between pt-6 px-4 md:px-12 max-w-[1400px] mx-auto">
+                        <div className="flex-1 flex justify-start items-center gap-4 md:gap-8">
+                            <img src="logo.png" alt="DIME Logo" className="h-16 md:h-24 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
                             
                             <button 
                                 onClick={scrollToAbout} 
-                                className="text-white hover:text-dimeGold hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] font-black text-xs md:text-sm uppercase tracking-widest transition-all duration-300 hidden md:block border-b-2 border-transparent hover:border-dimeGold pb-1 mt-1 md:mt-2">
+                                className="text-white hover:text-dimeGold hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] font-black text-xs md:text-sm uppercase tracking-widest transition-all duration-300 hidden md:block border-b-2 border-transparent hover:border-dimeGold pb-0.5">
                                 About Us
                             </button>
                             
                             <button 
                                 onClick={scrollToAbout} 
-                                className="md:hidden text-white hover:text-dimeGold text-xl drop-shadow-md transition-colors duration-300 mt-1">
+                                className="md:hidden text-white hover:text-dimeGold text-xl drop-shadow-md transition-colors duration-300">
                                 <i className="fa-solid fa-circle-info"></i>
                             </button>
                         </div>
 
-                        <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90">
+                        <div className="flex-1 hidden md:flex flex-col items-center justify-center opacity-90">
                             <span className="text-green-500 font-black text-[9px] md:text-xs tracking-[0.2em] uppercase mb-1 drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]">Proven Gains</span>
                             <svg className="w-32 lg:w-48 h-10 lg:h-14" viewBox="0 0 100 40" preserveAspectRatio="none">
                                 <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2 L100,40 L0,40 Z" fill="#22c55e" opacity="0.1"/>
@@ -316,7 +316,7 @@
                             </svg>
                         </div>
 
-                        <div className="flex-1 flex justify-end items-center gap-4 pt-2 md:pt-4"> 
+                        <div className="flex-1 flex justify-end items-center"> 
                             <a href="https://t.me/deimantas" target="_blank" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
                                 <i className="fa-brands fa-telegram text-lg md:text-xl"></i>
                                 <span>Join Now</span>
@@ -324,8 +324,8 @@
                         </div>
                     </nav>
 
-                    <main className="container mx-auto px-4 pt-0 pb-10 max-w-6xl flex flex-col items-center flex-grow relative z-10">
-                        <div className="text-center mb-10 md:mb-12 -mt-2 md:-mt-6">
+                    <main className="container mx-auto px-4 pt-10 pb-10 max-w-6xl flex flex-col items-center flex-grow relative z-10">
+                        <div className="text-center mb-10 md:mb-12">
                             <h1 className="text-3xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight uppercase text-white">
                                 Beat the <span className="text-dimeAccent">Bookie</span> <br/> 
                                 <span>with Precision</span>
@@ -468,7 +468,7 @@
                                 Welcome to DIME Tipster. For over a decade, we have systematically dismantled sportsbooks through deep-level basketball analysis. We do not rely on luck, gut feelings, or biases; our approach is rooted entirely in verified statistics, advanced metrics, and an encyclopedic knowledge of global basketball markets. 
                             </p>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-10">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mb-10 mx-auto">
                                 <div className="bg-black/40 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center shadow-inner">
                                     <i className="fa-solid fa-calendar-check text-3xl text-dimeGold mb-3"></i>
                                     <span className="text-3xl font-black text-white tracking-tight mb-1">10+</span>
@@ -478,11 +478,6 @@
                                     <i className="fa-solid fa-shield-halved text-3xl text-green-500 mb-3"></i>
                                     <span className="text-3xl font-black text-white tracking-tight mb-1">100%</span>
                                     <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Verified Tracking</span>
-                                </div>
-                                <div className="bg-black/40 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center shadow-inner">
-                                    <i className="fa-solid fa-arrow-trend-up text-3xl text-dimeAccent mb-3"></i>
-                                    <span className="text-3xl font-black text-white tracking-tight mb-1">Consistent</span>
-                                    <span className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest font-bold">Stable Growth</span>
                                 </div>
                             </div>
 
