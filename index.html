@@ -144,26 +144,28 @@
             return progress;
         };
 
-        // Highly reliable Wikimedia SVG links for top non-US leagues
+        // Open sports media CDN to bypass strict adblockers
         const topLeagues = [
-            { name: "EuroLeague", logo: "https://upload.wikimedia.org/wikipedia/en/f/f1/EuroLeague_logo.svg" },
-            { name: "Liga ACB", logo: "https://upload.wikimedia.org/wikipedia/en/f/f6/Liga_Endesa_logo.svg" },
-            { name: "LBA", logo: "https://upload.wikimedia.org/wikipedia/en/6/69/Lega_Basket_Serie_A_logo.svg" },
-            { name: "LNB Pro A", logo: "https://upload.wikimedia.org/wikipedia/en/5/52/LNB_Pro_A_logo.svg" },
-            { name: "BBL", logo: "https://upload.wikimedia.org/wikipedia/en/0/07/Basketball_Bundesliga_logo.svg" },
-            { name: "BSL", logo: "https://upload.wikimedia.org/wikipedia/en/e/e6/Basketbol_S%C3%BCper_Ligi_logo.svg" },
-            { name: "GBL", logo: "https://upload.wikimedia.org/wikipedia/en/6/68/Greek_Basket_League_logo.svg" },
-            { name: "NBL", logo: "https://upload.wikimedia.org/wikipedia/en/6/64/National_Basketball_League_%28Australia%29_logo.svg" },
-            { name: "CBA", logo: "https://upload.wikimedia.org/wikipedia/en/8/87/Chinese_Basketball_Association_logo.svg" },
-            { name: "ABA", logo: "https://upload.wikimedia.org/wikipedia/en/1/14/ABA_League_logo.svg" },
-            { name: "B.League", logo: "https://upload.wikimedia.org/wikipedia/en/f/f8/B.League_logo.svg" },
-            { name: "LKL", logo: "https://upload.wikimedia.org/wikipedia/en/2/29/Lietuvos_krep%C5%A1inio_lyga_logo.svg" },
-            { name: "Winner League", logo: "https://upload.wikimedia.org/wikipedia/en/5/52/Israeli_Basketball_Premier_League_logo.svg" },
-            { name: "FIBA", logo: "https://upload.wikimedia.org/wikipedia/en/8/8c/FIBA_logo.svg" }
+            { name: "EuroLeague", logo: "https://media.api-sports.io/basketball/leagues/117.png" },
+            { name: "Liga ACB", logo: "https://media.api-sports.io/basketball/leagues/116.png" },
+            { name: "LBA", logo: "https://media.api-sports.io/basketball/leagues/120.png" },
+            { name: "LNB", logo: "https://media.api-sports.io/basketball/leagues/128.png" },
+            { name: "BBL", logo: "https://media.api-sports.io/basketball/leagues/118.png" },
+            { name: "NBL", logo: "https://media.api-sports.io/basketball/leagues/104.png" },
+            { name: "CBA", logo: "https://media.api-sports.io/basketball/leagues/134.png" },
+            { name: "B.League", logo: "https://media.api-sports.io/basketball/leagues/142.png" },
+            { name: "EuroCup", logo: "https://media.api-sports.io/basketball/leagues/2.png" },
+            { name: "Champions League", logo: "https://media.api-sports.io/basketball/leagues/119.png" },
+            { name: "KBL", logo: "https://media.api-sports.io/basketball/leagues/145.png" },
+            { name: "Super Ligi", logo: "https://media.api-sports.io/basketball/leagues/130.png" },
+            { name: "GBL", logo: "https://media.api-sports.io/basketball/leagues/122.png" }
         ];
         
         // Multiplied for seamless marquee scrolling
         const doubledLeagues = [...topLeagues, ...topLeagues, ...topLeagues, ...topLeagues];
+        
+        // Base64 emergency fallback vector image if an individual link fails
+        const fallbackImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23d4af37' d='M256 0c141.4 0 256 114.6 256 256S397.4 512 256 512 0 397.4 0 256 114.6 0 256 0zm0 32C132.3 32 32 132.3 32 256c0 48.7 15.5 93.8 41.8 130.6l23.1-23.1c-14.7-27.4-23-58.6-23-91.5 0-106 86-192 192-192 32.9 0 64.1 8.3 91.5 23l23.1-23.1C349.8 47.5 304.7 32 256 32zm130.6 41.8l-23.1 23.1C378.2 124.3 384 156.4 384 189.9c0 97.2-78.8 176-176 176-33.5 0-65.6-5.8-93-16.5l-23.1 23.1C128.7 398.8 165.7 416 208 416c106 0 192-86 192-192 0-42.3-17.2-79.3-44.4-108.2z'/%3E%3C/svg%3E";
 
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
@@ -551,7 +553,10 @@
                                                 <img 
                                                     src={league.logo} 
                                                     alt={league.name} 
-                                                    onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.style.display = 'none'; }}
+                                                    onError={(e) => { 
+                                                        e.target.onerror = null; 
+                                                        e.target.src = fallbackImage; 
+                                                    }}
                                                     className="h-8 md:h-12 w-auto object-contain filter hover:scale-110 transition-all duration-300" 
                                                 />
                                             </div>
