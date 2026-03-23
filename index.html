@@ -144,28 +144,19 @@
             return progress;
         };
 
-        // Open sports media CDN to bypass strict adblockers
-        const topLeagues = [
-            { name: "EuroLeague", logo: "https://media.api-sports.io/basketball/leagues/117.png" },
-            { name: "Liga ACB", logo: "https://media.api-sports.io/basketball/leagues/116.png" },
-            { name: "LBA", logo: "https://media.api-sports.io/basketball/leagues/120.png" },
-            { name: "LNB", logo: "https://media.api-sports.io/basketball/leagues/128.png" },
-            { name: "BBL", logo: "https://media.api-sports.io/basketball/leagues/118.png" },
-            { name: "NBL", logo: "https://media.api-sports.io/basketball/leagues/104.png" },
-            { name: "CBA", logo: "https://media.api-sports.io/basketball/leagues/134.png" },
-            { name: "B.League", logo: "https://media.api-sports.io/basketball/leagues/142.png" },
-            { name: "EuroCup", logo: "https://media.api-sports.io/basketball/leagues/2.png" },
-            { name: "Champions League", logo: "https://media.api-sports.io/basketball/leagues/119.png" },
-            { name: "KBL", logo: "https://media.api-sports.io/basketball/leagues/145.png" },
-            { name: "Super Ligi", logo: "https://media.api-sports.io/basketball/leagues/130.png" },
-            { name: "GBL", logo: "https://media.api-sports.io/basketball/leagues/122.png" }
+        // Massive extraction of international basketball league IDs to ensure maximum variety
+        const globalLeagueIds = [
+            2, 3, 4, 104, 115, 116, 117, 118, 119, 120, 121, 122, 124, 125, 
+            126, 128, 130, 131, 132, 134, 138, 140, 142, 145, 146, 147, 150, 
+            153, 161, 193, 197, 201
         ];
         
-        // Multiplied for seamless marquee scrolling
-        const doubledLeagues = [...topLeagues, ...topLeagues, ...topLeagues, ...topLeagues];
+        const topLeagues = globalLeagueIds.map(id => ({
+            logo: `https://media.api-sports.io/basketball/leagues/${id}.png`
+        }));
         
-        // Base64 emergency fallback vector image if an individual link fails
-        const fallbackImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23d4af37' d='M256 0c141.4 0 256 114.6 256 256S397.4 512 256 512 0 397.4 0 256 114.6 0 256 0zm0 32C132.3 32 32 132.3 32 256c0 48.7 15.5 93.8 41.8 130.6l23.1-23.1c-14.7-27.4-23-58.6-23-91.5 0-106 86-192 192-192 32.9 0 64.1 8.3 91.5 23l23.1-23.1C349.8 47.5 304.7 32 256 32zm130.6 41.8l-23.1 23.1C378.2 124.3 384 156.4 384 189.9c0 97.2-78.8 176-176 176-33.5 0-65.6-5.8-93-16.5l-23.1 23.1C128.7 398.8 165.7 416 208 416c106 0 192-86 192-192 0-42.3-17.2-79.3-44.4-108.2z'/%3E%3C/svg%3E";
+        // Multiplied for seamless marquee scrolling
+        const doubledLeagues = [...topLeagues, ...topLeagues, ...topLeagues];
 
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
@@ -552,10 +543,10 @@
                                             <div key={idx} className="flex items-center justify-center shrink-0 bg-white/90 p-1.5 rounded-md shadow-[0_2px_5px_rgba(0,0,0,0.5)]">
                                                 <img 
                                                     src={league.logo} 
-                                                    alt={league.name} 
+                                                    alt="Basketball League Logo" 
                                                     onError={(e) => { 
                                                         e.target.onerror = null; 
-                                                        e.target.src = fallbackImage; 
+                                                        e.target.parentElement.style.display = 'none'; 
                                                     }}
                                                     className="h-8 md:h-12 w-auto object-contain filter hover:scale-110 transition-all duration-300" 
                                                 />
