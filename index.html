@@ -123,7 +123,8 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const useLoadingProgress = (isActive, duration = 2800) => {
+        // CHANGED: Reduced loading animation duration from 2800ms to 1200ms
+        const useLoadingProgress = (isActive, duration = 1200) => {
             const [progress, setProgress] = React.useState(0);
             
             React.useEffect(() => {
@@ -144,37 +145,38 @@
             return progress;
         };
 
+        // CHANGED: Replaced Wikipedia SVGs with guaranteed PNG generation matching your dark/gold theme
         const topLeagues = [
-            { name: "EuroLeague", logo: "https://upload.wikimedia.org/wikipedia/en/f/f1/EuroLeague_logo.svg" },
-            { name: "Liga ACB", logo: "https://upload.wikimedia.org/wikipedia/en/0/05/Liga_ACB_logo.svg" },
-            { name: "LBA Italy", logo: "https://upload.wikimedia.org/wikipedia/fr/4/47/Lega_Basket_Serie_A_%28logo%29.svg" },
-            { name: "LNB Pro A", logo: "https://upload.wikimedia.org/wikipedia/en/8/87/Betclic_Elite_logo.svg" },
-            { name: "BBL Germany", logo: "https://upload.wikimedia.org/wikipedia/en/8/8b/Basketball_Bundesliga_logo.svg" },
-            { name: "BSL Turkey", logo: "https://upload.wikimedia.org/wikipedia/en/1/18/Basketbol_S%C3%BCper_Ligi_logo.svg" },
-            { name: "GBL Greece", logo: "https://upload.wikimedia.org/wikipedia/en/8/8f/Greek_Basket_League_logo.svg" },
-            { name: "NBL Australia", logo: "https://upload.wikimedia.org/wikipedia/en/8/88/NBL_Australia_logo.svg" },
-            { name: "CBA China", logo: "https://upload.wikimedia.org/wikipedia/en/3/36/Chinese_Basketball_Association_logo.svg" },
-            { name: "FIBA", logo: "https://upload.wikimedia.org/wikipedia/en/9/93/FIBA_logo.svg" },
-            { name: "EuroCup", logo: "https://upload.wikimedia.org/wikipedia/en/8/8f/EuroCup_Basketball_logo.svg" },
-            { name: "BCL", logo: "https://upload.wikimedia.org/wikipedia/en/0/03/Basketball_Champions_League_logo.svg" },
-            { name: "B.League", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=JPN" },
-            { name: "KBL", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=KBL" },
-            { name: "PBA", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=PBA" },
-            { name: "ABA League", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=ABA" },
-            { name: "LKL", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=LKL" },
-            { name: "PLK", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=PLK" },
-            { name: "LNB Arg", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=ARG" },
-            { name: "NBB Brazil", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=NBB" },
-            { name: "BSN P.Rico", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=BSN" },
-            { name: "CEBL Canada", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=CEBL" },
-            { name: "BAL Africa", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=BAL" },
-            { name: "VTB United", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=VTB" },
-            { name: "BNXT League", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=BNXT" },
-            { name: "Winner League", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=ISR" },
-            { name: "KLS Serbia", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=KLS" },
-            { name: "A1 Croatia", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=CRO" },
-            { name: "LEB Oro", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=LEB" },
-            { name: "LNB Chile", logo: "https://placehold.co/100x100/ffffff/0a0f14?text=CHL" }
+            { name: "NBA", logo: "https://ui-avatars.com/api/?name=NBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "EuroLeague", logo: "https://ui-avatars.com/api/?name=EL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "Liga ACB", logo: "https://ui-avatars.com/api/?name=ACB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "LBA Italy", logo: "https://ui-avatars.com/api/?name=LBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "LNB Pro A", logo: "https://ui-avatars.com/api/?name=LNB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "BBL Germany", logo: "https://ui-avatars.com/api/?name=BBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "BSL Turkey", logo: "https://ui-avatars.com/api/?name=BSL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "GBL Greece", logo: "https://ui-avatars.com/api/?name=GBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "NBL Australia", logo: "https://ui-avatars.com/api/?name=NBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "CBA China", logo: "https://ui-avatars.com/api/?name=CBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "FIBA", logo: "https://ui-avatars.com/api/?name=FIB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "EuroCup", logo: "https://ui-avatars.com/api/?name=EC&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "BCL", logo: "https://ui-avatars.com/api/?name=BCL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "B.League", logo: "https://ui-avatars.com/api/?name=BL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "KBL", logo: "https://ui-avatars.com/api/?name=KBL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "PBA", logo: "https://ui-avatars.com/api/?name=PBA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "ABA League", logo: "https://ui-avatars.com/api/?name=ABA&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "LKL", logo: "https://ui-avatars.com/api/?name=LKL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "PLK", logo: "https://ui-avatars.com/api/?name=PLK&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "LNB Arg", logo: "https://ui-avatars.com/api/?name=ARG&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "NBB Brazil", logo: "https://ui-avatars.com/api/?name=NBB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "BSN P.Rico", logo: "https://ui-avatars.com/api/?name=BSN&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "CEBL Canada", logo: "https://ui-avatars.com/api/?name=CEB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "BAL Africa", logo: "https://ui-avatars.com/api/?name=BAL&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "VTB United", logo: "https://ui-avatars.com/api/?name=VTB&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "BNXT League", logo: "https://ui-avatars.com/api/?name=BNX&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "Winner League", logo: "https://ui-avatars.com/api/?name=ISR&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "KLS Serbia", logo: "https://ui-avatars.com/api/?name=KLS&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "A1 Croatia", logo: "https://ui-avatars.com/api/?name=CRO&background=0a0f14&color=d4af37&bold=true&rounded=true" },
+            { name: "LEB Oro", logo: "https://ui-avatars.com/api/?name=LEB&background=0a0f14&color=d4af37&bold=true&rounded=true" }
         ];
         const doubledLeagues = [...topLeagues, ...topLeagues];
 
@@ -251,10 +253,11 @@
                         } else {
                             setData({ stats: { roi: '+18.4%', units: '+32.1' }, picks: Array.isArray(json) ? json : [] });
                         }
-                        setTimeout(() => setIsLoading(false), 2800); 
+                        // CHANGED: Match fetching timer to new UI timer
+                        setTimeout(() => setIsLoading(false), 1200); 
                     })
                     .catch(() => {
-                        setTimeout(() => setIsLoading(false), 2800);
+                        setTimeout(() => setIsLoading(false), 1200);
                     });
             }, []);
 
@@ -304,17 +307,14 @@
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col fade-in">
                     <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto">
-                        <div className="flex-1 flex justify-start items-start">
-                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105 -mt-2 md:-mt-4" />
+                        <div className="flex-1 flex justify-start -mt-2 md:-mt-4">
+                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
                             
-                            {/* Perfectly aligned with the middle column's pt-4 lg:pt-8 */}
-                            <div className="pt-4 lg:pt-8 ml-3 md:ml-8">
-                                <button 
-                                    onClick={scrollToAbout} 
-                                    className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5">
-                                    ABOUT US
-                                </button>
-                            </div>
+                            <button 
+                                onClick={scrollToAbout} 
+                                className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-8 mt-6 md:mt-8 lg:mt-14">
+                                About Us
+                            </button>
                         </div>
 
                         <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90">
@@ -372,11 +372,11 @@
                         <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative mb-6">
                             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
                             
-                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-center md:justify-between items-center backdrop-blur-xl relative z-10">
+                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center backdrop-blur-xl relative z-10">
                                 <h2 className="text-lg md:text-2xl font-black uppercase text-white tracking-wide">Archive</h2>
                                 
-                               <div className="hidden md:flex items-center">
-                                    <span className="text-dimeAccent font-black text-sm tracking-widest uppercase">LAST 10 PICKS</span>
+                               <div className="flex items-center">
+                                    <span className="text-dimeAccent font-black text-[10px] md:text-sm tracking-widest uppercase">LAST 10 PICKS</span>
                                </div>
                             </div>
                             
@@ -551,7 +551,7 @@
                                 </div>
                             </div>
 
-                            {/* 30 Leagues Marquee */}
+                            {/* Leagues Marquee */}
                             <div className="w-full border-t border-white/10 pt-8 mt-4 overflow-hidden">
                                 <h3 className="text-center text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.2em] font-black mb-6">
                                     Crushing Books Across The Globe
@@ -564,9 +564,7 @@
                                     <div className="animate-scroll whitespace-nowrap flex items-center gap-8 md:gap-12 px-4">
                                         {doubledLeagues.map((league, idx) => (
                                             <div key={idx} className="flex items-center gap-2 md:gap-3 cursor-default group/item">
-                                                <div className="bg-white/95 p-1 rounded-md shadow-sm group-hover/item:shadow-md transition-all">
-                                                    <img src={league.logo} alt={league.name} className="w-5 h-5 md:w-6 md:h-6 object-contain grayscale opacity-80 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-300" />
-                                                </div>
+                                                <img src={league.logo} alt={league.name} className="w-5 md:w-7 h-auto rounded-[2px] shadow-[0_2px_5px_rgba(0,0,0,0.8)] opacity-70 group-hover/item:opacity-100 transition-all duration-300 border border-white/10" />
                                                 <span className="text-gray-400 font-black text-xs md:text-sm tracking-widest uppercase group-hover/item:text-white transition-all">
                                                     {league.name}
                                                 </span>
