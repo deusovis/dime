@@ -290,23 +290,25 @@
 
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col fade-in">
-                    
-                    {/* ORIGINAL NAV BAR + ABOUT US */}
                     <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto">
-                        <div className="flex-1 flex justify-start items-center gap-4 md:gap-6 -mt-2 md:-mt-4">
-                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
+                        <div className="flex-1 flex justify-start items-start gap-4 md:gap-8">
+                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105 -mt-2 md:-mt-4" />
                             
-                            <button 
-                                onClick={scrollToAbout} 
-                                className="text-white hover:text-dimeGold hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] font-black text-xs md:text-sm uppercase tracking-widest transition-all duration-300 hidden md:block border-b-2 border-transparent hover:border-dimeGold pb-0.5">
-                                About Us
-                            </button>
+                            <div className="pt-4 lg:pt-8 hidden md:block">
+                                <button 
+                                    onClick={scrollToAbout} 
+                                    className="text-white hover:text-dimeGold hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] font-black text-xs md:text-sm uppercase tracking-widest transition-all duration-300 border-b-2 border-transparent hover:border-dimeGold pb-0.5">
+                                    About Us
+                                </button>
+                            </div>
                             
-                            <button 
-                                onClick={scrollToAbout} 
-                                className="md:hidden text-white hover:text-dimeGold text-xl drop-shadow-md transition-colors duration-300 mt-1">
-                                <i className="fa-solid fa-circle-info"></i>
-                            </button>
+                            <div className="pt-4 md:hidden">
+                                <button 
+                                    onClick={scrollToAbout} 
+                                    className="text-white hover:text-dimeGold text-xl drop-shadow-md transition-colors duration-300">
+                                    <i className="fa-solid fa-circle-info"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90">
