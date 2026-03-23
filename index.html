@@ -144,21 +144,20 @@
             return progress;
         };
 
-        // NEW: Structured format for you to easily insert actual logo URLs
-        // Just replace the 'logo' url string with the path to your custom images (e.g. 'images/euroleague.png')
+        // Official logos pulled directly from Wikimedia's robust CDN
         const leagues = [
-            { name: "EuroLeague", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=EL" },
-            { name: "Liga ACB", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=ACB" },
-            { name: "LBA", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=LBA" },
-            { name: "LNB Pro A", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=LNB" },
-            { name: "BBL", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=BBL" },
-            { name: "BSL", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=BSL" },
-            { name: "GBL", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=GBL" },
-            { name: "NBL", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=NBL" },
-            { name: "CBA", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=CBA" },
-            { name: "FIBA World", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=FIBA" },
-            { name: "EuroCup", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=CUP" },
-            { name: "BCL", logo: "https://placehold.co/100x100/1a2e22/d4af37?text=BCL" }
+            { name: "EuroLeague", logo: "https://upload.wikimedia.org/wikipedia/en/f/f1/EuroLeague_logo.svg" },
+            { name: "Liga ACB", logo: "https://upload.wikimedia.org/wikipedia/en/0/05/Liga_ACB_logo.svg" },
+            { name: "LBA", logo: "https://upload.wikimedia.org/wikipedia/fr/4/47/Lega_Basket_Serie_A_%28logo%29.svg" },
+            { name: "LNB Pro A", logo: "https://upload.wikimedia.org/wikipedia/en/8/87/Betclic_Elite_logo.svg" },
+            { name: "BBL", logo: "https://upload.wikimedia.org/wikipedia/en/8/8b/Basketball_Bundesliga_logo.svg" },
+            { name: "BSL", logo: "https://upload.wikimedia.org/wikipedia/en/1/18/Basketbol_S%C3%BCper_Ligi_logo.svg" },
+            { name: "GBL", logo: "https://upload.wikimedia.org/wikipedia/en/8/8f/Greek_Basket_League_logo.svg" },
+            { name: "NBL", logo: "https://upload.wikimedia.org/wikipedia/en/8/88/NBL_Australia_logo.svg" },
+            { name: "CBA", logo: "https://upload.wikimedia.org/wikipedia/en/3/36/Chinese_Basketball_Association_logo.svg" },
+            { name: "FIBA", logo: "https://upload.wikimedia.org/wikipedia/en/9/93/FIBA_logo.svg" },
+            { name: "EuroCup", logo: "https://upload.wikimedia.org/wikipedia/en/8/8f/EuroCup_Basketball_logo.svg" },
+            { name: "BCL", logo: "https://upload.wikimedia.org/wikipedia/en/0/03/Basketball_Champions_League_logo.svg" }
         ];
         const doubledLeagues = [...leagues, ...leagues];
 
@@ -291,16 +290,15 @@
                         <div className="flex-1 flex justify-start items-center gap-4 md:gap-8 -mt-2 md:-mt-4">
                             <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
                             
-                            {/* UPDATED: Nav font color is now gold */}
                             <button 
                                 onClick={scrollToAbout} 
-                                className="text-dimeGold drop-shadow-[0_0_8px_rgba(212,175,55,0.3)] hover:text-white font-black text-xs md:text-sm uppercase tracking-widest transition-colors hidden md:block border-b-2 border-transparent hover:border-dimeGold pb-1 mt-4">
+                                className="text-white hover:text-dimeGold hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)] font-black text-xs md:text-sm uppercase tracking-widest transition-all duration-300 hidden md:block border-b-2 border-transparent hover:border-dimeGold pb-1 mt-4">
                                 About Us
                             </button>
                             
                             <button 
                                 onClick={scrollToAbout} 
-                                className="md:hidden text-dimeGold hover:text-white text-xl mt-2 drop-shadow-md">
+                                className="md:hidden text-white hover:text-dimeGold text-xl mt-2 drop-shadow-md transition-colors duration-300">
                                 <i className="fa-solid fa-circle-info"></i>
                             </button>
                         </div>
@@ -357,7 +355,6 @@
                             </div>
                         </div>
 
-                        {/* UPDATED: Reduced bottom margin (mb-6) to bring the About section slightly closer */}
                         <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative mb-6">
                             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
                             
@@ -545,10 +542,9 @@
                                 </div>
                             </div>
 
-                            {/* UPDATED: Dynamic Logo & Text Marquee */}
                             <div className="w-full border-t border-white/10 pt-8 mt-4 overflow-hidden">
                                 <h3 className="text-center text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.2em] font-black mb-6">
-                                    Crushing Books Across The Globe
+                                    DOMINATING GLOBAL MARKETS
                                 </h3>
                                 
                                 <div className="relative flex overflow-x-hidden group bg-black/20 py-4 rounded-xl border border-white/5">
@@ -558,7 +554,9 @@
                                     <div className="animate-scroll whitespace-nowrap flex items-center gap-10 md:gap-16 px-4">
                                         {doubledLeagues.map((league, idx) => (
                                             <div key={idx} className="flex items-center gap-3 cursor-default group/item">
-                                                <img src={league.logo} alt={league.name} className="w-8 h-8 md:w-12 md:h-12 rounded bg-black/50 border border-white/10 object-contain grayscale opacity-70 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-300 drop-shadow-md" />
+                                                <div className="bg-white/95 p-1.5 md:p-2 rounded-lg shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover/item:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300">
+                                                    <img src={league.logo} alt={league.name} className="w-10 h-10 md:w-14 md:h-14 object-contain grayscale opacity-80 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-300" />
+                                                </div>
                                                 <span className="text-gray-400 font-black text-sm md:text-lg tracking-widest uppercase group-hover/item:text-white transition-all">
                                                     {league.name}
                                                 </span>
