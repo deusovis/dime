@@ -11,16 +11,20 @@ def scrape_blogabet():
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
     
-    final_data = {"stats": {"roi": "+18.4%", "units": "+32.1"}, "picks": []}
+    # UPDATED: Swapped 'units' for 'picks' with a default value
+    final_data = {"stats": {"roi": "+18.4%", "picks": "372"}, "picks": []}
 
     try:
-        # 1. GET ROI AND UNITS FROM HEADER
+        # 1. GET ROI AND PICKS FROM HEADER
         try:
             main_res = scraper.get(main_url, cookies=cookies)
             main_soup = BeautifulSoup(main_res.text, 'html.parser')
-            profit_elem = main_soup.find(id="header-profit")
+            
+            # UPDATED: Targeting the header-picks ID instead of header-profit
+            picks_elem = main_soup.find(id="header-picks")
             roi_elem = main_soup.find(id="header-yield")
-            if profit_elem: final_data["stats"]["units"] = profit_elem.get_text(strip=True)
+            
+            if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
             if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
         except: pass
 
