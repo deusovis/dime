@@ -192,7 +192,7 @@
         const doubledLeagues = [...topLeagues, ...topLeagues];
 
         const App = () => {
-            const [data, setData] = React.useState({ stats: { roi: '...', units: '...' }, picks: [] });
+            const [data, setData] = React.useState({ stats: { roi: '...', picks: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
             const progress = useLoadingProgress(isLoading);
 
@@ -269,7 +269,7 @@
                         if (json.stats && json.picks) {
                             setData(json);
                         } else {
-                            setData({ stats: { roi: '+18.4%', units: '+32.1' }, picks: Array.isArray(json) ? json : [] });
+                            setData({ stats: { roi: '+18.4%', picks: '372' }, picks: Array.isArray(json) ? json : [] });
                         }
                         setTimeout(() => setIsLoading(false), 1200); 
                     })
@@ -377,8 +377,8 @@
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">ROI:</span>
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 mr-2 font-black drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">{data.stats.roi}</span>
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">|</span>
-                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">{data.stats.units}</span>
-                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 ml-2">Units</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">{data.stats.picks}</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 ml-2">Picks</span>
                                 </div>
                             </div>
                         </div>
