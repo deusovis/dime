@@ -144,7 +144,6 @@
             return progress;
         };
 
-        // Top 40+ Basketball Countries and their respective leagues
         const topLeagues = [
             { code: "eu", name: "EuroLeague" },
             { code: "es", name: "Liga ACB" },
@@ -190,7 +189,6 @@
             { code: "lb", name: "FLB" }
         ];
         
-        // Duplicated for seamless marquee scrolling
         const doubledLeagues = [...topLeagues, ...topLeagues];
 
         const App = () => {
@@ -318,8 +316,8 @@
 
             return (
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col fade-in">
-                    <nav className="w-full flex items-start pt-0 px-4 md:px-12 max-w-[1400px] mx-auto">
-                        <div className="flex-1 flex justify-start -mt-2 md:-mt-4">
+                    <nav className="w-full flex items-start pt-4 md:pt-6 px-4 md:px-12 max-w-[1400px] mx-auto">
+                        <div className="flex-1 flex justify-start">
                             <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
                             
                             <button 
@@ -329,7 +327,7 @@
                             </button>
                         </div>
 
-                        <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-4 lg:pt-8 opacity-90">
+                        <div className="flex-1 hidden md:flex flex-col items-center justify-start pt-2 lg:pt-6 opacity-90">
                             <span className="text-green-500 font-black text-[9px] md:text-xs tracking-[0.2em] uppercase mb-1 drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]">Proven Gains</span>
                             <svg className="w-32 lg:w-48 h-10 lg:h-14" viewBox="0 0 100 40" preserveAspectRatio="none">
                                 <path d="M0,40 L10,32 L20,35 L35,18 L50,22 L65,10 L80,15 L100,2 L100,40 L0,40 Z" fill="#22c55e" opacity="0.1"/>
@@ -338,7 +336,7 @@
                             </svg>
                         </div>
 
-                        <div className="flex-1 flex justify-end pt-2 md:pt-4"> 
+                        <div className="flex-1 flex justify-end pt-4 md:pt-8"> 
                             <a href="https://t.me/deimantas" target="_blank" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
                                 <i className="fa-brands fa-telegram text-lg md:text-xl"></i>
                                 <span>Join Now</span>
