@@ -1,11 +1,27 @@
 {
     "stats": {
         "roi": "+8%",
-        "picks": "377"
+        "picks": "380"
     },
     "picks": [
         {
             "id": 1,
+            "date": "25 Mar 2026",
+            "country": "Philippines",
+            "pick": "Terrafirma Dyip ML",
+            "odds": "2.12",
+            "result": "L"
+        },
+        {
+            "id": 2,
+            "date": "25 Mar 2026",
+            "country": "China",
+            "pick": "Guangdong Southern Tigers -31.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 3,
             "date": "24 Mar 2026",
             "country": "Euroleague (M)",
             "pick": "Anadolu Efes ML",
@@ -13,7 +29,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 4,
             "date": "24 Mar 2026",
             "country": "France",
             "pick": "Blois -6.5",
@@ -21,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "24 Mar 2026",
             "country": "Slovenia",
             "pick": "Maribor (W) +15.5",
@@ -29,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "24 Mar 2026",
             "country": "Brazil",
             "pick": "Filadelfia U19 +63.5",
@@ -37,7 +53,15 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
+            "date": "25 Mar 2026",
+            "country": "Georgia",
+            "pick": "Rustavi 2 U22 -38.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 8,
             "date": "24 Mar 2026",
             "country": "Serbia",
             "pick": "Korac Akademija 011 (W) +22.5",
@@ -45,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "23 Mar 2026",
             "country": "Argentina",
             "pick": "Gimnasia Villa del Parque (GEVP) ML",
@@ -53,35 +77,11 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "24 Mar 2026",
             "country": "Euroleague (M)",
             "pick": "Valencia ML",
             "odds": "2",
-            "result": "W"
-        },
-        {
-            "id": 8,
-            "date": "22 Mar 2026",
-            "country": "Brazil",
-            "pick": "Minas Tenis Clube -14.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "22 Mar 2026",
-            "country": "Poland",
-            "pick": "AZS Politechnika Korona Krakow (W) -7.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "23 Mar 2026",
-            "country": "El Salvador",
-            "pick": "Metapan (W) (Mayor) -5.5",
-            "odds": "1.83",
             "result": "W"
         }
     ]
