@@ -1,7 +1,7 @@
 {
     "stats": {
         "roi": "+8%",
-        "picks": "383"
+        "picks": "384"
     },
     "picks": [
         {
@@ -15,13 +15,21 @@
         {
             "id": 2,
             "date": "25 Mar 2026",
+            "country": "Portugal",
+            "pick": "SC Braga U23 ML",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 3,
+            "date": "25 Mar 2026",
             "country": "Czech R.",
             "pick": "Usti Nad Labem ML",
             "odds": "1.83",
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "25 Mar 2026",
             "country": "Philippines",
             "pick": "Terrafirma Dyip ML",
@@ -29,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "25 Mar 2026",
             "country": "China",
             "pick": "Guangdong Southern Tigers -31.5",
@@ -37,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "25 Mar 2026",
             "country": "Czech R.",
             "pick": "Brno ML",
@@ -45,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "24 Mar 2026",
             "country": "Euroleague (M)",
             "pick": "Anadolu Efes ML",
@@ -53,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "24 Mar 2026",
             "country": "France",
             "pick": "Blois -6.5",
@@ -61,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "24 Mar 2026",
             "country": "Slovenia",
             "pick": "Maribor (W) +15.5",
@@ -69,18 +77,10 @@
             "result": "L"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "24 Mar 2026",
             "country": "Brazil",
             "pick": "Filadelfia U19 +63.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "25 Mar 2026",
-            "country": "Georgia",
-            "pick": "Rustavi 2 U22 -38.5",
             "odds": "1.83",
             "result": "W"
         }
