@@ -1,11 +1,27 @@
 {
     "stats": {
         "roi": "+8%",
-        "picks": "384"
+        "picks": "386"
     },
     "picks": [
         {
             "id": 1,
+            "date": "26 Mar 2026",
+            "country": "Uruguay",
+            "pick": "Nacional -1.5",
+            "odds": "1.74",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "26 Mar 2026",
+            "country": "Czech R.",
+            "pick": "Zabiny Brno B (W) -5.5",
+            "odds": "1.86",
+            "result": "W"
+        },
+        {
+            "id": 3,
             "date": "25 Mar 2026",
             "country": "Norway",
             "pick": "Centrum Tigers +24.5",
@@ -13,7 +29,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 4,
             "date": "25 Mar 2026",
             "country": "Portugal",
             "pick": "SC Braga U23 ML",
@@ -21,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "25 Mar 2026",
             "country": "Czech R.",
             "pick": "Usti Nad Labem ML",
@@ -29,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "25 Mar 2026",
             "country": "Philippines",
             "pick": "Terrafirma Dyip ML",
@@ -37,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 7,
             "date": "25 Mar 2026",
             "country": "China",
             "pick": "Guangdong Southern Tigers -31.5",
@@ -45,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 8,
             "date": "25 Mar 2026",
             "country": "Czech R.",
             "pick": "Brno ML",
@@ -53,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 9,
             "date": "24 Mar 2026",
             "country": "Euroleague (M)",
             "pick": "Anadolu Efes ML",
@@ -61,28 +77,12 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 10,
             "date": "24 Mar 2026",
             "country": "France",
             "pick": "Blois -6.5",
             "odds": "1.83",
             "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "24 Mar 2026",
-            "country": "Slovenia",
-            "pick": "Maribor (W) +15.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "24 Mar 2026",
-            "country": "Brazil",
-            "pick": "Filadelfia U19 +63.5",
-            "odds": "1.83",
-            "result": "W"
         }
     ]
 }
