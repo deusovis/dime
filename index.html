@@ -382,6 +382,43 @@
                             </div>
                         </div>
 
+                        <div id="plans-section" className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative mb-12">
+                            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
+                            
+                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-center items-center backdrop-blur-xl relative z-10">
+                                <h2 className="text-xl md:text-3xl font-black uppercase text-white tracking-wide">Choose Your Plan</h2>
+                            </div>
+                            
+                            <div className="p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 justify-center">
+                                {/* Monthly Plan */}
+                                <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center hover:bg-white/10 transition-colors">
+                                    <h3 className="text-lg md:text-xl font-bold text-gray-300 uppercase tracking-widest mb-2">Monthly</h3>
+                                    <div className="text-4xl md:text-5xl font-black text-white mb-6">$79.00<span className="text-sm text-gray-400 font-normal">/mo</span></div>
+                                    <ul className="text-sm md:text-base text-gray-400 space-y-3 mb-8 w-full">
+                                        <li className="flex items-center gap-2"><i className="fa-solid fa-check text-green-500"></i> Full Access to Picks</li>
+                                        <li className="flex items-center gap-2"><i className="fa-solid fa-check text-green-500"></i> Daily Analysis</li>
+                                        <li className="flex items-center gap-2"><i className="fa-solid fa-check text-green-500"></i> Telegram Community</li>
+                                    </ul>
+                                    <a href="https://t.me/deimantas" target="_blank" className="w-full btn-telegram py-3 rounded-xl font-bold uppercase tracking-wide text-white transition-transform hover:scale-105 active:scale-95">Select Monthly</a>
+                                </div>
+
+                                {/* Season Plan */}
+                                <div className="flex-1 bg-gradient-to-b from-dimeGreen/20 to-black/40 border border-dimeGreen/50 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center relative overflow-hidden transform md:-translate-y-4 shadow-[0_0_30px_rgba(62,107,77,0.3)] hover:shadow-[0_0_40px_rgba(62,107,77,0.5)] transition-shadow">
+                                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-dimeAccent to-transparent"></div>
+                                    <div className="absolute top-4 right-4 bg-dimeAccent text-black text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">Best Value</div>
+                                    <h3 className="text-lg md:text-xl font-bold text-dimeAccent uppercase tracking-widest mb-2">Season Pass</h3>
+                                    <div className="text-4xl md:text-5xl font-black text-white mb-2">$499.00</div>
+                                    <div className="text-sm text-gray-400 mb-6 font-medium">(Save ~30% annually)</div>
+                                    <ul className="text-sm md:text-base text-gray-200 space-y-3 mb-8 w-full">
+                                        <li className="flex items-center gap-2"><i className="fa-solid fa-check text-dimeAccent"></i> <span className="font-bold">Everything in Monthly</span></li>
+                                        <li className="flex items-center gap-2"><i className="fa-solid fa-check text-dimeAccent"></i> 9 Months Full Access</li>
+                                        <li className="flex items-center gap-2"><i className="fa-solid fa-check text-dimeAccent"></i> Priority Support</li>
+                                    </ul>
+                                    <a href="https://t.me/deimantas" target="_blank" className="w-full bg-gradient-to-r from-dimeAccent to-yellow-600 text-black py-3 rounded-xl font-black uppercase tracking-wide transition-transform hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(219,156,42,0.4)]">Select Season</a>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative mb-6">
                             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
                             
@@ -473,224 +510,11 @@
                                     <span className="bg-green-500/20 rounded-full p-1 md:p-1.5 flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <i className="fa-solid fa-check text-green-400 text-[10px] md:text-xs"></i>
                                     </span>
-                                    <span>Fully Verified History on <span className="text-green-400 group-hover:text-green-300 transition-colors drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">Blogabet</span></span>
+                                    See full verified history on Blogabet
                                 </a>
                             </div>
                         </div>
 
-                        {/* Native Inline About Section */}
-                        <div id="about-section" className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative px-6 py-12 md:px-16 md:py-16 flex flex-col items-center mt-2">
-                            
-                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-6 text-center leading-tight">
-                                10+ Years of <br/> <span className="text-dimeAccent">Data-Driven</span> Dominance
-                            </h2>
-
-                            <div className="w-16 h-1 bg-dimeGreen rounded-full mb-8"></div>
-
-                            <div className="text-gray-100 text-sm md:text-base text-center font-medium leading-relaxed mb-10 max-w-4xl drop-shadow-sm space-y-5">
-                                <p>
-                                    Welcome to <strong>DIME Tipster</strong>, the industry's premier destination for professional basketball betting analysis and expert predictions. For over a decade, we have consistently beaten the global basketball betting market through a relentless, data-driven methodology. Unlike the vast majority of sports tipsters, we operate with <strong>100% absolute transparency</strong>. We hide nothing. Every single pick, win, and loss is meticulously tracked and publicly verified, ensuring complete accountability and trust.
-                                </p>
-                                <p>
-                                    We do not rely on gut feelings, generic stats, or pure luck. Our highly profitable basketball betting strategy is built upon advanced metrics, deep-level market analysis, and an encyclopedic knowledge of over 40 basketball leagues worldwide. This rigorous, quantitative approach has allowed us to generate a highly lucrative ROI and accumulate thousands of units in pure profit over the last 10+ years.
-                                </p>
-                                <p>
-                                    Trust is earned, not given, which is why our picks are publicly visible for everyone to check, audit, and verify before joining. Whether you are a seasoned sports investor or a serious bettor looking to sustainably grow your bankroll, DIME Tipster provides the precise, high-value basketball tips you need to confidently and consistently beat the bookie.
-                                </p>
-                            </div>
-
-                            <div className="w-full flex flex-col md:flex-row gap-4 md:gap-6 mb-4 md:mb-12">
-                                <div className="flex-1 bg-gradient-to-br from-dimeGreen/20 to-black/60 border border-dimeGreen/30 rounded-2xl p-6 md:p-8 flex items-start gap-4 shadow-[0_0_20px_rgba(62,107,77,0.1)] transition-transform hover:-translate-y-1 duration-300">
-                                    <div className="bg-dimeGreen/20 p-3 rounded-xl flex-shrink-0">
-                                        <i className="fa-solid fa-shield-halved text-2xl text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]"></i>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base">Strict Flat Staking</h4>
-                                        <p className="text-gray-300 text-xs md:text-sm leading-relaxed">We protect your capital with a professional, disciplined 1/10 flat staking system designed to build your bankroll steadily over the entire season.</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex-1 bg-gradient-to-br from-dimeAccent/20 to-black/60 border border-dimeAccent/30 rounded-2xl p-6 md:p-8 flex items-start gap-4 shadow-[0_0_20px_rgba(219,156,42,0.1)] transition-transform hover:-translate-y-1 duration-300">
-                                    <div className="bg-dimeAccent/20 p-3 rounded-xl flex-shrink-0">
-                                        <i className="fa-solid fa-clock text-2xl text-dimeGold drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"></i>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base">Pre-Match Picks Only</h4>
-                                        <p className="text-gray-300 text-xs md:text-sm leading-relaxed">No chasing chaotic live lines. We provide deeply researched, pre-match picks, giving you ample time to secure the absolute best odds before tip-off.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="w-full mb-12 bg-black/60 rounded-xl p-4 md:p-8 border border-white/10 relative overflow-hidden">
-                                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_rgba(219,156,42,0.1),_transparent_50%)]"></div>
-                                
-                                <h3 className="text-white text-sm md:text-base font-black uppercase tracking-widest mb-6 flex items-center gap-3 relative z-10">
-                                    <i className="fa-solid fa-chart-area text-dimeGold"></i>
-                                    Equity Growth
-                                </h3>
-                                
-                                <div className="w-full h-48 md:h-64 relative z-10 flex flex-col justify-end border-l border-b border-gray-700 pb-2 pl-2">
-                                    <div className="absolute left-[-35px] top-0 h-full flex flex-col justify-between text-[8px] md:text-[10px] text-gray-500 font-mono py-2">
-                                        <span>+2400u</span>
-                                        <span>+1200u</span>
-                                        <span>0u</span>
-                                    </div>
-
-                                    <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 300">
-                                        <defs>
-                                            <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
-                                                <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
-                                            </linearGradient>
-                                        </defs>
-                                        <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20 L 1000,300 L 0,300 Z" fill="url(#gradientArea)" />
-                                        <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20" fill="none" stroke="#22c55e" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
-                                        <circle cx="1000" cy="20" r="8" fill="#fff" stroke="#22c55e" strokeWidth="4" className="animate-pulse" />
-                                    </svg>
-                                </div>
-                                
-                                <div className="flex justify-between text-[8px] md:text-[10px] text-gray-500 font-mono mt-3 ml-2">
-                                    <span>2016</span>
-                                    <span>2018</span>
-                                    <span>2020</span>
-                                    <span>2022</span>
-                                    <span>2024</span>
-                                    <span className="text-dimeGold font-bold">2026</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Plans Section */}
-                        <div id="plans-section" className="w-full mt-12 mb-6 flex flex-col items-center">
-                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-6 text-center leading-tight">
-                                Investment <span className="text-dimeAccent">Plans</span>
-                            </h2>
-                            <div className="w-16 h-1 bg-dimeGreen rounded-full mb-10"></div>
-
-                            <div className="w-full flex flex-col md:flex-row gap-6 max-w-4xl">
-                                {/* 1-Month Plan */}
-                                <div className="flex-1 glass-card rounded-2xl p-8 border border-white/10 flex flex-col relative overflow-hidden transition-transform hover:-translate-y-1 duration-300">
-                                    <h3 className="text-xl font-black text-white uppercase tracking-wider mb-2">1-Month Pass</h3>
-                                    <div className="flex items-baseline gap-1 mb-6">
-                                        <span className="text-4xl font-black text-dimeGold">$200</span>
-                                        <span className="text-gray-400 text-sm font-bold">/ month</span>
-                                    </div>
-                                    <ul className="text-gray-300 text-sm space-y-4 mb-8 flex-1">
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-green-500"></i> 100+ Pre-Match Picks</li>
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-green-500"></i> Strict 1/10 Flat Staking</li>
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-green-500"></i> 100% Risk-Free Guarantee</li>
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-green-500"></i> Direct Telegram Delivery</li>
-                                    </ul>
-                                    <a href="https://t.me/deimantas" target="_blank" className="w-full text-center bg-white/10 hover:bg-white/20 border border-white/20 text-white py-3 rounded-xl font-black uppercase tracking-widest transition-colors">Select Plan</a>
-                                </div>
-
-                                {/* Season Plan */}
-                                <div className="flex-1 bg-gradient-to-b from-dimeGreen/20 to-black/80 rounded-2xl p-8 border border-dimeGreen/50 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(62,107,77,0.2)] transition-transform hover:-translate-y-1 duration-300 transform md:-translate-y-4">
-                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-dimeGreen to-green-400"></div>
-                                    <div className="absolute top-4 right-4 bg-green-500/20 border border-green-500/50 text-green-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Best Value</div>
-                                    
-                                    <h3 className="text-xl font-black text-white uppercase tracking-wider mb-2">Season Pass</h3>
-                                    <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">October through June</p>
-                                    <div className="flex items-baseline gap-1 mb-2">
-                                        <span className="text-4xl font-black text-dimeGold">$1,199</span>
-                                        <span className="text-gray-500 text-sm font-bold line-through ml-2">$1,800</span>
-                                    </div>
-                                    <p className="text-green-400 text-xs font-black uppercase tracking-widest mb-6">Save $601 instantly</p>
-                                    
-                                    <ul className="text-gray-300 text-sm space-y-4 mb-8 flex-1">
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-dimeGold"></i> Everything in 1-Month Pass</li>
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-dimeGold"></i> Full Season Coverage (9 Months)</li>
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-dimeGold"></i> VIP Bankroll Management</li>
-                                        <li className="flex items-center gap-3"><i className="fa-solid fa-check text-dimeGold"></i> Priority Support</li>
-                                    </ul>
-                                    <a href="https://t.me/deimantas" target="_blank" className="w-full text-center bg-gradient-to-r from-dimeGreen to-[#4ade80] hover:from-[#4ade80] hover:to-dimeGreen text-white py-3 rounded-xl font-black uppercase tracking-widest transition-colors shadow-[0_0_15px_rgba(74,222,128,0.4)] text-shadow-sm">Join the Season</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* FAQ Section */}
-                        <div id="faq-section" className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative px-6 py-12 md:px-16 flex flex-col items-center mt-6">
-                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-6 text-center leading-tight">
-                                Frequently Asked <span className="text-dimeAccent">Questions</span>
-                            </h2>
-                            
-                            <div className="w-16 h-1 bg-dimeGreen rounded-full mb-10"></div>
-
-                            <div className="w-full max-w-4xl flex flex-col gap-4">
-                                
-                                <div className="bg-black/40 border border-white/5 rounded-xl p-5 md:p-6 hover:bg-black/60 transition-colors shadow-inner">
-                                    <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base flex items-center gap-3">
-                                        <i className="fa-solid fa-chart-simple text-dimeGold"></i>
-                                        What is your track record?
-                                    </h4>
-                                    <p className="text-gray-300 text-xs md:text-sm leading-relaxed pl-7 md:pl-8">For over a decade, we have delivered consistent, data-driven profitability, yielding a remarkable equity growth of over +2,400 units since 2016. However, we firmly believe that absolute, verifiable transparency today is far more important than relying solely on past accolades. To guarantee that standard of modern integrity, we have proudly partnered with Blogabet since 2026 to independently audit and verify 100% of our active betting history.</p>
-                                </div>
-
-                                <div className="bg-black/40 border border-white/5 rounded-xl p-5 md:p-6 hover:bg-black/60 transition-colors shadow-inner">
-                                    <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base flex items-center gap-3">
-                                        <i className="fa-solid fa-crosshairs text-green-500"></i>
-                                        How many picks will I receive?
-                                    </h4>
-                                    <p className="text-gray-300 text-xs md:text-sm leading-relaxed pl-7 md:pl-8">During the active basketball season, you will receive a high volume of over 100 meticulously researched, high-value plays every single month to help maximize your compounding growth.</p>
-                                </div>
-
-                                <div className="bg-black/40 border border-white/5 rounded-xl p-5 md:p-6 hover:bg-black/60 transition-colors shadow-inner">
-                                    <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base flex items-center gap-3">
-                                        <i className="fa-solid fa-earth-americas text-blue-400"></i>
-                                        Which basketball leagues do you cover?
-                                    </h4>
-                                    <p className="text-gray-300 text-xs md:text-sm leading-relaxed pl-7 md:pl-8">We specialize in global basketball markets, extensively covering over Top 40 International and Domestic leagues including the EuroLeague, Liga ACB, EuroCup, BSL, NBL, and many more.</p>
-                                </div>
-
-                                <div className="bg-black/40 border border-white/5 rounded-xl p-5 md:p-6 hover:bg-black/60 transition-colors shadow-inner">
-                                    <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base flex items-center gap-3">
-                                        <i className="fa-solid fa-hand-holding-dollar text-dimeAccent"></i>
-                                        How does the 100% Risk-Free Guarantee work?
-                                    </h4>
-                                    <p className="text-gray-300 text-xs md:text-sm leading-relaxed pl-7 md:pl-8">We back our expertise with absolute accountability; if a month ends in negative profit, you receive a full refund for your subscription, meaning you risk absolutely nothing by joining us.</p>
-                                </div>
-
-                                <div className="bg-black/40 border border-white/5 rounded-xl p-5 md:p-6 hover:bg-black/60 transition-colors shadow-inner">
-                                    <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base flex items-center gap-3">
-                                        <i className="fa-brands fa-telegram text-[#2481cc]"></i>
-                                        How do I access the tips?
-                                    </h4>
-                                    <p className="text-gray-300 text-xs md:text-sm leading-relaxed pl-7 md:pl-8">Simply click the "Join Now" button at the top of the page to connect with us.</p>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        {/* Leagues Marquee */}
-                        <div className="w-full pt-8 mt-4 overflow-hidden">
-                            <h3 className="text-center text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.2em] font-black mb-6">
-                                Dominating Global Basketball Markets
-                            </h3>
-                            
-                            <div className="relative flex overflow-x-hidden group bg-black/20 py-4 rounded-xl border border-white/5">
-                                <div className="absolute top-0 left-0 w-12 md:w-24 h-full bg-gradient-to-r from-[#0d141c] to-transparent z-10 pointer-events-none"></div>
-                                <div className="absolute top-0 right-0 w-12 md:w-24 h-full bg-gradient-to-l from-[#0d141c] to-transparent z-10 pointer-events-none"></div>
-                                
-                                <div className="animate-scroll whitespace-nowrap flex items-center gap-4 md:gap-6 px-4">
-                                    {doubledLeagues.map((league, idx) => (
-                                        <div key={idx} className="flex items-center gap-2 md:gap-3 shrink-0 bg-white/5 border border-white/10 px-3 py-2 rounded-lg shadow-[0_2px_5px_rgba(0,0,0,0.5)] hover:bg-white/10 transition-colors duration-300">
-                                            <img 
-                                                src={`https://flagcdn.com/w40/${league.code}.png`} 
-                                                alt={`${league.name} flag`} 
-                                                className="w-5 md:w-6 h-auto rounded-[2px] shadow-sm" 
-                                            />
-                                            <span className="text-gray-300 font-black text-[10px] md:text-xs tracking-widest uppercase whitespace-nowrap">
-                                                {league.name}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        <footer className="mt-auto py-10 w-full text-center opacity-70 hover:opacity-100 transition-opacity">
-                            <p className="text-gray-500 text-[10px] md:text-xs font-black tracking-[0.3em] uppercase">© 2026 DIME TIPSTER</p>
-                        </footer>
                     </main>
 
                 </div>
