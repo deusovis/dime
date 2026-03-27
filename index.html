@@ -386,10 +386,10 @@
                             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
                             
                             <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center backdrop-blur-xl relative z-10">
-                                <h2 className="text-lg md:text-2xl font-black uppercase text-white tracking-wide">Archive</h2>
+                                <h2 className="text-lg md:text-2xl font-black uppercase text-white tracking-wide">Verified History</h2>
                                 
                                <div className="flex items-center">
-                                    <span className="text-dimeAccent font-black text-[10px] md:text-sm tracking-widest uppercase">LAST 10 PICKS</span>
+                                    <span className="text-dimeAccent font-black text-[10px] md:text-sm tracking-widest uppercase">RECENT RESULTS</span>
                                </div>
                             </div>
                             
@@ -415,7 +415,7 @@
                                                         {pick.date}
                                                     </td>
                                                     <td className="px-2 py-4 md:px-10 md:py-7">
-                                                        <div className="flex flex-col md:flex-row md:items-center font-normal md:font-medium text-[11px] md:text-base uppercase tracking-wide gap-1 md:gap-3">
+                                                        <div className="flex flex-col md:flex-row md:items-center font-normal md:font-medium text-[10px] md:text-[15px] uppercase tracking-wide gap-1 md:gap-3">
                                                             {(() => {
                                                                 const pickStr = pick.pick || '';
                                                                 const parts = pickStr.split(' ');
@@ -506,17 +506,17 @@
                                     </div>
                                     <div>
                                         <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base">Strict Flat Staking</h4>
-                                        <p className="text-gray-300 text-xs md:text-sm leading-relaxed">We protect your capital with a professional, disciplined 1/10 flat staking system designed to build your bankroll steadily over the entire season.</p>
+                                        <p className="text-gray-300 text-xs md:text-sm leading-relaxed">We protect your capital with a professional, disciplined flat staking system designed to build your bankroll steadily over the entire season.</p>
                                     </div>
                                 </div>
 
                                 <div className="flex-1 bg-gradient-to-br from-dimeAccent/20 to-black/60 border border-dimeAccent/30 rounded-2xl p-6 md:p-8 flex items-start gap-4 shadow-[0_0_20px_rgba(219,156,42,0.1)] transition-transform hover:-translate-y-1 duration-300">
                                     <div className="bg-dimeAccent/20 p-3 rounded-xl flex-shrink-0">
-                                        <i className="fa-solid fa-clock text-2xl text-dimeGold drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"></i>
+                                        <i className="fa-solid fa-crosshairs text-2xl text-dimeGold drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]"></i>
                                     </div>
                                     <div>
-                                        <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base">Pre-Match Picks Only</h4>
-                                        <p className="text-gray-300 text-xs md:text-sm leading-relaxed">No chasing chaotic live lines. We provide deeply researched, pre-match picks, giving you ample time to secure the absolute best odds before tip-off.</p>
+                                        <h4 className="text-white font-black uppercase tracking-wider mb-2 text-sm md:text-base">Sharp Market Focus</h4>
+                                        <p className="text-gray-300 text-xs md:text-sm leading-relaxed">We eliminate the noise. Our strategy exclusively targets high-value Moneyline and Point Spread markets, completely avoiding the unpredictable volatility of Totals (Over/Under).</p>
                                     </div>
                                 </div>
                             </div>
@@ -529,33 +529,35 @@
                                     Equity Growth
                                 </h3>
                                 
-                                <div className="w-full h-48 md:h-64 relative z-10 flex flex-col justify-end border-l border-b border-gray-700 pb-2 pl-2">
-                                    <div className="absolute left-[-35px] top-0 h-full flex flex-col justify-between text-[8px] md:text-[10px] text-gray-500 font-mono py-2">
-                                        <span>+2400u</span>
-                                        <span>+1200u</span>
-                                        <span>0u</span>
-                                    </div>
+                                <div className="pl-10 md:pl-12 pr-2">
+                                    <div className="w-full h-48 md:h-64 relative z-10 flex flex-col justify-end border-l border-b border-gray-700 pb-2 pl-2">
+                                        <div className="absolute left-[-38px] md:left-[-45px] top-0 h-full flex flex-col justify-between text-[8px] md:text-[10px] text-gray-500 font-mono py-2 text-right w-[32px] md:w-[40px]">
+                                            <span>+2400u</span>
+                                            <span>+1200u</span>
+                                            <span>0u</span>
+                                        </div>
 
-                                    <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 300">
-                                        <defs>
-                                            <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
-                                                <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
-                                            </linearGradient>
-                                        </defs>
-                                        <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20 L 1000,300 L 0,300 Z" fill="url(#gradientArea)" />
-                                        <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20" fill="none" stroke="#22c55e" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
-                                        <circle cx="1000" cy="20" r="8" fill="#fff" stroke="#22c55e" strokeWidth="4" className="animate-pulse" />
-                                    </svg>
-                                </div>
-                                
-                                <div className="flex justify-between text-[8px] md:text-[10px] text-gray-500 font-mono mt-3 ml-2">
-                                    <span>2016</span>
-                                    <span>2018</span>
-                                    <span>2020</span>
-                                    <span>2022</span>
-                                    <span>2024</span>
-                                    <span className="text-dimeGold font-bold">2026</span>
+                                        <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 300">
+                                            <defs>
+                                                <linearGradient id="gradientArea" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="#22c55e" stopOpacity="0.4" />
+                                                    <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20 L 1000,300 L 0,300 Z" fill="url(#gradientArea)" />
+                                            <path d="M 0,280 L 100,260 L 200,230 L 300,250 L 400,180 L 500,160 L 600,110 L 700,130 L 800,70 L 900,40 L 1000,20" fill="none" stroke="#22c55e" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
+                                            <circle cx="1000" cy="20" r="8" fill="#fff" stroke="#22c55e" strokeWidth="4" className="animate-pulse" />
+                                        </svg>
+                                    </div>
+                                    
+                                    <div className="flex justify-between text-[8px] md:text-[10px] text-gray-500 font-mono mt-3 ml-2">
+                                        <span>2016</span>
+                                        <span>2018</span>
+                                        <span>2020</span>
+                                        <span>2022</span>
+                                        <span>2024</span>
+                                        <span className="text-dimeGold font-bold">2026</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
