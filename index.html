@@ -103,20 +103,6 @@
         @keyframes fadeIn {
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Marquee Animation */
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-            animation: scroll-left 50s linear infinite; 
-            display: flex;
-            width: max-content;
-        }
-        .animate-scroll:hover {
-            animation-play-state: paused;
-        }
     </style>
 </head>
 <body>
@@ -144,53 +130,6 @@
             return progress;
         };
 
-        const topLeagues = [
-            { code: "eu", name: "EuroLeague" },
-            { code: "es", name: "Liga ACB" },
-            { code: "eu", name: "EuroCup" },
-            { code: "tr", name: "BSL" },
-            { code: "it", name: "LBA" },
-            { code: "fr", name: "LNB Pro A" },
-            { code: "de", name: "BBL" },
-            { code: "gr", name: "GBL" },
-            { code: "lt", name: "LKL" },
-            { code: "rs", name: "KLS" },
-            { code: "un", name: "ABA League" },
-            { code: "au", name: "NBL" },
-            { code: "eu", name: "BCL" },
-            { code: "cn", name: "CBA" },
-            { code: "jp", name: "B.League" },
-            { code: "kr", name: "KBL" },
-            { code: "ph", name: "PBA" },
-            { code: "ar", name: "LNB Arg" },
-            { code: "br", name: "NBB" },
-            { code: "pr", name: "BSN" },
-            { code: "pl", name: "PLK" },
-            { code: "il", name: "Winner League" },
-            { code: "lv", name: "LBL" },
-            { code: "hr", name: "Premijer Liga" },
-            { code: "si", name: "Liga Nova KBM" },
-            { code: "me", name: "Prva A Liga" },
-            { code: "ba", name: "Championship" },
-            { code: "ca", name: "CEBL" },
-            { code: "nz", name: "NZNBL" },
-            { code: "do", name: "LNB" },
-            { code: "ve", name: "SPB" },
-            { code: "mx", name: "LNBP" },
-            { code: "uy", name: "LUB" },
-            { code: "be", name: "BNXT League" },
-            { code: "nl", name: "BNXT League" },
-            { code: "fi", name: "Korisliiga" },
-            { code: "se", name: "SBL" },
-            { code: "cz", name: "NBL" },
-            { code: "ee", name: "KML" },
-            { code: "gb", name: "BBL" },
-            { code: "tw", name: "P. LEAGUE+" },
-            { code: "lb", name: "FLB" }
-        ];
-        
-        const doubledLeagues = [...topLeagues, ...topLeagues];
-
         const App = () => {
             const [data, setData] = React.useState({ stats: { roi: '...', picks: '...' }, picks: [] });
             const [isLoading, setIsLoading] = React.useState(true);
@@ -209,64 +148,28 @@
                 }
                 
                 const countryMap = {
-                    'AFGHANISTAN': 'af', 'ALBANIA': 'al', 'ALGERIA': 'dz', 'ANDORRA': 'ad', 'ANGOLA': 'ao',
-                    'ARGENTINA': 'ar', 'ARMENIA': 'am', 'AUSTRALIA': 'au', 'AUSTRIA': 'at', 'AZERBAIJAN': 'az',
-                    'BAHAMAS': 'bs', 'BAHRAIN': 'bh', 'BANGLADESH': 'bd', 'BARBADOS': 'bb', 'BELARUS': 'by',
-                    'BELGIUM': 'be', 'BELIZE': 'bz', 'BENIN': 'bj', 'BHUTAN': 'bt', 'BOLIVIA': 'bo',
-                    'BOSNIA AND HERZEGOVINA': 'ba', 'BOSNIA': 'ba', 'BOTSWANA': 'bw', 'BRAZIL': 'br', 'BULGARIA': 'bg',
-                    'BURKINA FASO': 'bf', 'BURUNDI': 'bi', 'CABO VERDE': 'cv', 'CAMBODIA': 'kh', 'CAMEROON': 'cm',
-                    'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
-                    'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
-                    'CYPRUS': 'cy', 'CZECH R.': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
-                    'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
-                    'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
-                    'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
-                    'GEORGIA': 'ge', 'GERMANY': 'de', 'GHANA': 'gh', 'GREECE': 'gr', 'GUATEMALA': 'gt',
-                    'GUINEA': 'gn', 'GUYANA': 'gy', 'HAITI': 'ht', 'HONDURAS': 'hn', 'HUNGARY': 'hu',
-                    'ICELAND': 'is', 'INDIA': 'in', 'INDONESIA': 'id', 'IRAN': 'ir', 'IRAQ': 'iq',
-                    'IRELAND': 'ie', 'ISRAEL': 'il', 'ITALY': 'it', 'JAMAICA': 'jm', 'JAPAN': 'jp',
-                    'JORDAN': 'jo', 'KAZAKHSTAN': 'kz', 'KENYA': 'ke', 'KOSOVO': 'xk', 'KUWAIT': 'kw',
-                    'KYRGYZSTAN': 'kg', 'LAOS': 'la', 'LATVIA': 'lv', 'LEBANON': 'lb', 'LIBERIA': 'lr',
-                    'LIBYA': 'ly', 'LIECHTENSTEIN': 'li', 'LITHUANIA': 'lt', 'LUXEMBOURG': 'lu', 'MADAGASCAR': 'mg',
-                    'MALAWI': 'my', 'MALAYSIA': 'my', 'MALDIVES': 'mv', 'MALI': 'ml', 'MALTA': 'mt',
-                    'MEXICO': 'mx', 'MOLDOVA': 'md', 'MONACO': 'mc', 'MONGOLIA': 'mn', 'MONTENEGRO': 'me',
-                    'MOROCCO': 'ma', 'MOZAMBIQUE': 'mz', 'MYANMAR': 'mm', 'NAMIBIA': 'na', 'NEPAL': 'np',
-                    'NETHERLANDS': 'nl', 'NEW ZEALAND': 'nz', 'NICARAGUA': 'ni', 'NIGER': 'ne', 'NIGERIA': 'ng',
-                    'NORTH MACEDONIA': 'mk', 'MACEDONIA': 'mk', 'NORWAY': 'no', 'OMAN': 'om', 'PAKISTAN': 'pk',
-                    'PANAMA': 'pa', 'PARAGUAY': 'py', 'PERU': 'pe', 'PHILIPPINES': 'ph', 'POLAND': 'pl',
-                    'PORTUGAL': 'pt', 'PUERTO RICO': 'pr', 'QATAR': 'qa', 'ROMANIA': 'ro', 'RUSSIA': 'ru', 'RWANDA': 'rw',
-                    'SAUDI ARABIA': 'sa', 'SENEGAL': 'sn', 'SERBIA': 'rs', 'SINGAPORE': 'sg', 'SLOVAKIA': 'sk',
-                    'SLOVENIA': 'si', 'SOMALIA': 'so', 'SOUTH AFRICA': 'za', 'SOUTH KOREA': 'kr', 'REPUBLIC OF KOREA': 'kr',
-                    'KOREA REPUBLIC': 'kr', 'SPAIN': 'es', 'SRI LANKA': 'lk', 'SUDAN': 'sd', 'SWEDEN': 'se',
-                    'SWITZERLAND': 'ch', 'SYRIA': 'sy', 'TAIWAN': 'tw', 'TAJIKISTAN': 'tj', 'TANZANIA': 'tz',
-                    'THAILAND': 'th', 'TUNISIA': 'tn', 'TURKEY': 'tr', 'TÜRKİYE': 'tr', 'TURKMENISTAN': 'tm',
-                    'UGANDA': 'ug', 'UKRAINE': 'ua', 'UNITED ARAB EMIRATES': 'ae', 'UAE': 'ae', 'UNITED KINGDOM': 'gb',
-                    'UK': 'gb', 'USA': 'us', 'UNITED STATES': 'us', 'URUGUAY': 'uy', 'UZBEKISTAN': 'uz',
-                    'VENEZUELA': 've', 'VIETNAM': 'vn', 'YEMEN': 'ye', 'ZAMBIA': 'zm', 'ZIMBABWE': 'zw',
-                    'EUROPE': 'eu', 'INTERNATIONAL': 'un', 'WORLD': 'un'
+                    'ARGENTINA': 'ar', 'AUSTRALIA': 'au', 'BRAZIL': 'br', 'CANADA': 'ca', 'CHINA': 'cn', 
+                    'CROATIA': 'hr', 'FRANCE': 'fr', 'GERMANY': 'de', 'GREECE': 'gr', 'ITALY': 'it', 
+                    'JAPAN': 'jp', 'LITHUANIA': 'lt', 'MEXICO': 'mx', 'NETHERLANDS': 'nl', 'PHILIPPINES': 'ph', 
+                    'POLAND': 'pl', 'SERBIA': 'rs', 'SPAIN': 'es', 'TURKEY': 'tr', 'USA': 'us', 'EUROPE': 'eu'
                 };
 
                 const code = countryMap[countryName.toUpperCase().trim()];
-                
                 if (code) {
-                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} title={countryName} className="w-4 md:w-5 inline-block mr-1.5 md:mr-3 shadow-[0_2px_5px_rgba(0,0,0,0.5)] rounded-[2px] cursor-help border border-white/10" />;
+                    return <img src={`https://flagcdn.com/20x15/${code}.png`} alt={countryName} className="w-4 md:w-5 inline-block mr-1.5 md:mr-3 shadow-[0_2px_5px_rgba(0,0,0,0.5)] rounded-[2px]" />;
                 }
-                
-                return <i className="fa-solid fa-globe text-dimeGold text-[12px] md:text-[14px] mr-1.5 md:mr-3 cursor-help drop-shadow-md" title={countryName}></i>;
+                return <i className="fa-solid fa-globe text-dimeGold text-[12px] md:text-[14px] mr-1.5 md:mr-3"></i>;
             };
 
             React.useEffect(() => {
                 fetch('picks.json?v=' + new Date().getTime())
                     .then(res => res.json())
                     .then(json => {
-                        if (json.stats && json.picks) {
-                            setData(json);
-                        } else {
-                            setData({ stats: { roi: '+18.4%', picks: '372' }, picks: Array.isArray(json) ? json : [] });
-                        }
+                        setData({ stats: json.stats || { roi: '+18.4%', picks: '372' }, picks: json.picks || [] });
                         setTimeout(() => setIsLoading(false), 1200); 
                     })
                     .catch(() => {
+                        setData({ stats: { roi: '+18.4%', picks: '372' }, picks: [] });
                         setTimeout(() => setIsLoading(false), 1200);
                     });
             }, []);
@@ -275,35 +178,23 @@
                 return (
                     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-darkSlate overflow-hidden px-6">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(62,107,77,0.15)_0%,_transparent_60%)]"></div>
-                        
                         <div className="relative flex flex-col items-center z-10 w-full max-w-sm">
                             <div className="relative w-32 h-32 md:w-48 md:h-48 flex justify-center items-end mb-4">
                                 <div className="absolute w-full h-full flex justify-center items-end animate-bounce-heavy">
                                     <i className="fa-solid fa-basketball text-[7rem] md:text-[10rem] text-[#ea580c] animate-spin-ball drop-shadow-[0_0_30px_rgba(62,107,77,0.8)]"></i>
                                 </div>
                             </div>
-
                             <div className="w-20 md:w-28 h-2 md:h-3 bg-black rounded-[100%] blur-[2px] animate-shadow-pulse"></div>
-
                             <div className="mt-12 flex flex-col items-center w-full gap-6">
                                 <img src="logo.png" alt="DIME Tipster Logo" className="h-24 md:h-36 w-auto object-contain logo-glow" />
-                                
-                                <div className="w-full flex flex-col gap-2 bg-black/40 p-4 rounded-xl border border-dimeGreen/20 shadow-[0_0_20px_rgba(62,107,77,0.15)]">
+                                <div className="w-full flex flex-col gap-2 bg-black/40 p-4 rounded-xl border border-dimeGreen/20">
                                     <div className="flex justify-between w-full px-1 text-[10px] md:text-xs font-black tracking-widest uppercase text-gray-400">
                                         <span>Loading</span>
                                         <span className="text-dimeGold font-mono">{Math.floor(progress)}%</span>
                                     </div>
-                                    
-                                    <div className="relative w-full h-1.5 md:h-2 bg-black/80 rounded-full border border-white/5 overflow-visible shadow-inner">
-                                        <div 
-                                            className="absolute top-0 left-0 h-full bg-gradient-to-r from-dimeGreen to-[#4ade80] rounded-full shadow-[0_0_10px_rgba(74,222,128,0.4)] transition-all duration-75 ease-linear"
-                                            style={{ width: `${progress}%` }}
-                                        ></div>
-                                        
-                                        <div 
-                                            className="absolute top-1/2 -translate-y-1/2 -ml-2.5 z-10 transition-all duration-75 ease-linear"
-                                            style={{ left: `${progress}%` }}
-                                        >
+                                    <div className="relative w-full h-1.5 md:h-2 bg-black/80 rounded-full border border-white/5 overflow-visible">
+                                        <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-dimeGreen to-[#4ade80] rounded-full" style={{ width: `${progress}%` }}></div>
+                                        <div className="absolute top-1/2 -translate-y-1/2 -ml-2.5 z-10" style={{ left: `${progress}%` }}>
                                             <i className="fa-solid fa-basketball text-[#ea580c] text-[18px] md:text-[22px] drop-shadow-[0_0_8px_rgba(234,88,12,0.9)] animate-[spin_0.8s_linear_infinite]"></i>
                                         </div>
                                     </div>
@@ -318,27 +209,10 @@
                 <div className="relative overflow-x-hidden min-h-screen flex flex-col fade-in">
                     <nav className="w-full flex items-start pt-1 md:pt-3 px-4 md:px-12 max-w-[1400px] mx-auto">
                         <div className="flex-1 flex justify-start">
-                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
-                            
-                            <button 
-                                onClick={() => scrollToSection('about-section')} 
-                                className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-8 mt-4 md:mt-5 lg:mt-8 self-start">
-                                About Us
-                            </button>
-
-                            <button 
-                                onClick={() => scrollToSection('plans-section')} 
-                                className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-6 mt-4 md:mt-5 lg:mt-8 self-start">
-                                Plans
-                            </button>
-                            
-                            <button 
-                                onClick={() => scrollToSection('faq-section')} 
-                                className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-6 mt-4 md:mt-5 lg:mt-8 self-start">
-                                FAQ
-                            </button>
+                            <img src="logo.png" alt="DIME Logo" className="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow" />
+                            <button onClick={() => scrollToSection('about-section')} className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest ml-4 md:ml-8 mt-4 md:mt-5 lg:mt-8 self-start">About Us</button>
+                            <button onClick={() => scrollToSection('plans-section')} className="text-white hover:text-dimeGold font-black text-[10px] md:text-sm uppercase tracking-widest ml-4 md:ml-6 mt-4 md:mt-5 lg:mt-8 self-start">Plans</button>
                         </div>
-
                         <div className="flex-1 flex justify-end pt-2 md:pt-4"> 
                             <a href="https://t.me/deimantas" target="_blank" className="btn-telegram flex items-center justify-center gap-2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-black text-xs md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
                                 <i className="fa-brands fa-telegram text-lg md:text-xl"></i>
@@ -349,52 +223,35 @@
 
                     <main className="container mx-auto px-4 pt-0 md:pt-2 pb-10 max-w-6xl flex flex-col items-center flex-grow relative z-10">
                         <div className="text-center mb-10 md:mb-12 mt-6 md:-mt-10 lg:-mt-12 relative z-20">
-                            <h1 className="text-3xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight uppercase text-white">
-                                Beat the <span className="text-dimeAccent">Bookie</span> <br/> 
-                                <span>with Precision</span>
-                            </h1>
-                            
+                            <h1 className="text-3xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tight uppercase text-white">Beat the <span className="text-dimeAccent">Bookie</span> <br/> with Precision</h1>
                             <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
-                                
-                                <div className="relative w-full md:w-auto bg-white/5 border border-white/10 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
-                                    <div className="absolute -top-3 -left-2 md:-top-4 md:-left-4 z-20 flex items-center justify-center transform -rotate-12 transition-transform hover:scale-110 hover:-rotate-6 cursor-pointer">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-md bg-red-500 opacity-60"></span>
-                                        <span className="relative inline-flex items-center justify-center px-2.5 py-1 md:px-3 md:py-1 rounded-md bg-gradient-to-r from-red-600 via-red-500 to-orange-500 border border-red-300/60 shadow-[0_0_25px_rgba(239,68,68,0.9)]">
-                                            <i className="fa-solid fa-bolt text-yellow-300 text-[10px] mr-1 animate-pulse drop-shadow-[0_0_5px_rgba(253,224,71,0.8)]"></i>
-                                            <span className="text-white text-[10px] md:text-xs font-black uppercase tracking-widest drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-                                                New!
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <i className="fa-solid fa-circle-check text-green-500 mr-2 text-xl shadow-green-500"></i>
+                                <div className="relative w-full md:w-auto bg-white/5 border border-white/10 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold">
+                                    <i className="fa-solid fa-circle-check text-green-500 mr-2 text-xl"></i>
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">Verified on</span>
-                                    <a href="https://dime.blogabet.com" target="_blank" className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black hover:text-green-400 transition-colors">Blogabet</a>
+                                    <a href="https://dime.blogabet.com" target="_blank" className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black">Blogabet</a>
                                 </div>
-
-                                <div className="w-full md:w-auto bg-dimeGreen/20 border border-dimeGreen/40 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold backdrop-blur-md">
+                                <div className="w-full md:w-auto bg-dimeGreen/20 border border-dimeGreen/40 text-white px-6 py-3 rounded-xl flex items-center justify-center font-bold">
                                     <i className="fa-solid fa-chart-line text-green-500 mr-2 text-xl"></i> 
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">ROI:</span>
-                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 mr-2 font-black drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">{data.stats.roi}</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 mr-2 font-black">{data.stats.roi}</span>
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 mr-2">|</span>
-                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">{data.stats.picks}</span>
+                                    <span className="uppercase text-[10px] md:text-xs tracking-widest text-green-500 font-black">{data.stats.picks}</span>
                                     <span className="uppercase text-[10px] md:text-xs tracking-widest text-gray-400 ml-2">Picks</span>
                                 </div>
                             </div>
                         </div>
 
                         <div id="plans-section" className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative mb-12">
-                            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
-                            
-                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-center items-center backdrop-blur-xl relative z-10">
+                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-center items-center">
                                 <h2 className="text-xl md:text-3xl font-black uppercase text-white tracking-wide">Choose Your Plan</h2>
                             </div>
                             
-                            <div className="p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 justify-center">
+                            <div className="p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 justify-center items-stretch">
                                 {/* Monthly Plan */}
                                 <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center hover:bg-white/10 transition-colors">
                                     <h3 className="text-lg md:text-xl font-bold text-gray-300 uppercase tracking-widest mb-2">Monthly</h3>
                                     <div className="text-4xl md:text-5xl font-black text-white mb-6">$79.00<span className="text-sm text-gray-400 font-normal">/mo</span></div>
-                                    <ul className="text-sm md:text-base text-gray-400 space-y-3 mb-8 w-full">
+                                    <ul className="text-sm md:text-base text-gray-400 space-y-3 mb-8 w-full flex-grow">
                                         <li className="flex items-center gap-2"><i className="fa-solid fa-check text-green-500"></i> Full Access to Picks</li>
                                         <li className="flex items-center gap-2"><i className="fa-solid fa-check text-green-500"></i> Daily Analysis</li>
                                         <li className="flex items-center gap-2"><i className="fa-solid fa-check text-green-500"></i> Telegram Community</li>
@@ -403,120 +260,55 @@
                                 </div>
 
                                 {/* Season Plan */}
-                                <div className="flex-1 bg-gradient-to-b from-dimeGreen/20 to-black/40 border border-dimeGreen/50 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center relative overflow-hidden transform md:-translate-y-4 shadow-[0_0_30px_rgba(62,107,77,0.3)] hover:shadow-[0_0_40px_rgba(62,107,77,0.5)] transition-shadow">
-                                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-dimeAccent to-transparent"></div>
-                                    <div className="absolute top-4 right-4 bg-dimeAccent text-black text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">Best Value</div>
+                                <div className="flex-1 bg-gradient-to-b from-dimeGreen/20 to-black/40 border border-dimeGreen/50 rounded-2xl p-6 md:p-8 flex flex-col items-center text-center relative overflow-hidden shadow-[0_0_30px_rgba(62,107,77,0.3)] hover:shadow-[0_0_40px_rgba(62,107,77,0.5)] transition-shadow">
+                                    <div className="absolute top-4 right-4 bg-dimeAccent text-black text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full">Best Value</div>
                                     <h3 className="text-lg md:text-xl font-bold text-dimeAccent uppercase tracking-widest mb-2">Season Pass</h3>
                                     <div className="text-4xl md:text-5xl font-black text-white mb-2">$499.00</div>
                                     <div className="text-sm text-gray-400 mb-6 font-medium">(Save ~30% annually)</div>
-                                    <ul className="text-sm md:text-base text-gray-200 space-y-3 mb-8 w-full">
+                                    <ul className="text-sm md:text-base text-gray-200 space-y-3 mb-8 w-full flex-grow">
                                         <li className="flex items-center gap-2"><i className="fa-solid fa-check text-dimeAccent"></i> <span className="font-bold">Everything in Monthly</span></li>
                                         <li className="flex items-center gap-2"><i className="fa-solid fa-check text-dimeAccent"></i> 9 Months Full Access</li>
                                         <li className="flex items-center gap-2"><i className="fa-solid fa-check text-dimeAccent"></i> Priority Support</li>
                                     </ul>
-                                    <a href="https://t.me/deimantas" target="_blank" className="w-full bg-gradient-to-r from-dimeAccent to-yellow-600 text-black py-3 rounded-xl font-black uppercase tracking-wide transition-transform hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(219,156,42,0.4)]">Select Season</a>
+                                    <a href="https://t.me/deimantas" target="_blank" className="w-full bg-gradient-to-r from-dimeAccent to-yellow-600 text-black py-3 rounded-xl font-black uppercase tracking-wide transition-transform hover:scale-105 active:scale-95">Select Season</a>
                                 </div>
                             </div>
                         </div>
 
                         <div className="w-full glass-card rounded-2xl md:rounded-[2rem] overflow-hidden relative mb-6">
-                            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-dimeGreen/50 to-transparent"></div>
-                            
-                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center backdrop-blur-xl relative z-10">
+                            <div className="bg-gradient-to-r from-slate-900/80 to-black/80 px-4 py-5 md:px-10 md:py-8 border-b border-white/10 flex justify-between items-center">
                                 <h2 className="text-lg md:text-2xl font-black uppercase text-white tracking-wide">Archive</h2>
-                                
-                               <div className="flex items-center">
-                                    <span className="text-dimeAccent font-black text-[10px] md:text-sm tracking-widest uppercase">LAST 10 PICKS</span>
-                               </div>
+                                <span className="text-dimeAccent font-black text-[10px] md:text-sm tracking-widest uppercase">LAST 10 PICKS</span>
                             </div>
-                            
-                            <div className="w-full relative z-10">
+                            <div className="w-full overflow-x-auto">
                                 <table className="w-full text-left border-collapse">
                                     <thead>
-                                        <tr className="bg-black text-gray-400 text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] font-black border-y border-white/10">
-                                            <th className="px-3 py-4 md:px-10 md:py-6 w-[15%]">Date</th>
-                                            <th className="px-2 py-4 md:px-10 md:py-6 w-[55%]">Pick</th>
-                                            <th className="px-2 py-4 md:px-10 md:py-6 w-[15%] text-center align-middle">Odds</th>
-                                            <th className="px-3 py-4 md:px-10 md:py-6 text-right w-[15%]">Result</th>
+                                        <tr className="bg-black text-gray-400 text-[9px] md:text-xs uppercase tracking-[0.2em] font-black border-y border-white/10">
+                                            <th className="px-3 py-4 md:px-10 md:py-6">Date</th>
+                                            <th className="px-2 py-4 md:px-10 md:py-6">Pick</th>
+                                            <th className="px-2 py-4 md:px-10 md:py-6 text-center">Odds</th>
+                                            <th className="px-3 py-4 md:px-10 md:py-6 text-right">Result</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-200">
-                                        {data.picks.map((pick, index) => {
-                                            const res = (pick.result || '').toUpperCase();
-                                            const isWin = res === 'W' || res === 'WON' || res === 'WIN';
-                                            const isLoss = res === 'L' || res === 'LOST' || res === 'LOSE' || res === 'LOSS';
-
-                                            return (
-                                                <tr key={index} className="group border-b border-white/[0.04] last:border-0 hover:bg-gradient-to-r hover:from-white/[0.04] hover:to-transparent transition-all duration-300 ease-out">
-                                                    <td className="px-3 py-4 md:px-10 md:py-7 text-[10px] md:text-sm text-gray-500 font-semibold tracking-wide whitespace-nowrap group-hover:text-gray-400 transition-colors">
-                                                        {pick.date}
-                                                    </td>
-                                                    <td className="px-2 py-4 md:px-10 md:py-7">
-                                                        <div className="flex flex-col md:flex-row md:items-center font-black text-[11px] md:text-base uppercase tracking-wide gap-1 md:gap-3">
-                                                            {(() => {
-                                                                const pickStr = pick.pick || '';
-                                                                const parts = pickStr.split(' ');
-                                                                if (parts.length > 1) {
-                                                                    const line = parts.pop();
-                                                                    const team = parts.join(' ');
-                                                                    return (
-                                                                        <React.Fragment>
-                                                                            <div className="flex items-center leading-tight">
-                                                                                {getFlagIcon(pick.country)}
-                                                                                <span className="text-gray-100 drop-shadow-md group-hover:text-white transition-colors line-clamp-2 md:line-clamp-none">
-                                                                                    {team}
-                                                                                </span>
-                                                                            </div>
-                                                                            <div className="pl-[22px] md:pl-0">
-                                                                                <span className="inline-block text-[9px] md:text-xs text-dimeGold bg-dimeGold/10 px-1.5 py-0.5 md:px-2.5 md:py-1 rounded border border-dimeGold/20 font-bold tracking-widest shadow-sm">
-                                                                                    {line}
-                                                                                </span>
-                                                                            </div>
-                                                                        </React.Fragment>
-                                                                    );
-                                                                }
-                                                                return (
-                                                                    <div className="flex items-center leading-tight">
-                                                                        {getFlagIcon(pick.country)}
-                                                                        <span className="text-gray-100 drop-shadow-md group-hover:text-white transition-colors">{pickStr}</span>
-                                                                    </div>
-                                                                );
-                                                            })()}
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-2 py-4 md:px-10 md:py-7 text-center align-middle">
-                                                        <span className="font-black text-[10px] md:text-sm text-dimeGold font-mono block">
-                                                            {pick.odds}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-3 py-4 md:px-10 md:py-7 text-right">
-                                                        <span className={`px-2 py-1 md:px-6 md:py-2 rounded-lg md:rounded-xl font-black text-[10px] md:text-sm tracking-widest inline-block min-w-[36px] md:min-w-[70px] text-center border backdrop-blur-sm transition-all duration-300 ${
-                                                            isWin ? 'bg-green-500/10 text-green-400 border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.15)] group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 
-                                                            isLoss ? 'bg-red-500/10 text-red-400 border-red-500/30 shadow-[0_0_15px_rgba(239,68,68,0.15)] group-hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]' : 
-                                                            'bg-gray-500/10 text-gray-400 border-gray-500/30'
-                                                        }`}>
-                                                            {pick.result}
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                        {data.picks.map((pick, index) => (
+                                            <tr key={index} className="border-b border-white/[0.04] hover:bg-white/[0.04]">
+                                                <td className="px-3 py-4 md:px-10 md:py-7 text-[10px] md:text-sm text-gray-500">{pick.date}</td>
+                                                <td className="px-2 py-4 md:px-10 md:py-7">
+                                                    <div className="flex items-center font-black text-[11px] md:text-base uppercase tracking-wide">
+                                                        {getFlagIcon(pick.country)}
+                                                        <span>{pick.pick}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-2 py-4 md:px-10 md:py-7 text-center font-black">{pick.odds}</td>
+                                                <td className="px-3 py-4 md:px-10 md:py-7 text-right uppercase font-black">{pick.result}</td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
-                            
-                            <div className="bg-gradient-to-t from-black/60 to-black/30 p-4 md:p-8 text-center border-t border-white/5 relative z-10">
-                                <a href="https://dime.blogabet.com" target="_blank" rel="noopener noreferrer" className="group text-gray-400 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 text-[9px] md:text-sm uppercase font-black tracking-widest">
-                                    <span className="bg-green-500/20 rounded-full p-1 md:p-1.5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        <i className="fa-solid fa-check text-green-400 text-[10px] md:text-xs"></i>
-                                    </span>
-                                    See full verified history on Blogabet
-                                </a>
-                            </div>
                         </div>
-
                     </main>
-
                 </div>
             );
         };
