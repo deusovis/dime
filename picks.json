@@ -1,7 +1,7 @@
 {
     "stats": {
         "roi": "+9%",
-        "picks": "396"
+        "picks": "397"
     },
     "picks": [
         {
@@ -15,13 +15,21 @@
         {
             "id": 2,
             "date": "28 Mar 2026",
+            "country": "Turkey",
+            "pick": "Kutahya Belediye -3.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 3,
+            "date": "28 Mar 2026",
             "country": "Japan",
             "pick": "Shibuya Sun Rockers ML",
             "odds": "3.35",
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "28 Mar 2026",
             "country": "Japan",
             "pick": "Shimane Susanoo Magic -1.5",
@@ -29,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "28 Mar 2026",
             "country": "Japan",
             "pick": "Altiri Chiba +9.5",
@@ -37,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "28 Mar 2026",
             "country": "China",
             "pick": "Shandong Honey Badger ML",
@@ -45,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "27 Mar 2026",
             "country": "Czech R.",
             "pick": "MS Academy -3.5",
@@ -53,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "27 Mar 2026",
             "country": "Finland",
             "pick": "Vimpelin Veto (W) ML",
@@ -61,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "27 Mar 2026",
             "country": "Finland",
             "pick": "Kataja Basket -7.5",
@@ -69,20 +77,12 @@
             "result": "W"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "27 Mar 2026",
             "country": "Jordan",
             "pick": "Amman United -48.5",
             "odds": "1.83",
             "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "27 Mar 2026",
-            "country": "Uruguay",
-            "pick": "Urunday Universitario ML",
-            "odds": "2.12",
-            "result": "PENDING"
         }
     ]
 }
