@@ -1,11 +1,27 @@
 {
     "stats": {
         "roi": "+9%",
-        "picks": "390"
+        "picks": "393"
     },
     "picks": [
         {
             "id": 1,
+            "date": "28 Mar 2026",
+            "country": "Japan",
+            "pick": "Shimane Susanoo Magic -1.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "28 Mar 2026",
+            "country": "Japan",
+            "pick": "Altiri Chiba +9.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 3,
             "date": "27 Mar 2026",
             "country": "Czech R.",
             "pick": "MS Academy -3.5",
@@ -13,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 4,
             "date": "27 Mar 2026",
             "country": "Finland",
             "pick": "Vimpelin Veto (W) ML",
@@ -21,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "27 Mar 2026",
             "country": "Finland",
             "pick": "Kataja Basket -7.5",
@@ -29,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "27 Mar 2026",
             "country": "Jordan",
             "pick": "Amman United -48.5",
@@ -37,7 +53,15 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
+            "date": "27 Mar 2026",
+            "country": "Uruguay",
+            "pick": "Urunday Universitario ML",
+            "odds": "2.12",
+            "result": "PENDING"
+        },
+        {
+            "id": 8,
             "date": "26 Mar 2026",
             "country": "Uruguay",
             "pick": "Nacional -1.5",
@@ -45,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "26 Mar 2026",
             "country": "Czech R.",
             "pick": "Zabiny Brno B (W) -5.5",
@@ -53,35 +77,11 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "25 Mar 2026",
             "country": "Norway",
             "pick": "Centrum Tigers +24.5",
             "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 8,
-            "date": "25 Mar 2026",
-            "country": "Portugal",
-            "pick": "SC Braga U23 ML",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "25 Mar 2026",
-            "country": "Czech R.",
-            "pick": "Usti Nad Labem ML",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "25 Mar 2026",
-            "country": "Philippines",
-            "pick": "Terrafirma Dyip ML",
-            "odds": "2.12",
             "result": "L"
         }
     ]
