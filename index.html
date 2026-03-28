@@ -9,6 +9,8 @@
     <meta name="description" content="DIME Tipster provides professional, data-driven basketball betting tips and analysis. Get highly profitable basketball predictions with a fully verified 10+ year track record.">
     <meta name="keywords" content="basketball tips, basketball betting, professional tipster, EuroLeague picks, NBA predictions, sports investing">
     
+    <link rel="canonical" href="https://yourdomain.com" />
+    
     <meta property="og:title" content="DIME Tipster | Professional Basketball Analysis & Tips">
     <meta property="og:description" content="Data-driven basketball betting tips with a 10+ year verified track record. Join now for professional analysis.">
     <meta property="og:type" content="website">
@@ -18,6 +20,49 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is your track record?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For over a decade, we have delivered consistent, data-driven profitability, yielding a remarkable equity growth of over +2,400 units since 2016. However, we firmly believe that absolute, verifiable transparency today is far more important than relying solely on past accolades. To guarantee that standard of modern integrity, we have proudly partnered with Blogabet since 2026 to independently audit and verify 100% of our active betting history."
+        }
+      },{
+        "@type": "Question",
+        "name": "How many picks will I receive?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "During the active basketball season, you will receive a high volume of over 100 meticulously researched, high-value plays every single month to help maximize your compounding growth."
+        }
+      },{
+        "@type": "Question",
+        "name": "Which basketball leagues do you cover?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We specialize in global basketball markets, extensively covering over Top 40 International and Domestic leagues including the EuroLeague, Liga ACB, EuroCup, BSL, NBL, and many more."
+        }
+      },{
+        "@type": "Question",
+        "name": "How does the 100% Risk-Free Guarantee work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We back our expertise with absolute accountability; if a month ends in negative profit, you receive a full refund for your subscription, meaning you risk absolutely nothing by joining us."
+        }
+      },{
+        "@type": "Question",
+        "name": "How do I access the tips?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply click the 'Join Now' button at the top of the page to connect with us."
+        }
+      }]
+    }
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -65,7 +110,6 @@
             filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2));
         }
 
-        /* Marquee Animation */
         @keyframes scroll-left {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -82,22 +126,24 @@
 </head>
 <body>
     <div class="relative overflow-x-hidden min-h-screen flex flex-col">
-        <nav class="w-full flex items-start pt-1 md:pt-3 px-4 md:px-12 max-w-[1400px] mx-auto">
-            <div class="flex-1 flex justify-start">
-                <img src="logo.png" alt="DIME Logo" class="h-20 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
+        <nav class="w-full flex items-start justify-between pt-1 md:pt-3 px-4 md:px-12 max-w-[1400px] mx-auto relative z-50">
+            <div class="flex justify-start items-start gap-3 md:gap-0">
+                <img src="logo.png" alt="DIME Tipster - Professional Basketball Betting Tips Logo" class="h-16 md:h-28 lg:h-40 w-auto object-contain logo-glow transition-transform duration-500 hover:scale-105" />
                 
-                <a href="#about-section" class="text-white hover:text-dimeGold font-normal text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-8 mt-4 md:mt-5 lg:mt-8 self-start">
-                    About Us
-                </a>
-                <a href="#plans-section" class="text-white hover:text-dimeGold font-normal text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-6 mt-4 md:mt-5 lg:mt-8 self-start">
-                    Plans
-                </a>
-                <a href="#faq-section" class="text-white hover:text-dimeGold font-normal text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5 ml-4 md:ml-6 mt-4 md:mt-5 lg:mt-8 self-start">
-                    FAQ
-                </a>
+                <div class="flex items-center mt-3 md:mt-5 lg:mt-8 gap-3 md:gap-6 ml-2 md:ml-8">
+                    <a href="#about-section" class="text-white hover:text-dimeGold font-normal text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5">
+                        About Us
+                    </a>
+                    <a href="#plans-section" class="text-white hover:text-dimeGold font-normal text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5">
+                        Plans
+                    </a>
+                    <a href="#faq-section" class="text-white hover:text-dimeGold font-normal text-[10px] md:text-sm uppercase tracking-widest transition-colors border-b-2 border-transparent hover:border-dimeGold pb-0.5">
+                        FAQ
+                    </a>
+                </div>
             </div>
 
-            <div class="flex-1 flex justify-end pt-2 md:pt-4"> 
+            <div class="flex justify-end pt-2 md:pt-4 ml-4 flex-shrink-0"> 
                 <a href="https://t.me/deimantas" target="_blank" rel="noopener noreferrer" class="btn-telegram flex items-center justify-center gap-1.5 md:gap-2 text-white px-3 py-1.5 md:px-6 md:py-3 rounded-lg md:rounded-xl font-black text-[10px] md:text-sm uppercase tracking-tighter transition-transform active:scale-95 h-fit">
                     <i class="fa-brands fa-telegram text-base md:text-xl"></i>
                     <span>Join Now</span>
@@ -155,17 +201,17 @@
                 </div>
                 
                 <div class="w-full relative z-10 overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[500px]">
+                    <table class="w-full text-left border-collapse text-[10px] md:text-sm md:min-w-[500px]">
                         <thead>
-                            <tr class="bg-black text-gray-400 text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] font-black border-y border-white/10">
-                                <th class="px-3 py-4 md:px-10 md:py-6 w-[15%]">Date</th>
-                                <th class="px-2 py-4 md:px-10 md:py-6 w-[55%]">Pick</th>
-                                <th class="px-2 py-4 md:px-10 md:py-6 w-[15%] text-center align-middle">Odds</th>
-                                <th class="px-3 py-4 md:px-10 md:py-6 text-right w-[15%]">Result</th>
+                            <tr class="bg-black text-gray-400 text-[8px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.25em] font-black border-y border-white/10">
+                                <th class="px-2 py-3 md:px-10 md:py-6 w-[15%]">Date</th>
+                                <th class="px-2 py-3 md:px-10 md:py-6 w-[55%]">Pick</th>
+                                <th class="px-1 py-3 md:px-10 md:py-6 w-[15%] text-center align-middle">Odds</th>
+                                <th class="px-2 py-3 md:px-10 md:py-6 text-right w-[15%]">Result</th>
                             </tr>
                         </thead>
                         <tbody id="picks-table-body" class="text-gray-200">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
                 
@@ -272,7 +318,7 @@
                 </h2>
                 <div class="w-16 h-1 bg-dimeGreen rounded-full mb-10"></div>
 
-                <div class="w-full flex flex-col md:flex-row gap-6 max-w-4xl">
+                <div class="w-full flex flex-col md:flex-row gap-6 max-w-4xl items-stretch">
                     <div class="flex-1 glass-card rounded-2xl p-8 border border-white/10 flex flex-col relative overflow-hidden transition-transform hover:-translate-y-1 duration-300">
                         <h3 class="text-xl font-black text-white uppercase tracking-wider mb-2">Monthly Pass</h3>
                         <div class="flex items-baseline gap-1 mb-6">
@@ -287,7 +333,7 @@
                         <a href="https://t.me/deimantas" target="_blank" rel="noopener noreferrer" class="w-full block text-center bg-white/10 hover:bg-white/20 border border-white/20 text-white py-3 rounded-xl font-black uppercase tracking-widest transition-colors">Select Plan</a>
                     </div>
 
-                    <div class="flex-1 bg-gradient-to-b from-dimeGreen/20 to-black/80 rounded-2xl p-8 border border-dimeGreen/50 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(62,107,77,0.2)] transition-transform hover:-translate-y-1 duration-300 transform md:-translate-y-4">
+                    <div class="flex-1 bg-gradient-to-b from-dimeGreen/20 to-black/80 rounded-2xl p-8 border border-dimeGreen/50 flex flex-col relative overflow-hidden shadow-[0_0_30px_rgba(62,107,77,0.2)] transition-transform hover:-translate-y-1 duration-300">
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-dimeGreen to-green-400"></div>
                         <div class="absolute top-4 right-4 bg-green-500/20 border border-green-500/50 text-green-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Best Value</div>
                         
@@ -371,7 +417,7 @@
                     <div class="absolute top-0 right-0 w-12 md:w-24 h-full bg-gradient-to-l from-[#0d141c] to-transparent z-10 pointer-events-none"></div>
                     
                     <div id="marquee-container" class="animate-scroll whitespace-nowrap flex items-center gap-4 md:gap-6 px-4">
-                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -411,43 +457,43 @@
             `;
         });
 
-const countryMap = {
-                    'AFGHANISTAN': 'af', 'ALBANIA': 'al', 'ALGERIA': 'dz', 'ANDORRA': 'ad', 'ANGOLA': 'ao',
-                    'ARGENTINA': 'ar', 'ARMENIA': 'am', 'AUSTRALIA': 'au', 'AUSTRIA': 'at', 'AZERBAIJAN': 'az',
-                    'BAHAMAS': 'bs', 'BAHRAIN': 'bh', 'BANGLADESH': 'bd', 'BARBADOS': 'bb', 'BELARUS': 'by',
-                    'BELGIUM': 'be', 'BELIZE': 'bz', 'BENIN': 'bj', 'BHUTAN': 'bt', 'BOLIVIA': 'bo',
-                    'BOSNIA AND HERZEGOVINA': 'ba', 'BOSNIA': 'ba', 'BOTSWANA': 'bw', 'BRAZIL': 'br', 'BULGARIA': 'bg',
-                    'BURKINA FASO': 'bf', 'BURUNDI': 'bi', 'CABO VERDE': 'cv', 'CAMBODIA': 'kh', 'CAMEROON': 'cm',
-                    'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
-                    'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
-                    'CYPRUS': 'cy', 'CZECH R.': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
-                    'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
-                    'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
-                    'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
-                    'GEORGIA': 'ge', 'GERMANY': 'de', 'GHANA': 'gh', 'GREECE': 'gr', 'GUATEMALA': 'gt',
-                    'GUINEA': 'gn', 'GUYANA': 'gy', 'HAITI': 'ht', 'HONDURAS': 'hn', 'HUNGARY': 'hu',
-                    'ICELAND': 'is', 'INDIA': 'in', 'INDONESIA': 'id', 'IRAN': 'ir', 'IRAQ': 'iq',
-                    'IRELAND': 'ie', 'ISRAEL': 'il', 'ITALY': 'it', 'JAMAICA': 'jm', 'JAPAN': 'jp',
-                    'JORDAN': 'jo', 'KAZAKHSTAN': 'kz', 'KENYA': 'ke', 'KOSOVO': 'xk', 'KUWAIT': 'kw',
-                    'KYRGYZSTAN': 'kg', 'LAOS': 'la', 'LATVIA': 'lv', 'LEBANON': 'lb', 'LIBERIA': 'lr',
-                    'LIBYA': 'ly', 'LIECHTENSTEIN': 'li', 'LITHUANIA': 'lt', 'LUXEMBOURG': 'lu', 'MADAGASCAR': 'mg',
-                    'MALAWI': 'my', 'MALAYSIA': 'my', 'MALDIVES': 'mv', 'MALI': 'ml', 'MALTA': 'mt',
-                    'MEXICO': 'mx', 'MOLDOVA': 'md', 'MONACO': 'mc', 'MONGOLIA': 'mn', 'MONTENEGRO': 'me',
-                    'MOROCCO': 'ma', 'MOZAMBIQUE': 'mz', 'MYANMAR': 'mm', 'NAMIBIA': 'na', 'NEPAL': 'np',
-                    'NETHERLANDS': 'nl', 'NEW ZEALAND': 'nz', 'NICARAGUA': 'ni', 'NIGER': 'ne', 'NIGERIA': 'ng',
-                    'NORTH MACEDONIA': 'mk', 'MACEDONIA': 'mk', 'NORWAY': 'no', 'OMAN': 'om', 'PAKISTAN': 'pk',
-                    'PANAMA': 'pa', 'PARAGUAY': 'py', 'PERU': 'pe', 'PHILIPPINES': 'ph', 'POLAND': 'pl',
-                    'PORTUGAL': 'pt', 'PUERTO RICO': 'pr', 'QATAR': 'qa', 'ROMANIA': 'ro', 'RUSSIA': 'ru', 'RWANDA': 'rw',
-                    'SAUDI ARABIA': 'sa', 'SENEGAL': 'sn', 'SERBIA': 'rs', 'SINGAPORE': 'sg', 'SLOVAKIA': 'sk',
-                    'SLOVENIA': 'si', 'SOMALIA': 'so', 'SOUTH AFRICA': 'za', 'SOUTH KOREA': 'kr', 'REPUBLIC OF KOREA': 'kr',
-                    'KOREA REPUBLIC': 'kr', 'SPAIN': 'es', 'SRI LANKA': 'lk', 'SUDAN': 'sd', 'SWEDEN': 'se',
-                    'SWITZERLAND': 'ch', 'SYRIA': 'sy', 'TAIWAN': 'tw', 'TAJIKISTAN': 'tj', 'TANZANIA': 'tz',
-                    'THAILAND': 'th', 'TUNISIA': 'tn', 'TURKEY': 'tr', 'TÜRKİYE': 'tr', 'TURKMENISTAN': 'tm',
-                    'UGANDA': 'ug', 'UKRAINE': 'ua', 'UNITED ARAB EMIRATES': 'ae', 'UAE': 'ae', 'UNITED KINGDOM': 'gb',
-                    'UK': 'gb', 'USA': 'us', 'UNITED STATES': 'us', 'URUGUAY': 'uy', 'UZBEKISTAN': 'uz',
-                    'VENEZUELA': 've', 'VIETNAM': 'vn', 'YEMEN': 'ye', 'ZAMBIA': 'zm', 'ZIMBABWE': 'zw', 'Champions League': 'eu', 'Eurobasket (W)': 'eu', 'Euroleague (W)': 'eu', 'Eurocup': 'eu', 'Eurocup (W)': 'eu', 
-                    'EUROPE': 'eu', 'INTERNATIONAL': 'un', 'WORLD': 'un'
-                };
+        const countryMap = {
+            'AFGHANISTAN': 'af', 'ALBANIA': 'al', 'ALGERIA': 'dz', 'ANDORRA': 'ad', 'ANGOLA': 'ao',
+            'ARGENTINA': 'ar', 'ARMENIA': 'am', 'AUSTRALIA': 'au', 'AUSTRIA': 'at', 'AZERBAIJAN': 'az',
+            'BAHAMAS': 'bs', 'BAHRAIN': 'bh', 'BANGLADESH': 'bd', 'BARBADOS': 'bb', 'BELARUS': 'by',
+            'BELGIUM': 'be', 'BELIZE': 'bz', 'BENIN': 'bj', 'BHUTAN': 'bt', 'BOLIVIA': 'bo',
+            'BOSNIA AND HERZEGOVINA': 'ba', 'BOSNIA': 'ba', 'BOTSWANA': 'bw', 'BRAZIL': 'br', 'BULGARIA': 'bg',
+            'BURKINA FASO': 'bf', 'BURUNDI': 'bi', 'CABO VERDE': 'cv', 'CAMBODIA': 'kh', 'CAMEROON': 'cm',
+            'CANADA': 'ca', 'CHAD': 'td', 'CHILE': 'cl', 'CHINA': 'cn', 'COLOMBIA': 'co',
+            'COMOROS': 'km', 'CONGO': 'cg', 'COSTA RICA': 'cr', 'CROATIA': 'hr', 'CUBA': 'cu',
+            'CYPRUS': 'cy', 'CZECH R.': 'cz', 'CZECHIA': 'cz', 'DENMARK': 'dk', 'DJIBOUTI': 'dj',
+            'DOMINICAN REPUBLIC': 'do', 'ECUADOR': 'ec', 'EGYPT': 'eg', 'EL SALVADOR': 'sv', 'ENGLAND': 'gb-eng',
+            'EQUATORIAL GUINEA': 'gq', 'ERITREA': 'er', 'ESTONIA': 'ee', 'ESWATINI': 'sz', 'ETHIOPIA': 'et',
+            'FIJI': 'fj', 'FINLAND': 'fi', 'FRANCE': 'fr', 'GABON': 'ga', 'GAMBIA': 'gm',
+            'GEORGIA': 'ge', 'GERMANY': 'de', 'GHANA': 'gh', 'GREECE': 'gr', 'GUATEMALA': 'gt',
+            'GUINEA': 'gn', 'GUYANA': 'gy', 'HAITI': 'ht', 'HONDURAS': 'hn', 'HUNGARY': 'hu',
+            'ICELAND': 'is', 'INDIA': 'in', 'INDONESIA': 'id', 'IRAN': 'ir', 'IRAQ': 'iq',
+            'IRELAND': 'ie', 'ISRAEL': 'il', 'ITALY': 'it', 'JAMAICA': 'jm', 'JAPAN': 'jp',
+            'JORDAN': 'jo', 'KAZAKHSTAN': 'kz', 'KENYA': 'ke', 'KOSOVO': 'xk', 'KUWAIT': 'kw',
+            'KYRGYZSTAN': 'kg', 'LAOS': 'la', 'LATVIA': 'lv', 'LEBANON': 'lb', 'LIBERIA': 'lr',
+            'LIBYA': 'ly', 'LIECHTENSTEIN': 'li', 'LITHUANIA': 'lt', 'LUXEMBOURG': 'lu', 'MADAGASCAR': 'mg',
+            'MALAWI': 'my', 'MALAYSIA': 'my', 'MALDIVES': 'mv', 'MALI': 'ml', 'MALTA': 'mt',
+            'MEXICO': 'mx', 'MOLDOVA': 'md', 'MONACO': 'mc', 'MONGOLIA': 'mn', 'MONTENEGRO': 'me',
+            'MOROCCO': 'ma', 'MOZAMBIQUE': 'mz', 'MYANMAR': 'mm', 'NAMIBIA': 'na', 'NEPAL': 'np',
+            'NETHERLANDS': 'nl', 'NEW ZEALAND': 'nz', 'NICARAGUA': 'ni', 'NIGER': 'ne', 'NIGERIA': 'ng',
+            'NORTH MACEDONIA': 'mk', 'MACEDONIA': 'mk', 'NORWAY': 'no', 'OMAN': 'om', 'PAKISTAN': 'pk',
+            'PANAMA': 'pa', 'PARAGUAY': 'py', 'PERU': 'pe', 'PHILIPPINES': 'ph', 'POLAND': 'pl',
+            'PORTUGAL': 'pt', 'PUERTO RICO': 'pr', 'QATAR': 'qa', 'ROMANIA': 'ro', 'RUSSIA': 'ru', 'RWANDA': 'rw',
+            'SAUDI ARABIA': 'sa', 'SENEGAL': 'sn', 'SERBIA': 'rs', 'SINGAPORE': 'sg', 'SLOVAKIA': 'sk',
+            'SLOVENIA': 'si', 'SOMALIA': 'so', 'SOUTH AFRICA': 'za', 'SOUTH KOREA': 'kr', 'REPUBLIC OF KOREA': 'kr',
+            'KOREA REPUBLIC': 'kr', 'SPAIN': 'es', 'SRI LANKA': 'lk', 'SUDAN': 'sd', 'SWEDEN': 'se',
+            'SWITZERLAND': 'ch', 'SYRIA': 'sy', 'TAIWAN': 'tw', 'TAJIKISTAN': 'tj', 'TANZANIA': 'tz',
+            'THAILAND': 'th', 'TUNISIA': 'tn', 'TURKEY': 'tr', 'TÜRKİYE': 'tr', 'TURKMENISTAN': 'tm',
+            'UGANDA': 'ug', 'UKRAINE': 'ua', 'UNITED ARAB EMIRATES': 'ae', 'UAE': 'ae', 'UNITED KINGDOM': 'gb',
+            'UK': 'gb', 'USA': 'us', 'UNITED STATES': 'us', 'URUGUAY': 'uy', 'UZBEKISTAN': 'uz',
+            'VENEZUELA': 've', 'VIETNAM': 'vn', 'YEMEN': 'ye', 'ZAMBIA': 'zm', 'ZIMBABWE': 'zw', 'Champions League': 'eu', 'Eurobasket (W)': 'eu', 'Euroleague (W)': 'eu', 'Eurocup': 'eu', 'Eurocup (W)': 'eu', 
+            'EUROPE': 'eu', 'INTERNATIONAL': 'un', 'WORLD': 'un'
+        };
 
         function getFlagIconHTML(countryName) {
             if (!countryName || countryName === "World") {
@@ -507,17 +553,17 @@ const countryMap = {
 
                     const row = `
                         <tr class="group border-b border-white/[0.04] last:border-0 hover:bg-gradient-to-r hover:from-white/[0.04] hover:to-transparent transition-all duration-300 ease-out">
-                            <td class="px-3 py-4 md:px-10 md:py-7 text-[10px] md:text-sm text-gray-500 font-semibold tracking-wide whitespace-nowrap group-hover:text-gray-400 transition-colors">${pick.date}</td>
-                            <td class="px-2 py-4 md:px-10 md:py-7">
+                            <td class="px-2 py-3 md:px-10 md:py-7 text-[10px] md:text-sm text-gray-500 font-semibold tracking-wide whitespace-nowrap group-hover:text-gray-400 transition-colors">${pick.date}</td>
+                            <td class="px-2 py-3 md:px-10 md:py-7">
                                 <div class="flex flex-col md:flex-row md:items-center font-normal md:font-medium text-[10px] md:text-[15px] uppercase tracking-wide gap-1 md:gap-3">
                                     ${pickHTML}
                                 </div>
                             </td>
-                            <td class="px-2 py-4 md:px-10 md:py-7 text-center align-middle">
+                            <td class="px-1 py-3 md:px-10 md:py-7 text-center align-middle">
                                 <span class="font-black text-[10px] md:text-sm text-dimeGold font-mono block">${pick.odds}</span>
                             </td>
-                            <td class="px-3 py-4 md:px-10 md:py-7 text-right">
-                                <span class="px-2 py-1 md:px-6 md:py-2 rounded-lg md:rounded-xl font-black text-[10px] md:text-sm tracking-widest inline-block min-w-[36px] md:min-w-[70px] text-center border backdrop-blur-sm transition-all duration-300 ${resultClass}">
+                            <td class="px-2 py-3 md:px-10 md:py-7 text-right">
+                                <span class="px-1.5 py-1 md:px-6 md:py-2 rounded-lg md:rounded-xl font-black text-[9px] md:text-sm tracking-widest inline-block min-w-[32px] md:min-w-[70px] text-center border backdrop-blur-sm transition-all duration-300 ${resultClass}">
                                     ${pick.result}
                                 </span>
                             </td>
