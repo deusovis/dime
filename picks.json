@@ -1,11 +1,27 @@
 {
     "stats": {
-        "roi": "+10%",
-        "picks": "405"
+        "roi": "+11%",
+        "picks": "409"
     },
     "picks": [
         {
             "id": 1,
+            "date": "28 Mar 2026",
+            "country": "Germany",
+            "pick": "Paderborn Baskets ML",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 2,
+            "date": "28 Mar 2026",
+            "country": "Spain",
+            "pick": "Zamora ML",
+            "odds": "3.25",
+            "result": "W"
+        },
+        {
+            "id": 3,
             "date": "28 Mar 2026",
             "country": "Germany",
             "pick": "Bayern 2 ML",
@@ -13,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 4,
             "date": "28 Mar 2026",
             "country": "Slovakia",
             "pick": "SK UMB Banska Bystrica (W) ML",
@@ -21,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "28 Mar 2026",
             "country": "Switzerland",
             "pick": "Massagno +9.5",
@@ -29,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "28 Mar 2026",
             "country": "Portugal",
             "pick": "ABC Santo Andre -2.5",
@@ -37,7 +53,15 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
+            "date": "28 Mar 2026",
+            "country": "Austria",
+            "pick": "Oberwart Gunners +10.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 8,
             "date": "28 Mar 2026",
             "country": "Slovakia",
             "pick": "MBK Ruzomberok (W) -5.5",
@@ -45,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "28 Mar 2026",
             "country": "Brazil",
             "pick": "Desportivo Rio Grande U19 +18.5",
@@ -53,35 +77,11 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "28 Mar 2026",
             "country": "Australia",
             "pick": "Lakeside Lightning (W) ML",
             "odds": "2.25",
-            "result": "W"
-        },
-        {
-            "id": 8,
-            "date": "28 Mar 2026",
-            "country": "Turkey",
-            "pick": "Kutahya Belediye -3.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 9,
-            "date": "28 Mar 2026",
-            "country": "Spain (W)",
-            "pick": "Mallorca (W) -20.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "28 Mar 2026",
-            "country": "Serbia",
-            "pick": "Crvena Zvezda (W) -25.5",
-            "odds": "1.74",
             "result": "W"
         }
     ]
