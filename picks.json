@@ -1,86 +1,86 @@
 {
     "stats": {
-        "roi": "+11%",
-        "picks": "413"
+        "roi": "+6%",
+        "picks": "212"
     },
     "picks": [
         {
             "id": 1,
-            "date": "29 Mar 2026",
-            "country": "Austria",
-            "pick": "Vienna United ML",
-            "odds": "1.95",
-            "result": "L"
+            "date": "01 Mar 2026",
+            "country": "Portugal",
+            "pick": "CD Jose Regio +35.5",
+            "odds": "1.83",
+            "result": "W"
         },
         {
             "id": 2,
-            "date": "29 Mar 2026",
-            "country": "China",
-            "pick": "Liaoning (W) +14.5",
+            "date": "28 Feb 2026",
+            "country": "Iceland",
+            "pick": "Fjolnir -13.5",
             "odds": "1.83",
             "result": "W"
         },
         {
             "id": 3,
-            "date": "29 Mar 2026",
-            "country": "Spain",
-            "pick": "Bisbal +9.5",
+            "date": "28 Feb 2026",
+            "country": "Italy (W)",
+            "pick": "GEAS Basket (W) +19.5",
             "odds": "1.83",
             "result": "L"
         },
         {
             "id": 4,
-            "date": "28 Mar 2026",
-            "country": "Germany",
-            "pick": "Paderborn Baskets ML",
+            "date": "01 Mar 2026",
+            "country": "International (M)",
+            "pick": "Austria +13.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 5,
+            "date": "28 Feb 2026",
+            "country": "Italy (W)",
+            "pick": "Futurosa Trieste (W) +3.5",
             "odds": "1.83",
             "result": "L"
         },
         {
-            "id": 5,
-            "date": "28 Mar 2026",
-            "country": "Spain",
-            "pick": "Zamora ML",
-            "odds": "3.25",
-            "result": "W"
-        },
-        {
             "id": 6,
-            "date": "28 Mar 2026",
-            "country": "Germany",
-            "pick": "Bayern 2 ML",
+            "date": "28 Feb 2026",
+            "country": "Switzerland",
+            "pick": "Elfic Fribourg (W) -44.5",
             "odds": "1.83",
-            "result": "W"
+            "result": "L"
         },
         {
             "id": 7,
-            "date": "28 Mar 2026",
-            "country": "Slovakia",
-            "pick": "SK UMB Banska Bystrica (W) ML",
-            "odds": "2.12",
-            "result": "W"
+            "date": "28 Feb 2026",
+            "country": "Austria",
+            "pick": "Mistelbach Mustangs -14.5",
+            "odds": "1.83",
+            "result": "L"
         },
         {
             "id": 8,
-            "date": "28 Mar 2026",
+            "date": "28 Feb 2026",
             "country": "Switzerland",
-            "pick": "Massagno +9.5",
+            "pick": "Helios VS Basket (W) -4.5",
             "odds": "1.83",
             "result": "W"
         },
         {
             "id": 9,
-            "date": "28 Mar 2026",
-            "country": "Portugal",
-            "pick": "ABC Santo Andre -2.5",
-            "odds": "1.8",
-            "result": "W"
+            "date": "01 Mar 2026",
+            "country": "Belize",
+            "pick": "Belize City Defenders +7.5",
+            "odds": "1.83",
+            "result": "L"
         },
         {
             "id": 10,
-            "date": "28 Mar 2026",
-            "country": "Austria",
-            "pick": "Oberwart Gunners +10.5",
+            "date": "28 Feb 2026",
+            "country": "Sweden",
+            "pick": "Sodertalje (W) -27.5",
             "odds": "1.83",
             "result": "W"
         }
