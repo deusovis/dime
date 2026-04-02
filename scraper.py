@@ -23,17 +23,26 @@ def scrape_blogabet():
         picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
 
-        # 2. GET ROI AND PICKS FROM HEADER (NOW THAT FILTERS ARE CLEARED)
+        # 2. GET ROI AND PICKS FOR THE CLEARED STATE
         try:
-            # Re-fetch the main page so the header reflects the true "Cleared" lifetime stats
-            main_res = scraper.get(main_url, cookies=cookies)
-            main_soup = BeautifulSoup(main_res.text, 'html.parser')
+            # When filters are cleared, Blogabet returns inline JavaScript to update the header stats.
+            # We intercept this JS to get the true "Cleared" lifetime stats (e.g. 413 and +11%).
+            picks_match = re.search(r"\$\(\s*['\"]#header-picks['\"]\s*\)\.(?:text|html)\(\s*['\"]([^'\"]+)['\"]\s*\)", picks_res.text)
+            roi_match = re.search(r"\$\(\s*['\"]#header-yield['\"]\s*\)\.(?:text|html)\(\s*['\"]([^'\"]+)['\"]\s*\)", picks_res.text)
             
-            picks_elem = main_soup.find(id="header-picks")
-            roi_elem = main_soup.find(id="header-yield")
-            
-            if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
-            if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+            if picks_match and roi_match:
+                final_data["stats"]["picks"] = picks_match.group(1)
+                final_data["stats"]["roi"] = roi_match.group(1)
+            else:
+                # Fallback: Scrape the main page directly if the JS isn't found
+                main_res = scraper.get(main_url, cookies=cookies)
+                main_soup = BeautifulSoup(main_res.text, 'html.parser')
+                
+                picks_elem = main_soup.find(id="header-picks")
+                roi_elem = main_soup.find(id="header-yield")
+                
+                if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
+                if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
         except: pass
 
         # 3. PARSE THE PICKS
