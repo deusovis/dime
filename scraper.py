@@ -5,13 +5,11 @@ import re
 
 def scrape_blogabet():
     main_url = "https://dime.blogabet.com"
-    picks_url = "https://dime.blogabet.com/blog/picks"
     
     scraper = cloudscraper.create_scraper(browser={'browser': 'chrome','platform': 'windows','desktop': True})
     headers = {"X-Requested-With": "XMLHttpRequest"}
     cookies = {"ageVerified": "1"}
     
-    # UPDATED: Swapped 'units' for 'picks' with a default value
     final_data = {"stats": {"roi": "+18.4%", "picks": "372"}, "picks": []}
 
     try:
@@ -20,7 +18,6 @@ def scrape_blogabet():
             main_res = scraper.get(main_url, cookies=cookies)
             main_soup = BeautifulSoup(main_res.text, 'html.parser')
             
-            # UPDATED: Targeting the header-picks ID instead of header-profit
             picks_elem = main_soup.find(id="header-picks")
             roi_elem = main_soup.find(id="header-yield")
             
@@ -28,7 +25,12 @@ def scrape_blogabet():
             if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
         except: pass
 
-        # 2. GET 10 PICKS
+        # 2. SIMULATE "CLEAR ALL" TO RESET THE ARCHIVE FILTERS
+        clear_url = "https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0"
+        scraper.get(clear_url, headers=headers, cookies=cookies)
+
+        # 3. GET THE FRESH 10 PICKS
+        picks_url = "https://dime.blogabet.com/blog/picks"
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
@@ -91,10 +93,9 @@ def scrape_blogabet():
                 odds_match = re.search(r'@\s*(\d+\.?\d*)', all_text)
                 if odds_match: odds_val = odds_match.group(1)
                 
-                # --- BULLETPROOF RESULT DETECTION ---
+                # RESULT DETECTION
                 result = "PENDING"
                 
-                # Target exact label badges only (ignores 'text-green' verified checkmarks)
                 labels = block.find_all(class_=re.compile(r'\b(label-success|label-danger|label-warning)\b'))
                 for label in labels:
                     lbl_text = label.get_text(strip=True).upper()
@@ -105,7 +106,6 @@ def scrape_blogabet():
                     elif lbl_text in ["VOID", "DRAW", "REFUND", "HALF WON", "HALF LOST"]:
                         result = lbl_text
                 
-                # Fallback: strictly check profit/loss numbers (+ units or - units)
                 if result == "PENDING":
                     if re.search(r'\+\d+\.\d{2}\b', all_text):
                         result = "W"
@@ -124,7 +124,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Bulletproof result logic applied.")
+        print("Success: Fresh picks fetched and saved to picks.json.")
 
     except Exception as e:
         print(f"Error: {e}")
