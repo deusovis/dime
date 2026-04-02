@@ -2,6 +2,7 @@ import json
 import cloudscraper
 from bs4 import BeautifulSoup
 import re
+import time
 
 def scrape_blogabet():
     main_url = "https://dime.blogabet.com"
@@ -25,12 +26,13 @@ def scrape_blogabet():
             if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
         except: pass
 
-        # 2. SIMULATE "CLEAR ALL" TO RESET THE ARCHIVE FILTERS
-        clear_url = "https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0"
-        scraper.get(clear_url, headers=headers, cookies=cookies)
-
-        # 3. GET THE FRESH 10 PICKS
-        picks_url = "https://dime.blogabet.com/blog/picks"
+        # 2. GET THE FRESH 10 PICKS DIRECTLY FROM THE CLEARED FILTER URL
+        # Generate a dynamic timestamp just like the browser does (e.g., 1775093281000)
+        timestamp = int(time.time() * 1000)
+        
+        # We use the exact "Clear all" endpoint and parse ITS response directly
+        picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
+        
         picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
@@ -124,7 +126,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print("Success: Fresh picks fetched and saved to picks.json.")
+        print(f"Success: Fetched {len(final_data['picks'])} recent picks using dynamic timestamp.")
 
     except Exception as e:
         print(f"Error: {e}")
