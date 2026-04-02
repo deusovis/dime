@@ -1,11 +1,35 @@
 {
     "stats": {
-        "roi": "+10%",
-        "picks": "414"
+        "roi": "+11%",
+        "picks": "417"
     },
     "picks": [
         {
             "id": 1,
+            "date": "02 Apr 2026",
+            "country": "Australia",
+            "pick": "Eastern Mavericks ML",
+            "odds": "2.5",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "02 Apr 2026",
+            "country": "Australia",
+            "pick": "Sturt Sabres ML",
+            "odds": "2.25",
+            "result": "W"
+        },
+        {
+            "id": 3,
+            "date": "02 Apr 2026",
+            "country": "China",
+            "pick": "Zhejiang (W) +13.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 4,
             "date": "01 Apr 2026",
             "country": "Iceland",
             "pick": "KR Reykjavik ML",
@@ -13,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 5,
             "date": "29 Mar 2026",
             "country": "Austria",
             "pick": "Vienna United ML",
@@ -21,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 6,
             "date": "29 Mar 2026",
             "country": "China",
             "pick": "Liaoning (W) +14.5",
@@ -29,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 7,
             "date": "29 Mar 2026",
             "country": "Spain",
             "pick": "Bisbal +9.5",
@@ -37,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 8,
             "date": "28 Mar 2026",
             "country": "Germany",
             "pick": "Paderborn Baskets ML",
@@ -45,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "28 Mar 2026",
             "country": "Spain",
             "pick": "Zamora ML",
@@ -53,35 +77,11 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "28 Mar 2026",
             "country": "Germany",
             "pick": "Bayern 2 ML",
             "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 8,
-            "date": "28 Mar 2026",
-            "country": "Slovakia",
-            "pick": "SK UMB Banska Bystrica (W) ML",
-            "odds": "2.12",
-            "result": "W"
-        },
-        {
-            "id": 9,
-            "date": "28 Mar 2026",
-            "country": "Switzerland",
-            "pick": "Massagno +9.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "28 Mar 2026",
-            "country": "Portugal",
-            "pick": "ABC Santo Andre -2.5",
-            "odds": "1.8",
             "result": "W"
         }
     ]
