@@ -19,19 +19,36 @@ def scrape_blogabet():
         timestamp = int(time.time() * 1000)
         
         # We use the exact "Clear all" endpoint and parse ITS response directly.
-        # Calling this URL first resets the server-side filters for our current session.
         picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
         picks_res = scraper.get(picks_url, headers=headers)
 
         # 2. GET ROI AND PICKS FOR THE CLEARED STATE
-        # The XHR response usually appends JS to update the header dynamically.
-        # We MUST NOT fetch the main_url as a fallback, because loading the root homepage resets the session to the default 212 picks.
-        picks_match = re.search(r'#header-picks.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
-        roi_match = re.search(r'#header-yield.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
+        # Try to find inline JS updates in the AJAX response. 
+        # (Updated regex to be much more permissive, allowing numbers without quotes)
+        picks_match = re.search(r'#header-picks[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', picks_res.text)
+        roi_match = re.search(r'#header-yield[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', picks_res.text)
         
-        if picks_match and roi_match:
-            final_data["stats"]["picks"] = picks_match.group(1).strip()
-            final_data["stats"]["roi"] = roi_match.group(1).strip()
+        if picks_match: final_data["stats"]["picks"] = picks_match.group(1).strip()
+        if roi_match: final_data["stats"]["roi"] = roi_match.group(1).strip()
+
+        # SMART FALLBACK: If the JS wasn't present and values are still blank
+        if final_data["stats"]["picks"] in ["-", ""]:
+            try:
+                main_res = scraper.get("https://dime.blogabet.com", headers=headers)
+                main_soup = BeautifulSoup(main_res.text, 'html.parser')
+                
+                # Get the absolute total picks directly from the sidebar menu: "PICKS ARCHIVE (413)"
+                archive_link = main_soup.find('a', attrs={'data-target': 'PICKS ARCHIVE'})
+                if archive_link:
+                    small_tag = archive_link.find('small')
+                    if small_tag:
+                        final_data["stats"]["picks"] = re.sub(r'[^\d]', '', small_tag.get_text())
+                
+                # Try to grab the ROI from the header if it's available
+                if final_data["stats"]["roi"] in ["-", ""]:
+                    roi_elem = main_soup.find(id="header-yield")
+                    if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+            except: pass
 
         # 3. PARSE THE PICKS
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
@@ -126,7 +143,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print(f"Success: Fetched {len(final_data['picks'])} recent picks and updated global stats.")
+        print(f"Success: Fetched {len(final_data['picks'])} recent picks and verified global stats.")
 
     except Exception as e:
         print(f"Error: {e}")
