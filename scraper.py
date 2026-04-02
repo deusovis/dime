@@ -14,8 +14,18 @@ def scrape_blogabet():
     final_data = {"stats": {"roi": "+18.4%", "picks": "372"}, "picks": []}
 
     try:
-        # 1. GET ROI AND PICKS FROM HEADER
+        # 1. CLEAR FILTERS & GET THE FRESH 10 PICKS
+        # Generate a dynamic timestamp just like the browser does (e.g., 1775093281000)
+        timestamp = int(time.time() * 1000)
+        
+        # We use the exact "Clear all" endpoint and parse ITS response directly.
+        # Calling this URL first resets the server-side filters for our current session.
+        picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
+        picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
+
+        # 2. GET ROI AND PICKS FROM HEADER (NOW THAT FILTERS ARE CLEARED)
         try:
+            # Re-fetch the main page so the header reflects the true "Cleared" lifetime stats
             main_res = scraper.get(main_url, cookies=cookies)
             main_soup = BeautifulSoup(main_res.text, 'html.parser')
             
@@ -26,14 +36,7 @@ def scrape_blogabet():
             if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
         except: pass
 
-        # 2. GET THE FRESH 10 PICKS DIRECTLY FROM THE CLEARED FILTER URL
-        # Generate a dynamic timestamp just like the browser does (e.g., 1775093281000)
-        timestamp = int(time.time() * 1000)
-        
-        # We use the exact "Clear all" endpoint and parse ITS response directly
-        picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
-        
-        picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
+        # 3. PARSE THE PICKS
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
@@ -126,7 +129,7 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print(f"Success: Fetched {len(final_data['picks'])} recent picks using dynamic timestamp.")
+        print(f"Success: Fetched {len(final_data['picks'])} recent picks and updated global stats.")
 
     except Exception as e:
         print(f"Error: {e}")
