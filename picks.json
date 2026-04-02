@@ -3,5 +3,86 @@
         "roi": "+6%",
         "picks": "212"
     },
-    "picks": []
+    "picks": [
+        {
+            "id": 1,
+            "date": "01 Mar 2026",
+            "country": "Portugal",
+            "pick": "CD Jose Regio +35.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "28 Feb 2026",
+            "country": "Iceland",
+            "pick": "Fjolnir -13.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 3,
+            "date": "28 Feb 2026",
+            "country": "Italy (W)",
+            "pick": "GEAS Basket (W) +19.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 4,
+            "date": "01 Mar 2026",
+            "country": "International (M)",
+            "pick": "Austria +13.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 5,
+            "date": "28 Feb 2026",
+            "country": "Italy (W)",
+            "pick": "Futurosa Trieste (W) +3.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 6,
+            "date": "28 Feb 2026",
+            "country": "Switzerland",
+            "pick": "Elfic Fribourg (W) -44.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 7,
+            "date": "28 Feb 2026",
+            "country": "Austria",
+            "pick": "Mistelbach Mustangs -14.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 8,
+            "date": "28 Feb 2026",
+            "country": "Switzerland",
+            "pick": "Helios VS Basket (W) -4.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 9,
+            "date": "01 Mar 2026",
+            "country": "Belize",
+            "pick": "Belize City Defenders +7.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 10,
+            "date": "28 Feb 2026",
+            "country": "Sweden",
+            "pick": "Sodertalje (W) -27.5",
+            "odds": "1.83",
+            "result": "W"
+        }
+    ]
 }
