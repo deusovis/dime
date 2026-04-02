@@ -5,7 +5,7 @@ import re
 
 def scrape_blogabet():
     main_url = "https://dime.blogabet.com"
-    picks_url = "https://dime.blogabet.com"
+    picks_url = "https://dime.blogabet.com/blog/picks"
     
     scraper = cloudscraper.create_scraper(browser={'browser': 'chrome','platform': 'windows','desktop': True})
     headers = {"X-Requested-With": "XMLHttpRequest"}
