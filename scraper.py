@@ -5,15 +5,13 @@ import re
 import time
 
 def scrape_blogabet():
-    main_url = "https://dime.blogabet.com"
-    
     scraper = cloudscraper.create_scraper(browser={'browser': 'chrome','platform': 'windows','desktop': True})
     headers = {"X-Requested-With": "XMLHttpRequest"}
     
     # Set the cookie globally on the scraper session so filter states persist across requests
     scraper.cookies.update({"ageVerified": "1"})
     
-    final_data = {"stats": {"roi": "+18.4%", "picks": "372"}, "picks": []}
+    final_data = {"stats": {"roi": "-", "picks": "-"}, "picks": []}
 
     try:
         # 1. CLEAR FILTERS & GET THE FRESH 10 PICKS
@@ -26,30 +24,14 @@ def scrape_blogabet():
         picks_res = scraper.get(picks_url, headers=headers)
 
         # 2. GET ROI AND PICKS FOR THE CLEARED STATE
-        js_stats_found = False
-        try:
-            # The XHR response usually appends JS to update the header dynamically.
-            # This regex is broadened to handle chained jQuery methods (e.g., .removeClass('text-green').html('+11%'))
-            picks_match = re.search(r'#header-picks.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
-            roi_match = re.search(r'#header-yield.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
-            
-            if picks_match and roi_match:
-                final_data["stats"]["picks"] = picks_match.group(1).strip()
-                final_data["stats"]["roi"] = roi_match.group(1).strip()
-                js_stats_found = True
-        except: pass
-
-        if not js_stats_found:
-            # Fallback: Scrape the main page directly. 
-            # Since the global session now remembers we cleared the filters, this should return the true lifetime stats (413/+11%).
-            main_res = scraper.get(main_url)
-            main_soup = BeautifulSoup(main_res.text, 'html.parser')
-            
-            picks_elem = main_soup.find(id="header-picks")
-            roi_elem = main_soup.find(id="header-yield")
-            
-            if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
-            if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+        # The XHR response usually appends JS to update the header dynamically.
+        # We MUST NOT fetch the main_url as a fallback, because loading the root homepage resets the session to the default 212 picks.
+        picks_match = re.search(r'#header-picks.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
+        roi_match = re.search(r'#header-yield.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
+        
+        if picks_match and roi_match:
+            final_data["stats"]["picks"] = picks_match.group(1).strip()
+            final_data["stats"]["roi"] = roi_match.group(1).strip()
 
         # 3. PARSE THE PICKS
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
