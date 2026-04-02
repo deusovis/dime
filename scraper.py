@@ -15,53 +15,44 @@ def scrape_blogabet():
 
     try:
         # 1. IŠVALYTI FILTRUS IR GAUTI 10 NAUJAUSIŲ SPĖJIMŲ
-        # Sugeneruojame dinaminį laiko žymeklį, kaip tai daro naršyklė (pvz., 1775093281000)
+        # Sugeneruojame dinaminį laiko žymeklį
         timestamp = int(time.time() * 1000)
         
         # Naudojame "Clear all" endpoint'ą
         picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
         picks_res = scraper.get(picks_url, headers=headers)
 
-        # 2. GAUTI ROI IR SPĖJIMŲ SKAIČIŲ TIESIAI IŠ STATISTIKOS PUSLAPIO
-        # Siunčiame tuščius filtrų parametrus TIESIAI į statistikos užklausą, 
-        # kad serveris priverstinai grąžintų visų laikų (all-time) statistiką (+11% ir 413).
+        # 2. GAUTI ROI IŠ STATISTIKOS PUSLAPIO
+        # Kreipiamės IŠKART po filtrų išvalymo be tų ilgų parametrų (nes jie nulauždavo serverio atsakymą)
         try:
-            stats_url = f"https://dime.blogabet.com/blog/stats?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp + 1}"
+            stats_url = f"https://dime.blogabet.com/blog/stats?_={timestamp + 1}"
             stats_res = scraper.get(stats_url, headers=headers)
             
-            # A metodas: Ieškome JS atnaujinimų AJAX atsakyme
-            picks_match = re.search(r'#header-picks[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', stats_res.text)
-            roi_match = re.search(r'#header-yield[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', stats_res.text)
-            
-            if picks_match: final_data["stats"]["picks"] = picks_match.group(1).strip()
-            if roi_match: final_data["stats"]["roi"] = roi_match.group(1).strip()
-
-            # B metodas: Jei JS nerastas, analizuojame HTML statistikos lentelę
-            if final_data["stats"]["roi"] in ["-", ""] or final_data["stats"]["picks"] in ["-", ""]:
-                stats_soup = BeautifulSoup(stats_res.text, 'html.parser')
-                
-                roi_elem = stats_soup.find(id="header-yield")
-                picks_elem = stats_soup.find(id="header-picks")
-                
-                if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
-                if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
-
-                # C metodas: Regex paieška HTML lentelėje
-                if final_data["stats"]["roi"] in ["-", ""]:
-                    yield_table_match = re.search(r'(?i)Yield[\s\S]{1,150}?(?:>|\s)([+\-]?\d+(?:\.\d+)?\s*%)', stats_res.text)
-                    if yield_table_match: 
-                        final_data["stats"]["roi"] = yield_table_match.group(1).strip()
-                    else:
-                        green_yield = re.search(r'(?i)text-green[^>]*>\s*([+]\d+(?:\.\d+)?\s*%)', stats_res.text)
-                        if green_yield: final_data["stats"]["roi"] = green_yield.group(1).strip()
-
-                if final_data["stats"]["picks"] in ["-", ""]:
-                    picks_table_match = re.search(r'(?i)Picks[\s\S]{1,150}?(?:>|\s)(\d+)(?:<|\s)', stats_res.text)
-                    if picks_table_match: 
-                        final_data["stats"]["picks"] = picks_table_match.group(1).strip()
+            # Ieškome žodžio "Yield" ir po jo einančio procento
+            roi_match = re.search(r'(?i)Yield[\s\S]{1,100}?(?:>|\s)([+\-]?\d+(?:\.\d+)?\s*%)', stats_res.text)
+            if roi_match:
+                final_data["stats"]["roi"] = roi_match.group(1).strip()
+            else:
+                # Atsarginis variantas: ieškome pirmo teigiamo/neigiamo procento
+                perc_match = re.search(r'([+\-]\d+(?:\.\d+)?\s*%)', stats_res.text)
+                if perc_match:
+                    final_data["stats"]["roi"] = perc_match.group(1).strip()
         except: pass
 
-        # 3. ANALIZUOTI SPĖJIMUS
+        # 3. GAUTI VISŲ SPĖJIMŲ SKAIČIŲ IŠ ŠONINIO MENIU (Garantuotas būdas)
+        try:
+            # Pagrindiniame puslapyje šoniniame meniu visada yra tikslus skaičius, pvz., "PICKS ARCHIVE (413)"
+            main_res = scraper.get("https://dime.blogabet.com")
+            main_soup = BeautifulSoup(main_res.text, 'html.parser')
+            
+            archive_link = main_soup.find('a', attrs={'data-value': 'picks'})
+            if archive_link:
+                picks_match = re.search(r'\((\d+)\)', archive_link.text)
+                if picks_match:
+                    final_data["stats"]["picks"] = picks_match.group(1).strip()
+        except: pass
+
+        # 4. ANALIZUOTI SPĖJIMUS
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
         pick_blocks = picks_soup.find_all('li', class_=re.compile(r'feed-pick'))
         
