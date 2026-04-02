@@ -9,7 +9,9 @@ def scrape_blogabet():
     
     scraper = cloudscraper.create_scraper(browser={'browser': 'chrome','platform': 'windows','desktop': True})
     headers = {"X-Requested-With": "XMLHttpRequest"}
-    cookies = {"ageVerified": "1"}
+    
+    # Set the cookie globally on the scraper session so filter states persist across requests
+    scraper.cookies.update({"ageVerified": "1"})
     
     final_data = {"stats": {"roi": "+18.4%", "picks": "372"}, "picks": []}
 
@@ -21,29 +23,33 @@ def scrape_blogabet():
         # We use the exact "Clear all" endpoint and parse ITS response directly.
         # Calling this URL first resets the server-side filters for our current session.
         picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
-        picks_res = scraper.get(picks_url, headers=headers, cookies=cookies)
+        picks_res = scraper.get(picks_url, headers=headers)
 
         # 2. GET ROI AND PICKS FOR THE CLEARED STATE
+        js_stats_found = False
         try:
-            # When filters are cleared, Blogabet returns inline JavaScript to update the header stats.
-            # We intercept this JS to get the true "Cleared" lifetime stats (e.g. 413 and +11%).
-            picks_match = re.search(r"\$\(\s*['\"]#header-picks['\"]\s*\)\.(?:text|html)\(\s*['\"]([^'\"]+)['\"]\s*\)", picks_res.text)
-            roi_match = re.search(r"\$\(\s*['\"]#header-yield['\"]\s*\)\.(?:text|html)\(\s*['\"]([^'\"]+)['\"]\s*\)", picks_res.text)
+            # The XHR response usually appends JS to update the header dynamically.
+            # This regex is broadened to handle chained jQuery methods (e.g., .removeClass('text-green').html('+11%'))
+            picks_match = re.search(r'#header-picks.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
+            roi_match = re.search(r'#header-yield.*?(?:text|html)\s*\(\s*["\']([^"\']+)["\']', picks_res.text)
             
             if picks_match and roi_match:
-                final_data["stats"]["picks"] = picks_match.group(1)
-                final_data["stats"]["roi"] = roi_match.group(1)
-            else:
-                # Fallback: Scrape the main page directly if the JS isn't found
-                main_res = scraper.get(main_url, cookies=cookies)
-                main_soup = BeautifulSoup(main_res.text, 'html.parser')
-                
-                picks_elem = main_soup.find(id="header-picks")
-                roi_elem = main_soup.find(id="header-yield")
-                
-                if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
-                if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+                final_data["stats"]["picks"] = picks_match.group(1).strip()
+                final_data["stats"]["roi"] = roi_match.group(1).strip()
+                js_stats_found = True
         except: pass
+
+        if not js_stats_found:
+            # Fallback: Scrape the main page directly. 
+            # Since the global session now remembers we cleared the filters, this should return the true lifetime stats (413/+11%).
+            main_res = scraper.get(main_url)
+            main_soup = BeautifulSoup(main_res.text, 'html.parser')
+            
+            picks_elem = main_soup.find(id="header-picks")
+            roi_elem = main_soup.find(id="header-yield")
+            
+            if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
+            if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
 
         # 3. PARSE THE PICKS
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
