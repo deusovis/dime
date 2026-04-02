@@ -22,33 +22,45 @@ def scrape_blogabet():
         picks_url = f"https://dime.blogabet.com/blog/picks?filters%5Brange%5D%5Bdata1%5D=&filters%5Brange%5D%5Bdata2%5D=&filters%5Btype%5D=0&_={timestamp}"
         picks_res = scraper.get(picks_url, headers=headers)
 
-        # 2. GET ROI AND PICKS FOR THE CLEARED STATE
-        # Try to find inline JS updates in the AJAX response. 
-        # (Updated regex to be much more permissive, allowing numbers without quotes)
-        picks_match = re.search(r'#header-picks[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', picks_res.text)
-        roi_match = re.search(r'#header-yield[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', picks_res.text)
-        
-        if picks_match: final_data["stats"]["picks"] = picks_match.group(1).strip()
-        if roi_match: final_data["stats"]["roi"] = roi_match.group(1).strip()
+        # 2. GET ROI AND PICKS DIRECTLY FROM THE STATS ENDPOINT
+        # We fetch the stats tab directly. This avoids resetting the session while guaranteeing access to the lifetime stats.
+        try:
+            stats_url = f"https://dime.blogabet.com/blog/stats?_={timestamp + 1}"
+            stats_res = scraper.get(stats_url, headers=headers)
+            
+            # Approach A: Look for inline JS updates in the AJAX response
+            picks_match = re.search(r'#header-picks[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', stats_res.text)
+            roi_match = re.search(r'#header-yield[\s\S]*?(?:text|html)\s*\(\s*[\'"]?([+\-0-9.%]+)[\'"]?\s*\)', stats_res.text)
+            
+            if picks_match: final_data["stats"]["picks"] = picks_match.group(1).strip()
+            if roi_match: final_data["stats"]["roi"] = roi_match.group(1).strip()
 
-        # SMART FALLBACK: If the JS wasn't present and values are still blank
-        if final_data["stats"]["picks"] in ["-", ""]:
-            try:
-                main_res = scraper.get("https://dime.blogabet.com", headers=headers)
-                main_soup = BeautifulSoup(main_res.text, 'html.parser')
+            # Approach B: If JS wasn't present, parse the actual HTML of the stats table
+            if final_data["stats"]["roi"] in ["-", ""] or final_data["stats"]["picks"] in ["-", ""]:
+                stats_soup = BeautifulSoup(stats_res.text, 'html.parser')
                 
-                # Get the absolute total picks directly from the sidebar menu: "PICKS ARCHIVE (413)"
-                archive_link = main_soup.find('a', attrs={'data-target': 'PICKS ARCHIVE'})
-                if archive_link:
-                    small_tag = archive_link.find('small')
-                    if small_tag:
-                        final_data["stats"]["picks"] = re.sub(r'[^\d]', '', small_tag.get_text())
+                # Try finding them by their explicit DOM IDs if rendered
+                roi_elem = stats_soup.find(id="header-yield")
+                picks_elem = stats_soup.find(id="header-picks")
                 
-                # Try to grab the ROI from the header if it's available
+                if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
+                if picks_elem: final_data["stats"]["picks"] = picks_elem.get_text(strip=True)
+
+                # Approach C: Regex search through the stats HTML table for "Yield" and "Picks" cells
                 if final_data["stats"]["roi"] in ["-", ""]:
-                    roi_elem = main_soup.find(id="header-yield")
-                    if roi_elem: final_data["stats"]["roi"] = roi_elem.get_text(strip=True)
-            except: pass
+                    yield_table_match = re.search(r'(?i)Yield[\s\S]{1,150}?(?:>|\s)([+\-]?\d+(?:\.\d+)?\s*%)', stats_res.text)
+                    if yield_table_match: 
+                        final_data["stats"]["roi"] = yield_table_match.group(1).strip()
+                    else:
+                        # Find the first green percentage (usually the positive yield)
+                        green_yield = re.search(r'(?i)text-green[^>]*>\s*([+]\d+(?:\.\d+)?\s*%)', stats_res.text)
+                        if green_yield: final_data["stats"]["roi"] = green_yield.group(1).strip()
+
+                if final_data["stats"]["picks"] in ["-", ""]:
+                    picks_table_match = re.search(r'(?i)Picks[\s\S]{1,150}?(?:>|\s)(\d+)(?:<|\s)', stats_res.text)
+                    if picks_table_match: 
+                        final_data["stats"]["picks"] = picks_table_match.group(1).strip()
+        except: pass
 
         # 3. PARSE THE PICKS
         picks_soup = BeautifulSoup(picks_res.text, 'html.parser')
@@ -143,7 +155,8 @@ def scrape_blogabet():
         
         with open('picks.json', 'w') as f:
             json.dump(final_data, f, indent=4)
-        print(f"Success: Fetched {len(final_data['picks'])} recent picks and verified global stats.")
+        print(f"Success: Fetched {len(final_data['picks'])} recent picks.")
+        print(f"Scraped Stats -> ROI: {final_data['stats']['roi']} | Picks: {final_data['stats']['picks']}")
 
     except Exception as e:
         print(f"Error: {e}")
