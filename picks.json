@@ -1,7 +1,7 @@
 {
     "stats": {
         "roi": "+11%",
-        "picks": "420"
+        "picks": "422"
     },
     "picks": [
         {
@@ -15,13 +15,29 @@
         {
             "id": 2,
             "date": "02 Apr 2026",
+            "country": "Morocco",
+            "pick": "AS Sale -14.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 3,
+            "date": "02 Apr 2026",
+            "country": "Finland",
+            "pick": "Torpan Pojat II (W) -15.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 4,
+            "date": "02 Apr 2026",
             "country": "Czech R.",
             "pick": "Basket Zabiny Brno (W) -30.5",
             "odds": "1.83",
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "02 Apr 2026",
             "country": "Qatar",
             "pick": "Al Arabi (Qatar) ML",
@@ -29,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "02 Apr 2026",
             "country": "Australia",
             "pick": "Eastern Mavericks ML",
@@ -37,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
             "date": "02 Apr 2026",
             "country": "Australia",
             "pick": "Sturt Sabres ML",
@@ -45,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 8,
             "date": "02 Apr 2026",
             "country": "China",
             "pick": "Zhejiang (W) +13.5",
@@ -53,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 9,
             "date": "01 Apr 2026",
             "country": "Iceland",
             "pick": "KR Reykjavik ML",
@@ -61,27 +77,11 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 10,
             "date": "29 Mar 2026",
             "country": "Austria",
             "pick": "Vienna United ML",
             "odds": "1.95",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "29 Mar 2026",
-            "country": "China",
-            "pick": "Liaoning (W) +14.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "29 Mar 2026",
-            "country": "Spain",
-            "pick": "Bisbal +9.5",
-            "odds": "1.83",
             "result": "L"
         }
     ]
