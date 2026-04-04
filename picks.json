@@ -1,11 +1,35 @@
 {
     "stats": {
-        "roi": "+11%",
-        "picks": "423"
+        "roi": "+12%",
+        "picks": "426"
     },
     "picks": [
         {
             "id": 1,
+            "date": "04 Apr 2026",
+            "country": "Hungary",
+            "pick": "Kaposvari ML",
+            "odds": "1.95",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "04 Apr 2026",
+            "country": "Turkey",
+            "pick": "Akhisar -1.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 3,
+            "date": "04 Apr 2026",
+            "country": "Slovakia",
+            "pick": "Slovan Bratislava (W) +23.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 4,
             "date": "04 Apr 2026",
             "country": "Argentina",
             "pick": "Jujuy ML",
@@ -13,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 5,
             "date": "02 Apr 2026",
             "country": "Poland",
             "pick": "MUKS Poznan (W) ML",
@@ -21,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 6,
             "date": "02 Apr 2026",
             "country": "Morocco",
             "pick": "AS Sale -14.5",
@@ -29,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 7,
             "date": "02 Apr 2026",
             "country": "Finland",
             "pick": "Torpan Pojat II (W) -15.5",
@@ -37,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 8,
             "date": "02 Apr 2026",
             "country": "Czech R.",
             "pick": "Basket Zabiny Brno (W) -30.5",
@@ -45,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "02 Apr 2026",
             "country": "Qatar",
             "pick": "Al Arabi (Qatar) ML",
@@ -53,36 +77,12 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "02 Apr 2026",
             "country": "Australia",
             "pick": "Eastern Mavericks ML",
             "odds": "2.5",
             "result": "W"
-        },
-        {
-            "id": 8,
-            "date": "02 Apr 2026",
-            "country": "Australia",
-            "pick": "Sturt Sabres ML",
-            "odds": "2.25",
-            "result": "W"
-        },
-        {
-            "id": 9,
-            "date": "02 Apr 2026",
-            "country": "China",
-            "pick": "Zhejiang (W) +13.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "01 Apr 2026",
-            "country": "Iceland",
-            "pick": "KR Reykjavik ML",
-            "odds": "3.05",
-            "result": "L"
         }
     ]
 }
