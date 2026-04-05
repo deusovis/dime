@@ -1,11 +1,19 @@
 {
     "stats": {
-        "roi": "+12%",
-        "picks": "430"
+        "roi": "+11%",
+        "picks": "431"
     },
     "picks": [
         {
             "id": 1,
+            "date": "05 Apr 2026",
+            "country": "Czech R.",
+            "pick": "BK Decin ML",
+            "odds": "2.3",
+            "result": "L"
+        },
+        {
+            "id": 2,
             "date": "05 Apr 2026",
             "country": "Turkey",
             "pick": "Kahramanmaras Istiklal +13.5",
@@ -13,7 +21,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "05 Apr 2026",
             "country": "Philippines",
             "pick": "San Miguel Beermen ML",
@@ -21,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "04 Apr 2026",
             "country": "Hungary",
             "pick": "Kaposvari ML",
@@ -29,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "04 Apr 2026",
             "country": "Brazil",
             "pick": "Assis Basket ML",
@@ -37,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "04 Apr 2026",
             "country": "Germany",
             "pick": "Munster ML",
@@ -45,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "04 Apr 2026",
             "country": "Turkey",
             "pick": "Akhisar -1.5",
@@ -53,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "04 Apr 2026",
             "country": "Slovakia",
             "pick": "Slovan Bratislava (W) +23.5",
@@ -61,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "04 Apr 2026",
             "country": "Argentina",
             "pick": "Jujuy ML",
@@ -69,19 +77,11 @@
             "result": "W"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "02 Apr 2026",
             "country": "Poland",
             "pick": "MUKS Poznan (W) ML",
             "odds": "3.2",
-            "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "02 Apr 2026",
-            "country": "Morocco",
-            "pick": "AS Sale -14.5",
-            "odds": "1.83",
             "result": "L"
         }
     ]
