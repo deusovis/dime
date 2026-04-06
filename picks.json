@@ -1,11 +1,19 @@
 {
     "stats": {
         "roi": "+11%",
-        "picks": "434"
+        "picks": "435"
     },
     "picks": [
         {
             "id": 1,
+            "date": "06 Apr 2026",
+            "country": "Israel",
+            "pick": "Elitzur Ashkelon -10.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 2,
             "date": "06 Apr 2026",
             "country": "ABA",
             "pick": "FMP -1.5",
@@ -13,7 +21,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "05 Apr 2026",
             "country": "Argentina",
             "pick": "Obras Sanitarias ML",
@@ -21,7 +29,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "06 Apr 2026",
             "country": "Chile",
             "pick": "Deportes Castro ML",
@@ -29,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "05 Apr 2026",
             "country": "Czech R.",
             "pick": "BK Decin ML",
@@ -37,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "05 Apr 2026",
             "country": "Turkey",
             "pick": "Kahramanmaras Istiklal +13.5",
@@ -45,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "05 Apr 2026",
             "country": "Philippines",
             "pick": "San Miguel Beermen ML",
@@ -53,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "04 Apr 2026",
             "country": "Hungary",
             "pick": "Kaposvari ML",
@@ -61,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "04 Apr 2026",
             "country": "Brazil",
             "pick": "Assis Basket ML",
@@ -69,20 +77,12 @@
             "result": "L"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "04 Apr 2026",
             "country": "Germany",
             "pick": "Munster ML",
             "odds": "1.86",
             "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "04 Apr 2026",
-            "country": "Turkey",
-            "pick": "Akhisar -1.5",
-            "odds": "1.83",
-            "result": "W"
         }
     ]
 }
