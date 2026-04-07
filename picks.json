@@ -1,11 +1,27 @@
 {
     "stats": {
         "roi": "+11%",
-        "picks": "442"
+        "picks": "445"
     },
     "picks": [
         {
             "id": 1,
+            "date": "07 Apr 2026",
+            "country": "Livebet",
+            "pick": "Corlu -3.5 (34-39)",
+            "odds": "1.833",
+            "result": "L"
+        },
+        {
+            "id": 2,
+            "date": "07 Apr 2026",
+            "country": "UAE",
+            "pick": "Shabab Al Ahly (UAE) -4.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 3,
             "date": "07 Apr 2026",
             "country": "China",
             "pick": "Jiangxi Ganchi +14.5",
@@ -13,7 +29,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 4,
             "date": "07 Apr 2026",
             "country": "Asia",
             "pick": "Vanta Black Dragons +10.5",
@@ -21,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "06 Apr 2026",
             "country": "Venezuela",
             "pick": "Panteras de Miranda +15.5",
@@ -29,7 +45,15 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 6,
+            "date": "07 Apr 2026",
+            "country": "Turkey",
+            "pick": "Corlu -2.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 7,
             "date": "07 Apr 2026",
             "country": "Kazakhstan",
             "pick": "Tomiris (W) ML",
@@ -37,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 8,
             "date": "06 Apr 2026",
             "country": "Argentina",
             "pick": "Ateneo Popular Versalles -3.5",
@@ -45,7 +69,7 @@
             "result": "PENDING"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "06 Apr 2026",
             "country": "Israel",
             "pick": "Hapoel Migdal Haemek-Jezreel ML",
@@ -53,35 +77,11 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "06 Apr 2026",
             "country": "Israel",
             "pick": "Elitzur Ashkelon -10.5",
             "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 8,
-            "date": "06 Apr 2026",
-            "country": "Malta",
-            "pick": "Starlites Naxxar (W) ML",
-            "odds": "3.9",
-            "result": "W"
-        },
-        {
-            "id": 9,
-            "date": "06 Apr 2026",
-            "country": "ABA",
-            "pick": "FMP -1.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "05 Apr 2026",
-            "country": "Argentina",
-            "pick": "Obras Sanitarias ML",
-            "odds": "2.3",
             "result": "L"
         }
     ]
