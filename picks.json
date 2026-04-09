@@ -1,11 +1,51 @@
 {
     "stats": {
         "roi": "+11%",
-        "picks": "452"
+        "picks": "457"
     },
     "picks": [
         {
             "id": 1,
+            "date": "08 Apr 2026",
+            "country": "Poland",
+            "pick": "Pogon Mogilno +12.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "08 Apr 2026",
+            "country": "Poland",
+            "pick": "Trojka Zyrardow +18.5",
+            "odds": "1.86",
+            "result": "W"
+        },
+        {
+            "id": 3,
+            "date": "08 Apr 2026",
+            "country": "Poland",
+            "pick": "Rybnik +20.5",
+            "odds": "1.83",
+            "result": "L"
+        },
+        {
+            "id": 4,
+            "date": "08 Apr 2026",
+            "country": "Italy",
+            "pick": "Roseto -1.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 5,
+            "date": "08 Apr 2026",
+            "country": "United Kingdom",
+            "pick": "Bristol Flyers 2 +19.5",
+            "odds": "1.66",
+            "result": "W"
+        },
+        {
+            "id": 6,
             "date": "08 Apr 2026",
             "country": "China",
             "pick": "Nanjing Monkey King ML",
@@ -13,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 7,
             "date": "08 Apr 2026",
             "country": "Poland",
             "pick": "Kotwica Kolobrzeg -3.5",
@@ -21,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 8,
             "date": "07 Apr 2026",
             "country": "Livebet",
             "pick": "Corlu -3.5 (34-39)",
@@ -29,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 9,
             "date": "08 Apr 2026",
             "country": "China",
             "pick": "Zhejiang Lions ML",
@@ -37,51 +77,11 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 10,
             "date": "07 Apr 2026",
             "country": "Romania",
             "pick": "CS Municipal Ploiesti ML",
             "odds": "2.7",
-            "result": "L"
-        },
-        {
-            "id": 6,
-            "date": "08 Apr 2026",
-            "country": "Korea",
-            "pick": "Suwon Sonicboom ML",
-            "odds": "2",
-            "result": "W"
-        },
-        {
-            "id": 7,
-            "date": "07 Apr 2026",
-            "country": "UAE",
-            "pick": "Shabab Al Ahly (UAE) -4.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 8,
-            "date": "07 Apr 2026",
-            "country": "China",
-            "pick": "Jiangxi Ganchi +14.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "07 Apr 2026",
-            "country": "Argentina",
-            "pick": "Platense LDD ML",
-            "odds": "1.95",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "07 Apr 2026",
-            "country": "Albania",
-            "pick": "Elbasani +21.5",
-            "odds": "1.83",
             "result": "L"
         }
     ]
