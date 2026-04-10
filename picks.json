@@ -1,11 +1,19 @@
 {
     "stats": {
-        "roi": "+11%",
-        "picks": "460"
+        "roi": "+10%",
+        "picks": "461"
     },
     "picks": [
         {
             "id": 1,
+            "date": "10 Apr 2026",
+            "country": "Bulgaria",
+            "pick": "Levski ML",
+            "odds": "3.65",
+            "result": "L"
+        },
+        {
+            "id": 2,
             "date": "09 Apr 2026",
             "country": "Argentina",
             "pick": "CS Alejandro Korn ML",
@@ -13,7 +21,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "09 Apr 2026",
             "country": "Latvia",
             "pick": "Gulbenes Buki ML",
@@ -21,7 +29,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "09 Apr 2026",
             "country": "Romania",
             "pick": "CSU Stiinta Bucuresti -39.5",
@@ -29,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "08 Apr 2026",
             "country": "Poland",
             "pick": "Pogon Mogilno +12.5",
@@ -37,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "08 Apr 2026",
             "country": "Poland",
             "pick": "Trojka Zyrardow +18.5",
@@ -45,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "08 Apr 2026",
             "country": "Poland",
             "pick": "Rybnik +20.5",
@@ -53,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "08 Apr 2026",
             "country": "Italy",
             "pick": "Roseto -1.5",
@@ -61,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "08 Apr 2026",
             "country": "United Kingdom",
             "pick": "Bristol Flyers 2 +19.5",
@@ -69,19 +77,11 @@
             "result": "W"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "08 Apr 2026",
             "country": "China",
             "pick": "Nanjing Monkey King ML",
             "odds": "1.95",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "08 Apr 2026",
-            "country": "Poland",
-            "pick": "Kotwica Kolobrzeg -3.5",
-            "odds": "1.74",
             "result": "W"
         }
     ]
