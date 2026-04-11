@@ -1,11 +1,35 @@
 {
     "stats": {
         "roi": "+10%",
-        "picks": "465"
+        "picks": "468"
     },
     "picks": [
         {
             "id": 1,
+            "date": "11 Apr 2026",
+            "country": "Poland",
+            "pick": "Enea AZS Poznan (W) ML",
+            "odds": "3.2",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "11 Apr 2026",
+            "country": "Italy (W)",
+            "pick": "Vicenza (W) ML",
+            "odds": "5",
+            "result": "L"
+        },
+        {
+            "id": 3,
+            "date": "11 Apr 2026",
+            "country": "United Kingdom",
+            "pick": "Nottingham Hoods -2.5",
+            "odds": "1.8",
+            "result": "W"
+        },
+        {
+            "id": 4,
             "date": "11 Apr 2026",
             "country": "Albania",
             "pick": "Skenderbeu -26.5",
@@ -13,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 5,
             "date": "11 Apr 2026",
             "country": "Australia",
             "pick": "Sydney Comets (W) +15.5",
@@ -21,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 6,
             "date": "11 Apr 2026",
             "country": "Australia",
             "pick": "Pakenham Warriors ML",
@@ -29,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 7,
             "date": "11 Apr 2026",
             "country": "Chile",
             "pick": "CD Espanol Talca +18.5",
@@ -37,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 8,
             "date": "10 Apr 2026",
             "country": "Bulgaria",
             "pick": "Levski ML",
@@ -45,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 9,
             "date": "09 Apr 2026",
             "country": "Argentina",
             "pick": "CS Alejandro Korn ML",
@@ -53,36 +77,12 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 10,
             "date": "09 Apr 2026",
             "country": "Latvia",
             "pick": "Gulbenes Buki ML",
             "odds": "2.5",
             "result": "L"
-        },
-        {
-            "id": 8,
-            "date": "09 Apr 2026",
-            "country": "Romania",
-            "pick": "CSU Stiinta Bucuresti -39.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "08 Apr 2026",
-            "country": "Poland",
-            "pick": "Pogon Mogilno +12.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "08 Apr 2026",
-            "country": "Poland",
-            "pick": "Trojka Zyrardow +18.5",
-            "odds": "1.86",
-            "result": "W"
         }
     ]
 }
