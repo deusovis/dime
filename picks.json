@@ -1,11 +1,19 @@
 {
     "stats": {
         "roi": "+11%",
-        "picks": "472"
+        "picks": "473"
     },
     "picks": [
         {
             "id": 1,
+            "date": "13 Apr 2026",
+            "country": "Turkey",
+            "pick": "Kocaeli Kagitspor -1.5",
+            "odds": "1.74",
+            "result": "W"
+        },
+        {
+            "id": 2,
             "date": "12 Apr 2026",
             "country": "Italy",
             "pick": "Janus Basket Fabriano ML",
@@ -13,7 +21,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "12 Apr 2026",
             "country": "Jordan",
             "pick": "Al Jubaiha ML",
@@ -21,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "12 Apr 2026",
             "country": "Belgium",
             "pick": "Phantoms Boom (W) +20.5",
@@ -29,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "11 Apr 2026",
             "country": "Poland",
             "pick": "Enea AZS Poznan (W) ML",
@@ -37,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "11 Apr 2026",
             "country": "Italy (W)",
             "pick": "Umbertide (W) ML",
@@ -45,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "11 Apr 2026",
             "country": "Italy (W)",
             "pick": "Vicenza (W) ML",
@@ -53,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "11 Apr 2026",
             "country": "United Kingdom",
             "pick": "Nottingham Hoods -2.5",
@@ -61,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "11 Apr 2026",
             "country": "Albania",
             "pick": "Skenderbeu -26.5",
@@ -69,20 +77,12 @@
             "result": "L"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "11 Apr 2026",
             "country": "Australia",
             "pick": "Sydney Comets (W) +15.5",
             "odds": "1.83",
             "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "11 Apr 2026",
-            "country": "Australia",
-            "pick": "Pakenham Warriors ML",
-            "odds": "1.95",
-            "result": "W"
         }
     ]
 }
