@@ -1,11 +1,27 @@
 {
     "stats": {
         "roi": "+10%",
-        "picks": "479"
+        "picks": "481"
     },
     "picks": [
         {
             "id": 1,
+            "date": "18 Apr 2026",
+            "country": "Turkey",
+            "pick": "Eak Konut Gelisim (W) -3.5 ML",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 2,
+            "date": "18 Apr 2026",
+            "country": "Turkey",
+            "pick": "Darica (W) ML",
+            "odds": "1.95",
+            "result": "L"
+        },
+        {
+            "id": 3,
             "date": "16 Apr 2026",
             "country": "Australia",
             "pick": "Waverley Falcons ML",
@@ -13,7 +29,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 4,
             "date": "15 Apr 2026",
             "country": "Germany",
             "pick": "Keltern (W) -6.5",
@@ -21,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "15 Apr 2026",
             "country": "Brazil",
             "pick": "Sao Jose ML",
@@ -29,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "15 Apr 2026",
             "country": "China",
             "pick": "Shanxi Loongs ML",
@@ -37,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
             "date": "14 Apr 2026",
             "country": "Brazil",
             "pick": "Brasilia ML",
@@ -45,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 8,
             "date": "15 Apr 2026",
             "country": "Taiwan",
             "pick": "Keelung Black Kites ML",
@@ -53,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 9,
             "date": "13 Apr 2026",
             "country": "Turkey",
             "pick": "Kocaeli Kagitspor -1.5",
@@ -61,27 +77,11 @@
             "result": "W"
         },
         {
-            "id": 8,
+            "id": 10,
             "date": "12 Apr 2026",
             "country": "Italy",
             "pick": "Janus Basket Fabriano ML",
             "odds": "1.95",
-            "result": "W"
-        },
-        {
-            "id": 9,
-            "date": "12 Apr 2026",
-            "country": "Jordan",
-            "pick": "Al Jubaiha ML",
-            "odds": "2.5",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "12 Apr 2026",
-            "country": "Belgium",
-            "pick": "Phantoms Boom (W) +20.5",
-            "odds": "1.83",
             "result": "W"
         }
     ]
