@@ -1,11 +1,19 @@
 {
     "stats": {
         "roi": "+11%",
-        "picks": "482"
+        "picks": "483"
     },
     "picks": [
         {
             "id": 1,
+            "date": "19 Apr 2026",
+            "country": "ABA",
+            "pick": "Buducnost ML",
+            "odds": "1.95",
+            "result": "W"
+        },
+        {
+            "id": 2,
             "date": "18 Apr 2026",
             "country": "Turkey",
             "pick": "Eak Konut Gelisim (W) -3.5 ML",
@@ -13,7 +21,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "18 Apr 2026",
             "country": "Turkey",
             "pick": "Darica (W) ML",
@@ -21,7 +29,7 @@
             "result": "L"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "18 Apr 2026",
             "country": "Argentina",
             "pick": "Quimsa LDD ML",
@@ -29,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "16 Apr 2026",
             "country": "Australia",
             "pick": "Waverley Falcons ML",
@@ -37,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "15 Apr 2026",
             "country": "Germany",
             "pick": "Keltern (W) -6.5",
@@ -45,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "15 Apr 2026",
             "country": "Brazil",
             "pick": "Sao Jose ML",
@@ -53,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "15 Apr 2026",
             "country": "China",
             "pick": "Shanxi Loongs ML",
@@ -61,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "14 Apr 2026",
             "country": "Brazil",
             "pick": "Brasilia ML",
@@ -69,20 +77,12 @@
             "result": "L"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "15 Apr 2026",
             "country": "Taiwan",
             "pick": "Keelung Black Kites ML",
             "odds": "3.35",
             "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "13 Apr 2026",
-            "country": "Turkey",
-            "pick": "Kocaeli Kagitspor -1.5",
-            "odds": "1.74",
-            "result": "W"
         }
     ]
 }
