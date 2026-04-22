@@ -1,11 +1,19 @@
 {
     "stats": {
         "roi": "+11%",
-        "picks": "487"
+        "picks": "489"
     },
     "picks": [
         {
             "id": 1,
+            "date": "21 Apr 2026",
+            "country": "Mexico",
+            "pick": "Anahuac Xalapa ML",
+            "odds": "3.65",
+            "result": "L"
+        },
+        {
+            "id": 2,
             "date": "21 Apr 2026",
             "country": "Slovakia",
             "pick": "Slavia Banska Bystrica (W) -7.5",
@@ -13,7 +21,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "21 Apr 2026",
             "country": "Philippines",
             "pick": "Quezon Huskers -2.5",
@@ -21,7 +29,15 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 4,
+            "date": "21 Apr 2026",
+            "country": "Hungary",
+            "pick": "DEAC Debreceni ML",
+            "odds": "2.12",
+            "result": "W"
+        },
+        {
+            "id": 5,
             "date": "19 Apr 2026",
             "country": "Brazil",
             "pick": "Basquete Tatui -2.5",
@@ -29,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "19 Apr 2026",
             "country": "Argentina",
             "pick": "Ferrocarril Oeste (W) ML",
@@ -37,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
             "date": "19 Apr 2026",
             "country": "ABA",
             "pick": "Buducnost ML",
@@ -45,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 8,
             "date": "18 Apr 2026",
             "country": "Turkey",
             "pick": "Eak Konut Gelisim (W) -3.5 ML",
@@ -53,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 9,
             "date": "18 Apr 2026",
             "country": "Turkey",
             "pick": "Darica (W) ML",
@@ -61,28 +77,12 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 10,
             "date": "18 Apr 2026",
             "country": "Argentina",
             "pick": "Quimsa LDD ML",
             "odds": "3.2",
             "result": "W"
-        },
-        {
-            "id": 9,
-            "date": "16 Apr 2026",
-            "country": "Australia",
-            "pick": "Waverley Falcons ML",
-            "odds": "2.5",
-            "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "15 Apr 2026",
-            "country": "Germany",
-            "pick": "Keltern (W) -6.5",
-            "odds": "1.83",
-            "result": "L"
         }
     ]
 }
