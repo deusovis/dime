@@ -1,11 +1,51 @@
 {
     "stats": {
-        "roi": "+11%",
-        "picks": "498"
+        "roi": "+10%",
+        "picks": "503"
     },
     "picks": [
         {
             "id": 1,
+            "date": "23 Apr 2026",
+            "country": "Iceland",
+            "pick": "KV Reykjavik ML",
+            "odds": "3.2",
+            "result": "L"
+        },
+        {
+            "id": 2,
+            "date": "24 Apr 2026",
+            "country": "Puerto Rico",
+            "pick": "Gigantes Carolina ML",
+            "odds": "1.95",
+            "result": "L"
+        },
+        {
+            "id": 3,
+            "date": "23 Apr 2026",
+            "country": "Poland",
+            "pick": "Miasto Szkla Krosno ML",
+            "odds": "2.9",
+            "result": "L"
+        },
+        {
+            "id": 4,
+            "date": "23 Apr 2026",
+            "country": "Spain (W)",
+            "pick": "Estudiantes (W) ML",
+            "odds": "3.7",
+            "result": "L"
+        },
+        {
+            "id": 5,
+            "date": "23 Apr 2026",
+            "country": "Iceland",
+            "pick": "Njardvik (W) ML",
+            "odds": "2.12",
+            "result": "L"
+        },
+        {
+            "id": 6,
             "date": "22 Apr 2026",
             "country": "Italy",
             "pick": "Loreto Pesaro ML",
@@ -13,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 7,
             "date": "22 Apr 2026",
             "country": "Mali",
             "pick": "Real (W) +1.5",
@@ -21,7 +61,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 8,
             "date": "22 Apr 2026",
             "country": "Europe",
             "pick": "CSO Voluntari ML",
@@ -29,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 9,
             "date": "22 Apr 2026",
             "country": "Slovakia",
             "pick": "MBK Ruzomberok (W) ML",
@@ -37,51 +77,11 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 10,
             "date": "23 Apr 2026",
             "country": "El Salvador",
             "pick": "Santa Tecla Imdels (W) (Mayor) -5.5",
             "odds": "1.8",
-            "result": "L"
-        },
-        {
-            "id": 6,
-            "date": "22 Apr 2026",
-            "country": "Portugal",
-            "pick": "CAB Madeira -9.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 7,
-            "date": "22 Apr 2026",
-            "country": "Sweden",
-            "pick": "IK Eos ML",
-            "odds": "2.05",
-            "result": "L"
-        },
-        {
-            "id": 8,
-            "date": "22 Apr 2026",
-            "country": "Puerto Rico",
-            "pick": "Criollos de Caguas -2.5",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "21 Apr 2026",
-            "country": "Mexico",
-            "pick": "Anahuac Xalapa ML",
-            "odds": "3.65",
-            "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "21 Apr 2026",
-            "country": "Mexico",
-            "pick": "Tec Mty Santa Fe -1.5",
-            "odds": "1.83",
             "result": "L"
         }
     ]
