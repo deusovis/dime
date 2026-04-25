@@ -1,11 +1,19 @@
 {
     "stats": {
         "roi": "+10%",
-        "picks": "507"
+        "picks": "508"
     },
     "picks": [
         {
             "id": 1,
+            "date": "24 Apr 2026",
+            "country": "Belgium",
+            "pick": "Namur Capitale (W) ML",
+            "odds": "4.4",
+            "result": "L"
+        },
+        {
+            "id": 2,
             "date": "24 Apr 2026",
             "country": "Africa (M)",
             "pick": "Club Africain -2.5",
@@ -13,7 +21,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "24 Apr 2026",
             "country": "Africa (M)",
             "pick": "FUS Rabat -3.5",
@@ -21,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "24 Apr 2026",
             "country": "Australia",
             "pick": "Dandenong Rangers ML",
@@ -29,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "24 Apr 2026",
             "country": "Australia",
             "pick": "Casey Cavaliers ML",
@@ -37,7 +45,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "23 Apr 2026",
             "country": "Iceland",
             "pick": "KV Reykjavik ML",
@@ -45,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "24 Apr 2026",
             "country": "Puerto Rico",
             "pick": "Gigantes Carolina ML",
@@ -53,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "23 Apr 2026",
             "country": "Poland",
             "pick": "Miasto Szkla Krosno ML",
@@ -61,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "23 Apr 2026",
             "country": "Spain (W)",
             "pick": "Estudiantes (W) ML",
@@ -69,20 +77,12 @@
             "result": "L"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "23 Apr 2026",
             "country": "Iceland",
             "pick": "Njardvik (W) ML",
             "odds": "2.12",
             "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "22 Apr 2026",
-            "country": "Italy",
-            "pick": "Loreto Pesaro ML",
-            "odds": "2.05",
-            "result": "W"
         }
     ]
 }
