@@ -1,11 +1,19 @@
 {
     "stats": {
-        "roi": "+10%",
-        "picks": "523"
+        "roi": "+11%",
+        "picks": "525"
     },
     "picks": [
         {
             "id": 1,
+            "date": "26 Apr 2026",
+            "country": "Chile",
+            "pick": "Villa Alemana Basquet ML",
+            "odds": "4.4",
+            "result": "W"
+        },
+        {
+            "id": 2,
             "date": "26 Apr 2026",
             "country": "France",
             "pick": "Boulogne Sur Mer ML",
@@ -13,7 +21,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "26 Apr 2026",
             "country": "Portugal",
             "pick": "Natacao (W) ML",
@@ -21,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "26 Apr 2026",
             "country": "Angola",
             "pick": "CD Primero de Agosto -3.5",
@@ -29,7 +37,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "26 Apr 2026",
             "country": "Portugal",
             "pick": "Sport Lisboa Benfica B ML",
@@ -37,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "26 Apr 2026",
             "country": "Portugal",
             "pick": "Imortal BC 2 ML",
@@ -45,7 +53,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "26 Apr 2026",
             "country": "Africa (M)",
             "pick": "Al Ahly (Egypt) -7.5",
@@ -53,7 +61,15 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 8,
+            "date": "26 Apr 2026",
+            "country": "Mali",
+            "pick": "Real (W) ML",
+            "odds": "1.95",
+            "result": "W"
+        },
+        {
+            "id": 9,
             "date": "26 Apr 2026",
             "country": "Australia",
             "pick": "Kilsyth Cobras ML",
@@ -61,28 +77,12 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 10,
             "date": "26 Apr 2026",
             "country": "Philippines",
             "pick": "Phoenix Fuel Masters ML",
             "odds": "2.12",
             "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "25 Apr 2026",
-            "country": "Italy (W)",
-            "pick": "Empoli (W) ML",
-            "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "25 Apr 2026",
-            "country": "Japan",
-            "pick": "Utsunomiya Brex ML",
-            "odds": "1.83",
-            "result": "W"
         }
     ]
 }
