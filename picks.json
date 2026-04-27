@@ -1,11 +1,27 @@
 {
     "stats": {
-        "roi": "+11%",
-        "picks": "526"
+        "roi": "+10%",
+        "picks": "528"
     },
     "picks": [
         {
             "id": 1,
+            "date": "27 Apr 2026",
+            "country": "Angola",
+            "pick": "Clube ED Formigas Do Cazenga (W) ML",
+            "odds": "5.5",
+            "result": "L"
+        },
+        {
+            "id": 2,
+            "date": "27 Apr 2026",
+            "country": "Serbia",
+            "pick": "Borac Cacak U19 ML",
+            "odds": "3.2",
+            "result": "L"
+        },
+        {
+            "id": 3,
             "date": "27 Apr 2026",
             "country": "Puerto Rico",
             "pick": "Gigantes Carolina ML",
@@ -13,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 2,
+            "id": 4,
             "date": "26 Apr 2026",
             "country": "Chile",
             "pick": "Villa Alemana Basquet ML",
@@ -21,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "26 Apr 2026",
             "country": "France",
             "pick": "Boulogne Sur Mer ML",
@@ -29,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "26 Apr 2026",
             "country": "Portugal",
             "pick": "Natacao (W) ML",
@@ -37,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
             "date": "26 Apr 2026",
             "country": "Angola",
             "pick": "CD Primero de Agosto -3.5",
@@ -45,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 8,
             "date": "26 Apr 2026",
             "country": "Portugal",
             "pick": "Sport Lisboa Benfica B ML",
@@ -53,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 9,
             "date": "26 Apr 2026",
             "country": "Portugal",
             "pick": "Imortal BC 2 ML",
@@ -61,27 +77,11 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 10,
             "date": "26 Apr 2026",
             "country": "Africa (M)",
             "pick": "Al Ahly (Egypt) -7.5",
             "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "26 Apr 2026",
-            "country": "Mali",
-            "pick": "Real (W) ML",
-            "odds": "1.95",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "26 Apr 2026",
-            "country": "Australia",
-            "pick": "Kilsyth Cobras ML",
-            "odds": "3.2",
             "result": "L"
         }
     ]
