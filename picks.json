@@ -1,11 +1,19 @@
 {
     "stats": {
         "roi": "+10%",
-        "picks": "535"
+        "picks": "536"
     },
     "picks": [
         {
             "id": 1,
+            "date": "01 May 2026",
+            "country": "Africa (M)",
+            "pick": "Al Ahly (Egypt) -6.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 2,
             "date": "01 May 2026",
             "country": "Paraguay",
             "pick": "Olimpia Queens (W) ML",
@@ -13,7 +21,7 @@
             "result": "L"
         },
         {
-            "id": 2,
+            "id": 3,
             "date": "30 Apr 2026",
             "country": "Italy",
             "pick": "Fortitudo Agrigento ML",
@@ -21,7 +29,7 @@
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 4,
             "date": "30 Apr 2026",
             "country": "Bosnia and Herzegovina",
             "pick": "Jumper (W) ML",
@@ -29,7 +37,7 @@
             "result": "W"
         },
         {
-            "id": 4,
+            "id": 5,
             "date": "01 May 2026",
             "country": "Dominican Rep.",
             "pick": "Soles De Santo Domingo Este ML",
@@ -37,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 5,
+            "id": 6,
             "date": "28 Apr 2026",
             "country": "Paraguay",
             "pick": "Amambay -7.5",
@@ -45,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 6,
+            "id": 7,
             "date": "28 Apr 2026",
             "country": "Argentina",
             "pick": "San Miguel ML",
@@ -53,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 7,
+            "id": 8,
             "date": "28 Apr 2026",
             "country": "Georgia",
             "pick": "Orbi ML",
@@ -61,7 +69,7 @@
             "result": "L"
         },
         {
-            "id": 8,
+            "id": 9,
             "date": "27 Apr 2026",
             "country": "Angola",
             "pick": "Clube ED Formigas Do Cazenga (W) ML",
@@ -69,20 +77,12 @@
             "result": "L"
         },
         {
-            "id": 9,
+            "id": 10,
             "date": "27 Apr 2026",
             "country": "Serbia",
             "pick": "Borac Cacak U19 ML",
             "odds": "3.2",
             "result": "L"
-        },
-        {
-            "id": 10,
-            "date": "27 Apr 2026",
-            "country": "Puerto Rico",
-            "pick": "Gigantes Carolina ML",
-            "odds": "2.12",
-            "result": "W"
         }
     ]
 }
