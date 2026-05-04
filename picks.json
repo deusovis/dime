@@ -1,7 +1,7 @@
 {
     "stats": {
         "roi": "+10%",
-        "picks": "539"
+        "picks": "541"
     },
     "picks": [
         {
@@ -15,13 +15,29 @@
         {
             "id": 2,
             "date": "03 May 2026",
+            "country": "Africa (M)",
+            "pick": "Al Ahly -1.5",
+            "odds": "1.83",
+            "result": "W"
+        },
+        {
+            "id": 3,
+            "date": "03 May 2026",
+            "country": "United Kingdom",
+            "pick": "Manchester Basketball ML",
+            "odds": "1.86",
+            "result": "W"
+        },
+        {
+            "id": 4,
+            "date": "03 May 2026",
             "country": "Turkey",
             "pick": "Turk Telekom -4.5",
             "odds": "1.83",
             "result": "W"
         },
         {
-            "id": 3,
+            "id": 5,
             "date": "01 May 2026",
             "country": "Brazil",
             "pick": "Paulistano U20 ML",
@@ -29,7 +45,7 @@
             "result": "L"
         },
         {
-            "id": 4,
+            "id": 6,
             "date": "01 May 2026",
             "country": "Africa (M)",
             "pick": "Al Ahly (Egypt) -6.5",
@@ -37,7 +53,7 @@
             "result": "W"
         },
         {
-            "id": 5,
+            "id": 7,
             "date": "01 May 2026",
             "country": "Paraguay",
             "pick": "Olimpia Queens (W) ML",
@@ -45,7 +61,7 @@
             "result": "L"
         },
         {
-            "id": 6,
+            "id": 8,
             "date": "30 Apr 2026",
             "country": "Italy",
             "pick": "Fortitudo Agrigento ML",
@@ -53,7 +69,7 @@
             "result": "W"
         },
         {
-            "id": 7,
+            "id": 9,
             "date": "30 Apr 2026",
             "country": "Bosnia and Herzegovina",
             "pick": "Jumper (W) ML",
@@ -61,27 +77,11 @@
             "result": "W"
         },
         {
-            "id": 8,
+            "id": 10,
             "date": "01 May 2026",
             "country": "Dominican Rep.",
             "pick": "Soles De Santo Domingo Este ML",
             "odds": "1.83",
-            "result": "L"
-        },
-        {
-            "id": 9,
-            "date": "28 Apr 2026",
-            "country": "Paraguay",
-            "pick": "Amambay -7.5",
-            "odds": "1.83",
-            "result": "W"
-        },
-        {
-            "id": 10,
-            "date": "28 Apr 2026",
-            "country": "Argentina",
-            "pick": "San Miguel ML",
-            "odds": "4.4",
             "result": "L"
         }
     ]
